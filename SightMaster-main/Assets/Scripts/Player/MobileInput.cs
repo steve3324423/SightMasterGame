@@ -5,6 +5,9 @@ public class MobileWeaponInput : InputControl
 {
     private CameraRotationMobile _cameraRotation;
 
+    public override float Pitch => _cameraRotation.RotationX;
+    public override float Yaw => _cameraRotation.RotationY;
+
     public MobileWeaponInput(LevelEnder levelEnder, PlayerHealth playerHealth,CameraRotationMobile cameraRotation) : base(levelEnder, playerHealth)
     {
         _cameraRotation = cameraRotation;
@@ -26,5 +29,10 @@ public class MobileWeaponInput : InputControl
     private Vector3 SetMove(Transform transformPlayer,float horizontal, float vertical)
     {
         return transformPlayer.right * horizontal + transformPlayer.forward * vertical;
+    }
+
+    public override void SetYaw(float yaw)
+    {
+        SetCameraRotation(_cameraRotation.RotationX, _cameraRotation.RotationY);
     }
 }

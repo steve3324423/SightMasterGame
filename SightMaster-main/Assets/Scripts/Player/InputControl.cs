@@ -12,7 +12,7 @@ public abstract class InputControl : IInput
 
     public event Action<float, float> RotationValuesChanged;
 
-    public InputControl(LevelEnder levelEnder, PlayerHealth playerHealth)
+    protected InputControl(LevelEnder levelEnder, PlayerHealth playerHealth)
     {
         _levelEnder = levelEnder;
         _playerHealth = playerHealth;
@@ -21,6 +21,9 @@ public abstract class InputControl : IInput
         _playerHealth.Dead += OnDead;
     }
 
+    public abstract float Pitch { get; }
+    public abstract float Yaw { get; }
+
     public virtual Vector3 GetDirection(Transform transformPlayer)
     {
         return Vector3.zero;
@@ -28,7 +31,9 @@ public abstract class InputControl : IInput
 
     public abstract Quaternion GetCameraRotation();
 
-    protected Quaternion SetCameraRotation(float xValue,float yValue)
+    public abstract void SetYaw(float yaw);
+
+    protected Quaternion SetCameraRotation(float xValue, float yValue)
     {
         _xRotation = xValue;
         _yRotation = yValue;

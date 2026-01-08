@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class CameraZoomPC : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class CameraZoomPC : MonoBehaviour
 
     private Coroutine _zoomCoroutine;
     private Camera _camera;
+
+    public event Action<float> ZoomChanged;
 
     private void Awake()
     {
@@ -47,6 +50,8 @@ public class CameraZoomPC : MonoBehaviour
                 float newFov = _camera.fieldOfView - scrollDelta * _zoomSpeed;
                 newFov = Mathf.Clamp(newFov, _aimedFov, _minFov);
                 _camera.fieldOfView = newFov;
+
+                ZoomChanged?.Invoke(newFov);
             }
             yield return null;
         }
@@ -70,6 +75,7 @@ public class CameraZoomPC : MonoBehaviour
                 _zoomCoroutine = null;
             }
             _camera.fieldOfView = _minFov;
+            ZoomChanged?.Invoke(_minFov);
         }
     }
 }

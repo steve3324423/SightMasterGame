@@ -9,8 +9,7 @@ public class PanelsHandler : MonoBehaviour
     [SerializeField] private GameObject _losePanel;
     [SerializeField] private GameObject _winPanel;
     [SerializeField] private GameObject _pausePanel;
-    [SerializeField] private GameObject _settingPanel;
-    [SerializeField] private SettingPanelHandler _settingHandlerPanel;
+   // [SerializeField] private SettingPanelHandler _settingHandlerPanel;
 
     private WaitForSeconds _waitSeconds;
     private float _timeForCoroutine = 3f;
@@ -22,7 +21,7 @@ public class PanelsHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        _settingHandlerPanel.Toggled += OnToggled;
+      //  _settingHandlerPanel.Toggled += OnToggled;
         _pauseHandler.Paused += OnPaused;
         _playerHealth.Dead += OnDead;
         _levelEnder.Wined += OnWined;
@@ -30,7 +29,7 @@ public class PanelsHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        _settingHandlerPanel.Toggled -= OnToggled;
+       // _settingHandlerPanel.Toggled -= OnToggled;
         _pauseHandler.Paused -= OnPaused;
         _playerHealth.Dead -= OnDead;
         _levelEnder.Wined -= OnWined;
@@ -62,7 +61,7 @@ public class PanelsHandler : MonoBehaviour
     private void SetCursorMode(bool isLocked)
     {
         if(Application.isMobilePlatform == false)
-            Cursor.lockState = isLocked ? CursorLockMode.Locked :CursorLockMode.None;
+            Cursor.lockState = isLocked ? CursorLockMode.Locked : CursorLockMode.None;
     }
 
     private IEnumerator EnablePanel(GameObject panel)

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CameraZoomMobile : MonoBehaviour
@@ -5,6 +6,8 @@ public class CameraZoomMobile : MonoBehaviour
     [SerializeField] private SliderZoom _sliderZoom;
 
     private Camera _camera;
+
+    public event Action<float> ZoomChanged; 
 
     private void Awake()
     {
@@ -27,5 +30,6 @@ public class CameraZoomMobile : MonoBehaviour
     private void OnValueChanged(float value)
     {
         _camera.fieldOfView = value;
+        ZoomChanged?.Invoke(value);
     }
 }

@@ -5,6 +5,7 @@ using Zenject;
 [RequireComponent(typeof(CharacterController))]
 public class Mover : MonoBehaviour
 {
+    [SerializeField] private Transform _mainCamera;
     [SerializeField] private float _speed = 15f;
 
     private CharacterController _controller;
@@ -25,7 +26,7 @@ public class Mover : MonoBehaviour
 
     private void Update()
     {
-        _controller.Move(_input.GetDirection(transform) * _speed * Time.deltaTime);
+        _controller.Move(_input.GetDirection(_mainCamera) * _speed * Time.deltaTime);
         Moved?.Invoke(_controller.velocity.magnitude > 0);
     }
 }

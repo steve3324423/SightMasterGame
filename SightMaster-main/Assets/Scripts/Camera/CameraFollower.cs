@@ -10,7 +10,6 @@ public class CameraFollower : MonoBehaviour
     [SerializeField] private float _rotationFollowSpeed = 7f;
     [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private LevelEnder _levelEnder;
-    [SerializeField] private Transform _lookTargetOverride;
 
     private bool _canRotate = true;
 
@@ -26,7 +25,6 @@ public class CameraFollower : MonoBehaviour
         Vector3 initialDesiredPosition = _target.position + _target.rotation * localOffset;
 
         transform.position = initialDesiredPosition;
-        transform.rotation = _lookTargetOverride.rotation;
     }
 
     private void OnDisable()
@@ -51,10 +49,7 @@ public class CameraFollower : MonoBehaviour
         {
             Vector3 localOffset = new Vector3(0, _height, -_rearDistance);
             Vector3 desiredPosition = _target.position + _target.rotation * localOffset;
-            transform.position = Vector3.Lerp(transform.position, desiredPosition, _positionFollowSpeed * Time.deltaTime);
-
-            Quaternion targetRotation = _lookTargetOverride.rotation;
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationFollowSpeed * Time.deltaTime);
+           // transform.position = Vector3.Lerp(transform.position, desiredPosition, _positionFollowSpeed * Time.deltaTime);
         }
     }
 }

@@ -1,11 +1,13 @@
-using System;
 using UnityEngine;
 
 public interface IInput
 {
-    Vector3 GetDirection(Transform transform);
-
-    Quaternion GetCameraRotation();
-
     event System.Action<float, float> RotationValuesChanged;
+
+    float Pitch { get; }
+    float Yaw { get; }
+
+    Vector3 GetDirection(Transform transform);
+    Quaternion GetCameraRotation();
+    void SetYaw(float yaw);
 }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using YG;
 
@@ -8,24 +7,33 @@ public class DekstopInput : InputControl
     private const string Vertical = "Vertical";
     private const string MouseX = "Mouse X";
     private const string MouseY = "Mouse Y";
+    private const float MinPitch = -30f;
+    private const float MaxPitch = 70f;
+    private const float SmoothSpeed = 25f;
+    private const float BaseFOV = 60f;
 
-    private CameraAimEnableHandler _cameraAim;
-    private float _degree = 45f;
-    private float _xValue = 0f;
-    private float _yValue = 0f;
-    private bool _isAimed;
+    private float _differenceValue = .001f;
+    private float _pitch = 15f;
+    private float _yaw = 0f;
+    private Sensitivity _sensitivity;
+    private float _targetPitch = 15f;
+    private float _targetYaw = 0f;
 
-    public DekstopInput(LevelEnder levelEnder, PlayerHealth playerHealth,CameraAimEnableHandler cameraAim) : base(levelEnder, playerHealth) 
+    public override float Pitch => _pitch;
+    public override float Yaw => _yaw;
+
+    public DekstopInput(LevelEnder levelEnder, PlayerHealth playerHealth, CameraAimEnableHandler cameraAim, Sensitivity sensitivity)
+        : base(levelEnder, playerHealth)
     {
         Cursor.lockState = CursorLockMode.Locked;
-        _cameraAim = cameraAim;
-
-        _cameraAim.Aimed += OnAimed;
+        _sensitivity = sensitivity;
+        _targetPitch = _pitch;
+        _targetYaw = _yaw;
     }
 
     public override Vector3 GetDirection(Transform transformPlayer)
     {
-        if(IsCanGetValue)
+        if (IsCanGetValue)
         {
             float horizontal = Input.GetAxis(Horizontal);
             float vertical = Input.GetAxis(Vertical);
@@ -38,20 +46,34 @@ public class DekstopInput : InputControl
 
     public override Quaternion GetCameraRotation()
     {
-        float mouseX = Input.GetAxis(MouseX) * YG2.saves.sensitivityMobile; ;
-        float mouseY = Input.GetAxis(MouseY) * YG2.saves.sensitivityMobile; ;
+        if (!IsCanGetValue)
+            return SetCameraRotation(_pitch, _yaw);
 
-        _yValue += mouseX;
-        _xValue -= mouseY;
+        float mouseX = Input.GetAxis(MouseX);
+        float mouseY = Input.GetAxis(MouseY);
 
-        _yValue = Mathf.Clamp(_yValue, -_degree, _degree);
-        _xValue = Mathf.Clamp(_xValue, -_degree, _degree);
+        float sensitivity = YG2.saves.sensitivity * _sensitivity.SensitivityValue;
 
-        return SetCameraRotation(_xValue,_yValue);
+        _targetYaw += mouseX * sensitivity;
+        _targetPitch -= mouseY * sensitivity;
+        _targetPitch = Mathf.Clamp(_targetPitch, MinPitch, MaxPitch);
+
+        _yaw = Mathf.Lerp(_yaw, _targetYaw, Time.unscaledDeltaTime * SmoothSpeed);
+        _pitch = Mathf.Lerp(_pitch, _targetPitch, Time.unscaledDeltaTime * SmoothSpeed);
+
+        if (Mathf.Abs(_yaw - _targetYaw) < _differenceValue)
+            _yaw = _targetYaw;
+
+        if (Mathf.Abs(_pitch - _targetPitch) < _differenceValue)
+            _pitch = _targetPitch;
+
+        return SetCameraRotation(_pitch, _yaw);
     }
 
-    private void OnAimed(bool isAimed)
+    public override void SetYaw(float yaw)
     {
-        _isAimed = isAimed;
+        _yaw = yaw;
+        _targetYaw = yaw;
+        SetCameraRotation(_pitch, _yaw);
     }
 }

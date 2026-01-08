@@ -14,6 +14,6 @@ public class CameraAim : MonoBehaviour
 
     private void Update()
     {
-        transform.localRotation = _input.GetCameraRotation();
+        transform.localRotation = Quaternion.Euler(_input.Pitch,0, 0);
     }
 }

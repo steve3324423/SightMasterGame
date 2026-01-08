@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 292451366935362983}
   - component: {fileID: 5577573187060150123}
-  - component: {fileID: 6412120655017315390}
+  - component: {fileID: 2831436921515213393}
   m_Layer: 5
   m_Name: SensitivitySlider
   m_TagString: Untagged
@@ -84,15 +84,15 @@ MonoBehaviour:
   m_FillRect: {fileID: 3812572253546929784}
   m_HandleRect: {fileID: 7513941911996894070}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 30
+  m_MinValue: 1
+  m_MaxValue: 5
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 3
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6412120655017315390}
-        m_TargetAssemblyTypeName: Sensitivity, Assembly-CSharp
+      - m_Target: {fileID: 2831436921515213393}
+        m_TargetAssemblyTypeName: SensitivitySlider, Assembly-CSharp
         m_MethodName: ChangeValue
         m_Mode: 1
         m_Arguments:
@@ -103,7 +103,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6412120655017315390
+--- !u!114 &2831436921515213393
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,9 +112,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1651537370145739984}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b91962bec384bee4c96a9ecfa8dd88fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 7bd05e17ce3536e428209e10aeacfd3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mobileValue: 15
+  _maxValue: 5
 --- !u!1 &2795296154922889350
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3905326, g: 1, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.867826, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -248,7 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8757578, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.564956, b: 0.8490566, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -299,8 +301,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -3, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_AnchoredPosition: {x: -1.0728, y: 0.3163004}
+  m_SizeDelta: {x: 21.9272, y: 0.3163}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3478242471695383206
 CanvasRenderer:
@@ -323,7 +325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.39215687, g: 1, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.87058824, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0.28, y: -12.9, z: 0, w: -13.32}
   m_Maskable: 1
@@ -489,8 +491,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4288706620
+  m_fontColor: {r: 0.23529412, g: 0.47058824, b: 0.627451, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

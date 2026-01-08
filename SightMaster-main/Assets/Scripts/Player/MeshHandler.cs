@@ -1,0 +1,18 @@
+using UnityEngine;
+
+public abstract class MeshHandler : MonoBehaviour
+{
+    [SerializeField] private Aim _aim;
+
+    private void OnEnable()
+    {
+        _aim.Aimed += OnAimed;
+    }
+
+    private void OnDisable()
+    {
+        _aim.Aimed -= OnAimed;
+    }
+
+    protected abstract void OnAimed(bool isAimed);
+}
