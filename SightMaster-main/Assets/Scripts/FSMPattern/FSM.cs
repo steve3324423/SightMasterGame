@@ -1,34 +1,38 @@
 using System;
 using System.Collections.Generic;
 
-public class FSM 
+namespace SightMaster.Scripts.FSM
 {
-    private Dictionary<Type,FSMState> _states = new Dictionary<Type,FSMState>();
-
-    private FSMState StateCurrent { get; set; }
-
-    public void AddState(FSMState state)
+    public class FSM
     {
-        _states.Add(state.GetType(), state);
-    }
+        private Dictionary<Type, FSMState> _states = new Dictionary<Type, FSMState>();
 
-    public void SetState<T>() where T : FSMState
-    {
-        var type = typeof(T);
+        private FSMState StateCurrent { get; set; }
 
-        if (StateCurrent != null && StateCurrent.GetType() == type)
-            return;
-
-        if(_states.TryGetValue(type,out var newState))
+        public void AddState(FSMState state)
         {
-            StateCurrent?.Exit();
-            StateCurrent = newState;
-            StateCurrent.Enter();
+            _states.Add(state.GetType(), state);
         }
-    }
 
-    public void Update()
-    {
-        StateCurrent?.Update();
+        public void SetState<T>()
+            where T : FSMState
+        {
+            var type = typeof(T);
+
+            if (StateCurrent != null && StateCurrent.GetType() == type)
+                return;
+
+            if (_states.TryGetValue(type, out var newState))
+            {
+                StateCurrent?.Exit();
+                StateCurrent = newState;
+                StateCurrent.Enter();
+            }
+        }
+
+        public void Update()
+        {
+            StateCurrent?.Update();
+        }
     }
 }

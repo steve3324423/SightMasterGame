@@ -1,30 +1,35 @@
+using SightMaster.Scripts.Weapon;
 using System;
 using UnityEngine;
 
-public class BulletSpawn : MonoBehaviour
+namespace SightMaster.Scripts.Weapon.Bullet
 {
-    [SerializeField] private Transform _positionSpawn;
-    [SerializeField] private RayWeapon[] _rayWeapons;
-    [SerializeField] private Bullet _bullet;
-
-    public event Action<Bullet> Created;
-
-    private void OnEnable()
+    public class BulletSpawn : MonoBehaviour
     {
-        foreach (RayWeapon weapon in _rayWeapons)
-            weapon.HitedHead += OnHitedHead;
+        [SerializeField] private Transform _positionSpawn;
+        [SerializeField] private RayWeapon[] _rayWeapons;
+        [SerializeField] private Bullet _bullet;
+
+        public event Action<Bullet> Created;
+
+        private void OnEnable()
+        {
+            foreach (RayWeapon weapon in _rayWeapons)
+                weapon.HitedHead += OnHitedHead;
+        }
+
+        private void OnDisable()
+        {
+            foreach (RayWeapon weapon in _rayWeapons)
+                weapon.HitedHead -= OnHitedHead;
+        }
+
+        private void OnHitedHead(Vector3 position, Vector3 rotation)
+        {
+            Bullet bullet = Instantiate(_bullet, _positionSpawn.position, Quaternion.identity);
+            bullet.SetDirection(position);
+            Created?.Invoke(_bullet);
+        }
     }
 
-    private void OnDisable()
-    {
-        foreach (RayWeapon weapon in _rayWeapons)
-            weapon.HitedHead -= OnHitedHead;
-    }
-
-    private void OnHitedHead(Vector3 position,Vector3 rotation)
-    {
-        Bullet bullet = Instantiate(_bullet,_positionSpawn.position,Quaternion.identity);
-        bullet.SetDirection(position);
-        Created?.Invoke(_bullet);
-    }
 }

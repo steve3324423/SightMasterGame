@@ -1,24 +1,28 @@
 using UI_Inputs;
+using SightMaster.Scripts.Weapon.Aim;
 using UnityEngine;
 
-public class JoystickState : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private UIInputJoystick _movementJoystick;
-    [SerializeField] private Aim _aim;
-
-    private void OnEnable()
+    public class JoystickState : MonoBehaviour
     {
-        _aim.Aimed += OnAimed;
-    }
+        [SerializeField] private UIInputJoystick _movementJoystick;
+        [SerializeField] private Aim _aim;
 
-    private void OnDisable()
-    {
-        _aim.Aimed -= OnAimed;
-    }
+        private void OnEnable()
+        {
+            _aim.Aimed += OnAimed;
+        }
 
-    private void OnAimed(bool isAimed)
-    {
-        if(Application.isMobilePlatform)
-            _movementJoystick.gameObject.SetActive(!isAimed);
+        private void OnDisable()
+        {
+            _aim.Aimed -= OnAimed;
+        }
+
+        private void OnAimed(bool isAimed)
+        {
+            if (Application.isMobilePlatform)
+                _movementJoystick.gameObject.SetActive(!isAimed);
+        }
     }
 }

@@ -1,13 +1,17 @@
-public abstract class FSMState
+
+namespace SightMaster.Scripts.FSM
 {
-    protected readonly FSM Fsm;
-
-    public FSMState(FSM fsm)
+    public abstract class FSMState
     {
-        Fsm = fsm;
-    }
+        protected readonly FSM Fsm;
 
-    public virtual void Enter() { }
-    public virtual void Exit() { }
-    public virtual void Update() { }
+        public FSMState(FSM fsm)
+        {
+            Fsm = fsm;
+        }
+
+        public virtual void Enter() { }
+        public virtual void Exit() { }
+        public virtual void Update() { }
+    }
 }

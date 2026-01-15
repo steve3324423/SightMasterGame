@@ -1,16 +1,20 @@
+using SightMaster.Scripts.InGameCurrency;
 using UnityEngine;
 using YG;
 
-public class IncreaseMoneyButton : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private LevelCompleteReward _reward;
-
-    private string _rewardID = "reward";
-
-    public void Double()
+    public class IncreaseMoneyButton : MonoBehaviour
     {
-        YG2.RewardedAdvShow(_rewardID);
-        _reward.IncreaseMoney();
-        transform.gameObject.SetActive(false);
+        [SerializeField] private LevelCompleteReward _reward;
+
+        private string _rewardID = "reward";
+
+        public void Double()
+        {
+            YG2.RewardedAdvShow(_rewardID);
+            _reward.IncreaseMoney();
+            transform.gameObject.SetActive(false);
+        }
     }
 }

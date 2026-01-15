@@ -1,3 +1,8 @@
+using SightMaster.Scripts.Camera;
+using SightMaster.Scripts.HandlerPause;
+using SightMaster.Scripts.UI;
+using SightMaster.Scripts.Player;
+using SightMaster.Scripts.LevelHandler;
 using UnityEngine;
 
 public class UIElementsHandler : MonoBehaviour

@@ -1,20 +1,25 @@
+using SightMaster.Scripts.Enviroment;
+using SightMaster.Scripts.Enemy.HealthHandler;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyHealth))]
-public class EnemyTakeExplosion : EnviromentTakeExplosion
+namespace SightMaster.Scripts.Enemy
 {
-    private EnemyHealth _enemyHealth;
-    private int _damage = 100;
-
-    protected override void Awake()
+    [RequireComponent(typeof(EnemyHealth))]
+    public class EnemyTakeExplosion : EnviromentTakeExplosion
     {
-        base.Awake();
-        _enemyHealth = GetComponent<EnemyHealth>();
-    }
+        private EnemyHealth _enemyHealth;
+        private int _damage = 100;
 
-    public override void TakeExplosion()
-    {
-        base.TakeExplosion();
-        _enemyHealth.TakeDamage(_damage);
+        protected override void Awake()
+        {
+            base.Awake();
+            _enemyHealth = GetComponent<EnemyHealth>();
+        }
+
+        public override void TakeExplosion()
+        {
+            base.TakeExplosion();
+            _enemyHealth.TakeDamage(_damage);
+        }
     }
 }

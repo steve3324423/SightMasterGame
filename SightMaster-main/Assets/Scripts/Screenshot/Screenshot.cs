@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public class Screenshot : MonoBehaviour
+namespace SightMaster.Scripts.SceneTransition
 {
-    private void Update()
+    public class Screenshot : MonoBehaviour
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            ScreenCapture.CaptureScreenshot("C:\\SCRGAME\\SCR3.png");
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+                ScreenCapture.CaptureScreenshot("C:\\SCRGAME\\SCR3.png");
+        }
     }
 }

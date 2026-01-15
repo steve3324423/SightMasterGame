@@ -1,8 +1,13 @@
+using SightMaster.Scripts.FSM;
 using UnityEngine;
 
-public class MoveAnimationState : AnimationState
+namespace SightMaster.Scripts.Animation
 {
-    private const string Move = "Move";
+    public class MoveAnimationState : AnimationState
+    {
+        private const string Move = "Move";
 
-    public MoveAnimationState(FSM fsm, Animator animator) : base(fsm, animator, Move) { }
+        public MoveAnimationState(FSM.FSM fsm, Animator animator)
+            : base(fsm, animator, Move) { }
+    }
 }

@@ -1,118 +1,126 @@
+using SightMaster.Scripts.UI;
+using SightMaster.Scripts.UI.Android;
+using SightMaster.Scripts.Weapon.Aim;
+using SightMaster.Scripts.Setting;
 using UnityEngine;
 using YG;
 
-public class CameraRotationMobile : MonoBehaviour
+namespace SightMaster.Scripts.Player
 {
-    [SerializeField] private Sensitivity _sensitivity;
-    [SerializeField] private Aim _aim;
-    [SerializeField] private AimButton _aimButton;
-    [SerializeField] private UITouchControl[] _touchControls;
-    [SerializeField] private UIBlocker _uiBlocker;
-    [SerializeField] private float _touchAreaFraction = 0.5f;
-    [SerializeField] private float _deadZone = 0.01f;
-    [SerializeField] private float _mobileValue = 1.5f;
-    [SerializeField] private float _smoothTime = 0.1f;
-
-    private float _currentRotationXVelocity;
-    private float _currentRotationYVelocity;
-    private float _verticalAngle = 45;
-    private bool _isDragging;
-    private bool _isAnyUIControlTouched;
-    private Vector2 _previousTouchPosition;
-
-    public float RotationX { private set; get; }
-    public float RotationY { private set; get; }
-
-    private void OnEnable()
+    public class CameraRotationMobile : MonoBehaviour
     {
-        foreach (UITouchControl touchControl in _touchControls)
-            touchControl.Touched += OnTouched;
+        [SerializeField] private Sensitivity _sensitivity;
+        [SerializeField] private Aim _aim;
+        [SerializeField] private AimButton _aimButton;
+        [SerializeField] private UITouchControl[] _touchControls;
+        [SerializeField] private UIBlocker _uiBlocker;
+        [SerializeField] private float _touchAreaFraction = 0.5f;
+        [SerializeField] private float _deadZone = 0.01f;
+        [SerializeField] private float _mobileValue = 1.5f;
+        [SerializeField] private float _smoothTime = 0.1f;
 
-        _aim.Aimed += OnAimed;
-    }
+        private float _currentRotationXVelocity;
+        private float _currentRotationYVelocity;
+        private float _verticalAngle = 45;
+        private bool _isDragging;
+        private bool _isAnyUIControlTouched;
+        private Vector2 _previousTouchPosition;
 
-    private void OnDisable()
-    {
-        foreach (UITouchControl touchControl in _touchControls)
-            touchControl.Touched -= OnTouched;
+        public float RotationX { get; private set; }
+        public float RotationY { get; private set; }
 
-        _aim.Aimed -= OnAimed;
-    }
-
-    private void OnTouched(bool isTouched)
-    {
-        _isAnyUIControlTouched = isTouched;
-    }
-
-    private void Update()
-    {
-        if (_uiBlocker.IsUIBeingTouched)
+        private void OnEnable()
         {
-            _isDragging = false;
-            return;
+            foreach (UITouchControl touchControl in _touchControls)
+                touchControl.Touched += OnTouched;
+
+            _aim.Aimed += OnAimed;
         }
 
-        if (Input.touchCount > 0)
+        private void OnDisable()
         {
-            Touch touch = Input.GetTouch(0);
-            float screenStartOfTouchAreaX = Screen.width * _touchAreaFraction;
-            bool isUIBlockingCamera = _isAnyUIControlTouched;
+            foreach (UITouchControl touchControl in _touchControls)
+                touchControl.Touched -= OnTouched;
 
-            switch (touch.phase)
+            _aim.Aimed -= OnAimed;
+        }
+
+        private void OnTouched(bool isTouched)
+        {
+            _isAnyUIControlTouched = isTouched;
+        }
+
+        private void Update()
+        {
+            if (_uiBlocker.IsUIBeingTouched)
             {
-                case TouchPhase.Began:
+                _isDragging = false;
+                return;
+            }
 
-                    if (touch.position.x >= screenStartOfTouchAreaX)
-                    {
-                        _isDragging = true;
-                        _previousTouchPosition = touch.position;
-                    }
-                    else
-                    {
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+                float screenStartOfTouchAreaX = Screen.width * _touchAreaFraction;
+                bool isUIBlockingCamera = _isAnyUIControlTouched;
+
+                switch (touch.phase)
+                {
+                    case TouchPhase.Began:
+
+                        if (touch.position.x >= screenStartOfTouchAreaX)
+                        {
+                            _isDragging = true;
+                            _previousTouchPosition = touch.position;
+                        }
+                        else
+                        {
+                            _isDragging = false;
+                        }
+
+                        break;
+
+                    case TouchPhase.Moved:
+
+                        if (_isDragging)
+                        {
+                            Vector2 touchDelta = touch.position - _previousTouchPosition;
+
+                            if (Mathf.Abs(touchDelta.x) < _deadZone)
+                                touchDelta.x = 0;
+
+                            if (Mathf.Abs(touchDelta.y) < _deadZone)
+                                touchDelta.y = 0;
+
+                            float horizontalSensitivity = YG2.saves.sensitivity * _mobileValue * _sensitivity.SensitivityValue;
+                            float verticalSensitivity = YG2.saves.sensitivity * _mobileValue * _sensitivity.SensitivityValue;
+                            float targetRotationY = RotationY + touchDelta.x * horizontalSensitivity * Time.deltaTime;
+                            float targetRotationX = RotationX - touchDelta.y * verticalSensitivity * Time.deltaTime;
+
+                            RotationX = Mathf.SmoothDamp(RotationX, targetRotationX, ref _currentRotationXVelocity, _smoothTime);
+                            RotationY = Mathf.SmoothDamp(RotationY, targetRotationY, ref _currentRotationYVelocity, _smoothTime);
+                            RotationX = Mathf.Clamp(RotationX, -_verticalAngle, _verticalAngle);
+
+                            _previousTouchPosition = touch.position;
+                        }
+
+                        break;
+
+                    case TouchPhase.Ended:
+                    case TouchPhase.Canceled:
                         _isDragging = false;
-                    }
-                    break;
-
-                case TouchPhase.Moved:
-
-                    if (_isDragging)
-                    {
-                        Vector2 touchDelta = touch.position - _previousTouchPosition;
-
-                        if (Mathf.Abs(touchDelta.x) < _deadZone)
-                            touchDelta.x = 0;
-
-                        if (Mathf.Abs(touchDelta.y) < _deadZone)
-                            touchDelta.y = 0;
-
-                        float horizontalSensitivity = YG2.saves.sensitivity * _mobileValue * _sensitivity.SensitivityValue;
-                        float verticalSensitivity = YG2.saves.sensitivity * _mobileValue * _sensitivity.SensitivityValue;
-                        print(horizontalSensitivity);
-                        float targetRotationY = RotationY + touchDelta.x * horizontalSensitivity * Time.deltaTime;
-                        float targetRotationX = RotationX - touchDelta.y * verticalSensitivity * Time.deltaTime;
-
-                        RotationX = Mathf.SmoothDamp(RotationX, targetRotationX, ref _currentRotationXVelocity, _smoothTime);
-                        RotationY = Mathf.SmoothDamp(RotationY, targetRotationY, ref _currentRotationYVelocity, _smoothTime);
-                        RotationX = Mathf.Clamp(RotationX, -_verticalAngle, _verticalAngle); 
-
-                        _previousTouchPosition = touch.position;
-                    }
-                    break;
-
-                case TouchPhase.Ended:
-                case TouchPhase.Canceled:
-                    _isDragging = false;
-                    break;
+                        break;
+                }
+            }
+            else
+            {
+                _isDragging = false;
             }
         }
-        else
-        {
-            _isDragging = false;
-        }
-    }
 
-    private void OnAimed(bool isAimed)
-    {
-        _touchAreaFraction = isAimed ? 0f : 0.5f;
+        private void OnAimed(bool isAimed)
+        {
+            _touchAreaFraction = isAimed ? 0f : 0.5f;
+        }
     }
 }

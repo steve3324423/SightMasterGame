@@ -1,28 +1,31 @@
 using UnityEngine;
 
-public class RPGMuzzleEffect : MonoBehaviour
+namespace SightMaster.Scripts.Enemy.EnemyWeapon
 {
-    [SerializeField] private EnemyWeapon _weapon;
-
-    private ParticleSystem _particleSystem;
-
-    private void Awake()
+    public class RPGMuzzleEffect : MonoBehaviour
     {
-        _particleSystem = GetComponent<ParticleSystem>();
-    }
+        [SerializeField] private EnemyWeapon _weapon;
 
-    private void OnEnable()
-    {
-        _weapon.Shooted += OnShooted;
-    }
+        private ParticleSystem _particleSystem;
 
-    private void OnDisable()
-    {
-        _weapon.Shooted -= OnShooted;
-    }
+        private void Awake()
+        {
+            _particleSystem = GetComponent<ParticleSystem>();
+        }
 
-    private void OnShooted(int value)
-    {
-        _particleSystem.Play();
+        private void OnEnable()
+        {
+            _weapon.Shooted += OnShooted;
+        }
+
+        private void OnDisable()
+        {
+            _weapon.Shooted -= OnShooted;
+        }
+
+        private void OnShooted(int value)
+        {
+            _particleSystem.Play();
+        }
     }
 }

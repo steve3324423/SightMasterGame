@@ -1,39 +1,43 @@
-using UnityEngine;
 using TMPro;
+using SightMaster.Scripts.Enemy;
+using UnityEngine;
 
-public class WaveCountText : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private WaveSpawned[] _waveSpawned;
-
-    private TextMeshProUGUI _text;
-    private int _countWave = 1;
-
-    private void Awake()
+    public class WaveCountText : MonoBehaviour
     {
-        _text = GetComponent<TextMeshProUGUI>();
-        SetText();
-    }
+        [SerializeField] private WaveSpawned[] _waveSpawned;
 
-    private void OnEnable()
-    {
-        foreach (WaveSpawned wave in _waveSpawned)
-            wave.Activated += OnActivated;
-    }
+        private TextMeshProUGUI _text;
+        private int _countWave = 1;
 
-    private void OnDisable()
-    {
-        foreach (WaveSpawned enemy in _waveSpawned)
-            enemy.Activated -= OnActivated;
-    }
+        private void Awake()
+        {
+            _text = GetComponent<TextMeshProUGUI>();
+            SetText();
+        }
 
-    private void OnActivated()
-    {
-        _countWave++;
-        SetText();
-    }
+        private void OnEnable()
+        {
+            foreach (WaveSpawned wave in _waveSpawned)
+                wave.Activated += OnActivated;
+        }
 
-    private void SetText()
-    {
-        _text.text = $"{_countWave}/{_waveSpawned.Length}";
+        private void OnDisable()
+        {
+            foreach (WaveSpawned enemy in _waveSpawned)
+                enemy.Activated -= OnActivated;
+        }
+
+        private void OnActivated()
+        {
+            _countWave++;
+            SetText();
+        }
+
+        private void SetText()
+        {
+            _text.text = $"{_countWave}/{_waveSpawned.Length}";
+        }
     }
 }

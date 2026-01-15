@@ -1,31 +1,34 @@
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using SightMaster.Scripts.Player;
+using UnityEngine;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class HealthBarPlayer : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private PlayerHealth _health;
-
-    private TextMeshProUGUI _text;
-
-    private void Awake()
+    [RequireComponent(typeof(TextMeshProUGUI))]
+    public class HealthBarPlayer : MonoBehaviour
     {
-        _text = GetComponent<TextMeshProUGUI>();
-    }
+        [SerializeField] private PlayerHealth _health;
 
-    private void OnEnable()
-    {
-        _health.HealthChanged += OnHealthChanged;
-    }
+        private TextMeshProUGUI _text;
 
-    private void OnDisable()
-    {
-        _health.HealthChanged -= OnHealthChanged;
-    }
+        private void Awake()
+        {
+            _text = GetComponent<TextMeshProUGUI>();
+        }
 
-    private void OnHealthChanged(int value)
-    {
-        _text.text = value.ToString();
+        private void OnEnable()
+        {
+            _health.HealthChanged += OnHealthChanged;
+        }
+
+        private void OnDisable()
+        {
+            _health.HealthChanged -= OnHealthChanged;
+        }
+
+        private void OnHealthChanged(int value)
+        {
+            _text.text = value.ToString();
+        }
     }
 }

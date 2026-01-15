@@ -1,29 +1,33 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-public class RPGSound : MonoBehaviour
+namespace SightMaster.Scripts.Enemy.EnemyWeapon
 {
-    [SerializeField] private EnemyWeapon _enemyWeapon;
-
-    private AudioSource _audio;
-
-    private void Awake()
+    [RequireComponent(typeof(AudioSource))]
+    public class RPGSound : MonoBehaviour
     {
-        _audio = GetComponent<AudioSource>();
-    }
+        [SerializeField] private EnemyWeapon _enemyWeapon;
 
-    private void OnEnable()
-    {
-        _enemyWeapon.Shooted += OnShooted;
-    }
+        private AudioSource _audio;
 
-    private void OnDisable()
-    {
-        _enemyWeapon.Shooted -= OnShooted;
-    }
+        private void Awake()
+        {
+            _audio = GetComponent<AudioSource>();
+        }
 
-    private void OnShooted(int value)
-    {
-        _audio.Play();
+        private void OnEnable()
+        {
+            _enemyWeapon.Shooted += OnShooted;
+        }
+
+        private void OnDisable()
+        {
+            _enemyWeapon.Shooted -= OnShooted;
+        }
+
+        private void OnShooted(int value)
+        {
+            _audio.Play();
+        }
     }
 }
+

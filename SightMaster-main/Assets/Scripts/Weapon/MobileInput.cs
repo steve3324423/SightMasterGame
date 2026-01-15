@@ -1,23 +1,27 @@
-using UnityEngine;
+using SightMaster.Scripts.UI;
+using SightMaster.Scripts.UI.Android;
 
-public class MobileInput : IInputWeapon
+namespace SightMaster.Scripts.Weapon
 {
-    private AimButton _aimButtom;
-    private ShootButton _shootButton;
-
-    public MobileInput(AimButton aimButtom,ShootButton shootButton)
+    public class MobileInput : IInputWeapon
     {
-        _aimButtom = aimButtom;
-        _shootButton = shootButton;
-    }
+        private AimButton _aimButtom;
+        private ShootButton _shootButton;
 
-    public bool IsAimed()
-    {
-        return _aimButtom.IsAimed;
-    }
+        public MobileInput(AimButton aimButtom, ShootButton shootButton)
+        {
+            _aimButtom = aimButtom;
+            _shootButton = shootButton;
+        }
 
-    public bool IsShoot()
-    {
-        return _shootButton.IsClickShoot;
+        public bool IsAimed()
+        {
+            return _aimButtom.IsAimed;
+        }
+
+        public bool IsShoot()
+        {
+            return _shootButton.IsClickShoot;
+        }
     }
 }

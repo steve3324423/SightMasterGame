@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public interface IInput
+namespace SightMaster.Scripts.Player
 {
-    event System.Action<float, float> RotationValuesChanged;
+    public interface IInput
+    {
+        event System.Action<float, float> RotationValuesChanged;
 
-    float Pitch { get; }
-    float Yaw { get; }
+        float Pitch { get; }
+        float Yaw { get; }
 
-    Vector3 GetDirection(Transform transform);
-    Quaternion GetCameraRotation();
-    void SetYaw(float yaw);
+        Vector3 GetDirection(Transform transform);
+        Quaternion GetCameraRotation();
+        void SetYaw(float yaw);
+    }
 }

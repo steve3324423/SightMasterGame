@@ -2,51 +2,55 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaveSpawned : MonoBehaviour
+namespace SightMaster.Scripts.Enemy
 {
-    [SerializeField] private bool _isDisabled = true;
-
-    private float _timeForInvoke = 3f;
-
-    public event Action<List<GameObject>> WarningBeforeSpawned;
-    public event Action Activated;
-
-    private void Start() 
+    public class WaveSpawned : MonoBehaviour
     {
-        if (_isDisabled)
-            ResetEnemies(false);
-    }
+        [SerializeField] private bool _isDisabled = true;
 
-    public void Start—ountdown()
-    {
-        List<GameObject> directChildren = GetDirectChildren(transform);
-        WarningBeforeSpawned?.Invoke(directChildren);
-        Invoke("Spawned", _timeForInvoke);
-    }
+        private float _timeForInvoke = 3f;
 
-    private void Spawned()
-    {
-        ResetEnemies(true);
-        Activated?.Invoke();
-    }
+        public event Action<List<GameObject>> WarningBeforeSpawned;
+        public event Action Activated;
 
-    private void ResetEnemies(bool enabled)
-    {
-        foreach (Transform child in transform)
+        private void Start()
         {
-            if (child != null)
-                child.gameObject.SetActive(enabled);
+            if (_isDisabled)
+                ResetEnemies(false);
         }
-    }
 
-    public List<GameObject> GetDirectChildren(Transform parentTransform)
-    {
-        List<GameObject> children = new List<GameObject>();
-        for (int i = 0; i < parentTransform.childCount; i++)
+        public void Start—ountdown()
         {
-            Transform childTransform = parentTransform.GetChild(i);
-            children.Add(childTransform.gameObject);
+            List<GameObject> directChildren = GetDirectChildren(transform);
+            WarningBeforeSpawned?.Invoke(directChildren);
+            Invoke("Spawned", _timeForInvoke);
         }
-        return children;
+
+        private void Spawned()
+        {
+            ResetEnemies(true);
+            Activated?.Invoke();
+        }
+
+        private void ResetEnemies(bool enabled)
+        {
+            foreach (Transform child in transform)
+            {
+                if (child != null)
+                    child.gameObject.SetActive(enabled);
+            }
+        }
+
+        public List<GameObject> GetDirectChildren(Transform parentTransform)
+        {
+            List<GameObject> children = new List<GameObject>();
+            for (int i = 0; i < parentTransform.childCount; i++)
+            {
+                Transform childTransform = parentTransform.GetChild(i);
+                children.Add(childTransform.gameObject);
+            }
+
+            return children;
+        }
     }
 }

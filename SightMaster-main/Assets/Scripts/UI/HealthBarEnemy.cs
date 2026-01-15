@@ -1,35 +1,39 @@
+using SightMaster.Scripts.Enemy.HealthHandler;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBarEnemy : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private EnemyHealth _health;
-    [SerializeField] private Transform _camera;
-
-    private Slider _slider;
-
-    private void Awake()
+    public class HealthBarEnemy : MonoBehaviour
     {
-        _slider = GetComponent<Slider>();
-    }
+        [SerializeField] private EnemyHealth _health;
+        [SerializeField] private Transform _camera;
 
-    private void OnEnable()
-    {
-        _health.ChangedHealth += OnChangedHealth;
-    }
+        private Slider _slider;
 
-    private void OnDestroy()
-    {
-        _health.ChangedHealth -= OnChangedHealth;
-    }
+        private void Awake()
+        {
+            _slider = GetComponent<Slider>();
+        }
 
-    private void LateUpdate()
-    {
-        transform.LookAt(new Vector3(_camera.position.x,_camera.position.y,_camera.position.z));
-    }
+        private void OnEnable()
+        {
+            _health.ChangedHealth += OnChangedHealth;
+        }
 
-    private void OnChangedHealth(int value)
-    {
-        _slider.value = value;
+        private void OnDestroy()
+        {
+            _health.ChangedHealth -= OnChangedHealth;
+        }
+
+        private void LateUpdate()
+        {
+            transform.LookAt(new Vector3(_camera.position.x, _camera.position.y, _camera.position.z));
+        }
+
+        private void OnChangedHealth(int value)
+        {
+            _slider.value = value;
+        }
     }
 }

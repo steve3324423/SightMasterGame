@@ -1,37 +1,41 @@
 using System;
+using SightMaster.Scripts.Player;
 using UnityEngine;
 
-public class AimButton : MonoBehaviour
+namespace SightMaster.Scripts.UI.Android
 {
-    [SerializeField] private PlayerHealth _playerHealth;
-
-    public bool IsAimed { get; private set; }
-
-    public event Action<bool> Aimed;
-
-    private void OnEnable()
+    public class AimButton : MonoBehaviour
     {
-        _playerHealth.Dead += OnDead;
-    }
+        [SerializeField] private PlayerHealth _playerHealth;
 
-    private void OnDisable()
-    {
-        _playerHealth.Dead -= OnDead;
-    }
+        public event Action<bool> Aimed;
 
-    private void OnDead()
-    {
-        SetIsAimed();
-    }
+        public bool IsAimed { get; private set; }
 
-    public void Aim()
-    {
-        SetIsAimed();
-    }
+        private void OnEnable()
+        {
+            _playerHealth.Dead += OnDead;
+        }
 
-    public void SetIsAimed()
-    {
-        IsAimed = !IsAimed;
-        Aimed?.Invoke(IsAimed);
+        private void OnDisable()
+        {
+            _playerHealth.Dead -= OnDead;
+        }
+
+        private void OnDead()
+        {
+            SetIsAimed();
+        }
+
+        public void Aim()
+        {
+            SetIsAimed();
+        }
+
+        public void SetIsAimed()
+        {
+            IsAimed = !IsAimed;
+            Aimed?.Invoke(IsAimed);
+        }
     }
 }

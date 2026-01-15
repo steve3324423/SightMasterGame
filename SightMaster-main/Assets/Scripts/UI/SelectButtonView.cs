@@ -1,29 +1,32 @@
+using SightMaster.Scripts.Shop;
 using UnityEngine;
-using YG;
 
-public class SelectButtonView : ShopButton
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private BuyButton _buy;
-
-    protected override void OnEnable()
+    public class SelectButtonView : ShopButton
     {
-        base.OnEnable();
-        _buy.Buyed += OnBuyed;
-    }
+        [SerializeField] private BuyButton _buy;
 
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        _buy.Buyed -= OnBuyed;
-    }
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            _buy.Buyed += OnBuyed;
+        }
 
-    protected override void OnWeaponChanged(WeaponToBuy weapon)
-    {
-        SetViewElements(true, true);
-    }
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            _buy.Buyed -= OnBuyed;
+        }
 
-    private void OnBuyed(WeaponToBuy weapon)
-    {
-        SetViewElements(true,true);
+        protected override void OnWeaponChanged(WeaponToBuy weapon)
+        {
+            SetViewElements(true, true);
+        }
+
+        private void OnBuyed(WeaponToBuy weapon)
+        {
+            SetViewElements(true, true);
+        }
     }
 }

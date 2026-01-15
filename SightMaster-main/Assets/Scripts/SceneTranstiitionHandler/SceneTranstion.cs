@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneTranstion : MonoBehaviour
+namespace SightMaster.Scripts.SceneTransition
 {
-    [SerializeField] private string _sceneName;
-
-    public void TransitionToScene()
+    public class SceneTranstion : MonoBehaviour
     {
-        SceneManager.LoadScene(_sceneName);
+        [SerializeField] private string _sceneName;
+
+        public void TransitionToScene()
+        {
+            SceneManager.LoadScene(_sceneName);
+        }
     }
 }

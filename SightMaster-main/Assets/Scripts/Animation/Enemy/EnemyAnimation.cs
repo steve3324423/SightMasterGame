@@ -1,73 +1,79 @@
+using SightMaster.Scripts.Enemy;
+using SightMaster.Scripts.Enemy.HealthHandler;
+using SightMaster.Scripts.FSM;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-public class EnemyAnimation : MonoBehaviour
+namespace SightMaster.Scripts.Animation.Enemy
 {
-    private EnemyHealth _enemyHealth;
-    private DepletionPlayer _depletion;
-    private Animator _animator;
-    private EnemyAI _enemyAI;
-    private FSM _fsm;
-
-    private void Awake()
+    [RequireComponent(typeof(Animator))]
+    public class EnemyAnimation : MonoBehaviour
     {
-        _enemyHealth = GetComponent<EnemyHealth>();
-        _depletion = GetComponent<DepletionPlayer>();
-        _animator = GetComponent<Animator>();
-        _enemyAI = GetComponent<EnemyAI>();
+        private EnemyHealth _enemyHealth;
+        private DepletionPlayer _depletion;
+        private Animator _animator;
+        private EnemyAI _enemyAI;
+        private FSM.FSM _fsm;
 
-        _fsm = new FSM();
-
-        _fsm.AddState(new DeadEnemyAnimationState(_animator,_fsm));
-        _fsm.AddState(new MoveEnemyAnimationState(_animator,_fsm));
-        _fsm.AddState(new IdleEnemyAnimationState(_animator,_fsm));
-        _fsm.AddState(new SitEnemyAnimationState(_animator,_fsm));
-        _fsm.AddState(new AttackEnemyAnimationState(_animator,_fsm));
-
-        _fsm.SetState<IdleEnemyAnimationState>();
-    }
-
-    private void OnEnable()
-    {
-        if(_enemyAI)
+        private void Awake()
         {
-            _enemyAI.ReachedShelter += OnReachedShelter;
-            _depletion.Scared += OnScared;
+            _enemyHealth = GetComponent<EnemyHealth>();
+            _depletion = GetComponent<DepletionPlayer>();
+            _animator = GetComponent<Animator>();
+            _enemyAI = GetComponent<EnemyAI>();
+
+            _fsm = new FSM.FSM();
+
+            _fsm.AddState(new DeadEnemyAnimationState(_animator, _fsm));
+            _fsm.AddState(new MoveEnemyAnimationState(_animator, _fsm));
+            _fsm.AddState(new IdleEnemyAnimationState(_animator, _fsm));
+            _fsm.AddState(new SitEnemyAnimationState(_animator, _fsm));
+            _fsm.AddState(new AttackEnemyAnimationState(_animator, _fsm));
+
+            _fsm.SetState<IdleEnemyAnimationState>();
         }
 
-        _depletion.Depleted += OnDepleted;
-        _enemyHealth.Dead += OnDead;
-    }
-
-    private void OnDisable()
-    {
-        if (_enemyAI)
+        private void OnEnable()
         {
-            _enemyAI.ReachedShelter -= OnReachedShelter;
-            _depletion.Scared -= OnScared;
+            if (_enemyAI)
+            {
+                _enemyAI.ReachedShelter += OnReachedShelter;
+                _depletion.Scared += OnScared;
+            }
+
+            _depletion.Depleted += OnDepleted;
+            _enemyHealth.Dead += OnDead;
         }
 
-        _depletion.Depleted -= OnDepleted;
-        _enemyHealth.Dead -= OnDead;
-    }
+        private void OnDisable()
+        {
+            if (_enemyAI)
+            {
+                _enemyAI.ReachedShelter -= OnReachedShelter;
+                _depletion.Scared -= OnScared;
+            }
 
-    private void OnDepleted()
-    {
-        _fsm.SetState<AttackEnemyAnimationState>();
-    }
+            _depletion.Depleted -= OnDepleted;
+            _enemyHealth.Dead -= OnDead;
+        }
 
-    private void OnReachedShelter()
-    {
-        _fsm.SetState<SitEnemyAnimationState>();
-    }
+        private void OnDepleted()
+        {
+            _fsm.SetState<AttackEnemyAnimationState>();
+        }
 
-    private void OnScared()
-    {
-        _fsm.SetState<MoveEnemyAnimationState>();
-    }
+        private void OnReachedShelter()
+        {
+            _fsm.SetState<SitEnemyAnimationState>();
+        }
 
-    private void OnDead()
-    {
-        _fsm.SetState<DeadEnemyAnimationState>();
+        private void OnScared()
+        {
+            _fsm.SetState<MoveEnemyAnimationState>();
+        }
+
+        private void OnDead()
+        {
+            _fsm.SetState<DeadEnemyAnimationState>();
+        }
     }
 }

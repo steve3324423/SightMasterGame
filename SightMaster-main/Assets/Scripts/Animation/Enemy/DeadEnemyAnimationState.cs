@@ -1,8 +1,13 @@
+using SightMaster.Scripts.FSM;
 using UnityEngine;
 
-public class DeadEnemyAnimationState : EnemyAnimationState
+namespace SightMaster.Scripts.Animation.Enemy
 {
-    private const string Death = "Death";
+    public class DeadEnemyAnimationState : EnemyAnimationState
+    {
+        private const string Death = "Death";
 
-    public DeadEnemyAnimationState(Animator animator, FSM fsm) : base(animator, Death, fsm) { }
+        public DeadEnemyAnimationState(Animator animator, FSM.FSM fsm)
+            : base(animator, Death, fsm) { }
+    }
 }

@@ -1,44 +1,48 @@
+using SightMaster.Scripts.Player;
 using UnityEngine;
 using YG;
 
-public class GameplayTime : MonoBehaviour
+namespace SightMaster.Scripts.LevelHandler
 {
-    private const string NameLeaderboard = "Leadboard";
-
-    [SerializeField] private PlayerHealth _playerHealth;
-    [SerializeField] private LevelEnder _levelEnder;
-
-    private bool _isGameStopped;
-
-    public float TimeGame { get; private set; } = 0;
-
-    private void OnEnable()
+    public class GameplayTime : MonoBehaviour
     {
-        _levelEnder.Wined += OnWined;
-        _playerHealth.Dead += OnDead;
-    }
+        private const string NameLeaderboard = "Leadboard";
 
-    private void OnDisable()
-    {
-        _levelEnder.Wined -= OnWined;
-        _playerHealth.Dead -= OnDead;
-    }
+        [SerializeField] private PlayerHealth _playerHealth;
+        [SerializeField] private LevelEnder _levelEnder;
 
-    private void Update()
-    {
-        if (_isGameStopped == false)
-            TimeGame += Time.deltaTime;
-    }
+        private bool _isGameStopped;
 
-    private void OnWined()
-    {
-        _isGameStopped = true;
-        YandexGame.savesData.TimeLevel = TimeGame;
-        YandexGame.NewLBScoreTimeConvert(NameLeaderboard,YandexGame.savesData.TimeLevel + TimeGame);
-    }
+        public float TimeGame { get; private set; } = 0;
 
-    private void OnDead()
-    {
-        _isGameStopped = false;
+        private void OnEnable()
+        {
+            _levelEnder.Wined += OnWined;
+            _playerHealth.Dead += OnDead;
+        }
+
+        private void OnDisable()
+        {
+            _levelEnder.Wined -= OnWined;
+            _playerHealth.Dead -= OnDead;
+        }
+
+        private void Update()
+        {
+            if (_isGameStopped == false)
+                TimeGame += Time.deltaTime;
+        }
+
+        private void OnWined()
+        {
+            _isGameStopped = true;
+            YandexGame.savesData.TimeLevel = TimeGame;
+            YandexGame.NewLBScoreTimeConvert(NameLeaderboard, YandexGame.savesData.TimeLevel + TimeGame);
+        }
+
+        private void OnDead()
+        {
+            _isGameStopped = false;
+        }
     }
 }

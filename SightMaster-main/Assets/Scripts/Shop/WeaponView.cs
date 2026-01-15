@@ -2,45 +2,48 @@ using System;
 using UnityEngine;
 using YG;
 
-public class WeaponView : MonoBehaviour
+namespace SightMaster.Scripts.Shop
 {
-    [SerializeField] private WeaponToBuy[] _weapons;
-    [SerializeField] private WeaponChange[] _weaponsIndex;
-
-    private WeaponToBuy _currentWeapon;
-
-    public event Action<WeaponToBuy> WeaponChanged;
-
-    private void Start()
+    public class WeaponView : MonoBehaviour
     {
-        GetSavesData();
-    }
+        [SerializeField] private WeaponToBuy[] _weapons;
+        [SerializeField] private WeaponChange[] _weaponsIndex;
 
-    private void OnEnable()
-    {
-        foreach(WeaponChange weaponIndex in _weaponsIndex)
-            weaponIndex.IndexChanged += OnIndexChanged;
-    }
+        private WeaponToBuy _currentWeapon;
 
-    private void OnDisable()
-    {
-        foreach (WeaponChange weaponIndex in _weaponsIndex)
-            weaponIndex.IndexChanged -= OnIndexChanged;
-    }
+        public event Action<WeaponToBuy> WeaponChanged;
 
-    private void OnIndexChanged(int index)
-    {
-        if(_currentWeapon != null)
-            _currentWeapon.gameObject.SetActive(false);
+        private void Start()
+        {
+            GetSavesData();
+        }
 
-        _currentWeapon =  _weapons[index];
-        _currentWeapon.gameObject.SetActive(true);
-        WeaponChanged?.Invoke(_currentWeapon);
-    }
+        private void OnEnable()
+        {
+            foreach (WeaponChange weaponIndex in _weaponsIndex)
+                weaponIndex.IndexChanged += OnIndexChanged;
+        }
 
-    private void GetSavesData()
-    {
-        int index = YG2.saves.idWeaponSelect - 1;
-        OnIndexChanged(index);
+        private void OnDisable()
+        {
+            foreach (WeaponChange weaponIndex in _weaponsIndex)
+                weaponIndex.IndexChanged -= OnIndexChanged;
+        }
+
+        private void OnIndexChanged(int index)
+        {
+            if (_currentWeapon != null)
+                _currentWeapon.gameObject.SetActive(false);
+
+            _currentWeapon = _weapons[index];
+            _currentWeapon.gameObject.SetActive(true);
+            WeaponChanged?.Invoke(_currentWeapon);
+        }
+
+        private void GetSavesData()
+        {
+            int index = YG2.saves.idWeaponSelect - 1;
+            OnIndexChanged(index);
+        }
     }
 }

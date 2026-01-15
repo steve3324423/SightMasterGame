@@ -1,32 +1,36 @@
-using UnityEngine;
 using TMPro;
+using SightMaster.Scripts.InGameCurrency;
+using UnityEngine;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class RewardView : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private LevelCompleteReward _reward;
-
-    private float _timeForInvoke = 1f;
-    private TextMeshProUGUI _text;
-
-    private void Awake()
+    [RequireComponent(typeof(TextMeshProUGUI))]
+    public class RewardView : MonoBehaviour
     {
-        _text = GetComponent<TextMeshProUGUI>();
-    }
+        [SerializeField] private LevelCompleteReward _reward;
 
-    private void OnEnable()
-    {
-        _text.text = $"{_reward.RewardAmount}$";
-        _reward.ChangeReward += OnChangeReward;
-    }
+        private float _timeForInvoke = 1f;
+        private TextMeshProUGUI _text;
 
-    private void OnDisable()
-    {
-        _reward.ChangeReward -= OnChangeReward;
-    }
+        private void Awake()
+        {
+            _text = GetComponent<TextMeshProUGUI>();
+        }
 
-    private void OnChangeReward()
-    {
-        _text.text = $"{_reward.RewardAmount}$";
+        private void OnEnable()
+        {
+            _text.text = $"{_reward.RewardAmount}$";
+            _reward.ChangeReward += OnChangeReward;
+        }
+
+        private void OnDisable()
+        {
+            _reward.ChangeReward -= OnChangeReward;
+        }
+
+        private void OnChangeReward()
+        {
+            _text.text = $"{_reward.RewardAmount}$";
+        }
     }
 }

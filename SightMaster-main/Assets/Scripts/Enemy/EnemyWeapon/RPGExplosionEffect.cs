@@ -1,30 +1,34 @@
+using SightMaster.Scripts.Camera;
 using UnityEngine;
 
-public class RPGExplosionEffect : MonoBehaviour
+namespace SightMaster.Scripts.Enemy.EnemyWeapon
 {
-    [SerializeField] private CameraAim _cameraAim;
-    [SerializeField] private EnemyWeapon _weapon;
-
-    private ParticleSystem _particleSystem;
-
-    private void Awake()
-    { 
-        _particleSystem = GetComponent<ParticleSystem>();
-    }
-
-    private void OnEnable()
+    public class RPGExplosionEffect : MonoBehaviour
     {
-        _weapon.Shooted += OnShooted;
-    }
+        [SerializeField] private CameraAim _cameraAim;
+        [SerializeField] private EnemyWeapon _weapon;
 
-    private void OnDisable()
-    {
-        _weapon.Shooted -= OnShooted;
-    }
+        private ParticleSystem _particleSystem;
 
-    private void OnShooted(int value)
-    {
-        transform.position = _cameraAim.transform.position;
-        _particleSystem.Play();
+        private void Awake()
+        {
+            _particleSystem = GetComponent<ParticleSystem>();
+        }
+
+        private void OnEnable()
+        {
+            _weapon.Shooted += OnShooted;
+        }
+
+        private void OnDisable()
+        {
+            _weapon.Shooted -= OnShooted;
+        }
+
+        private void OnShooted(int value)
+        {
+            transform.position = _cameraAim.transform.position;
+            _particleSystem.Play();
+        }
     }
 }

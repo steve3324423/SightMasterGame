@@ -1,29 +1,32 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-public class SoundFirstAidKit : MonoBehaviour
+namespace SightMaster.Scripts.FirstAidKit
 {
-    [SerializeField] private FirstAidKit _firstAidKit;
-
-    private AudioSource _audioSource;
-
-    private void Awake()
+    [RequireComponent(typeof(AudioSource))]
+    public class SoundFirstAidKit : MonoBehaviour
     {
-        _audioSource = GetComponent<AudioSource>();
-    }
+        [SerializeField] private FirstAidKit _firstAidKit;
 
-    private void OnEnable()
-    {
-        _firstAidKit.Taked += OnTaked;
-    }
+        private AudioSource _audioSource;
 
-    private void OnDestroy()
-    {
-        _firstAidKit.Taked -= OnTaked;
-    }
+        private void Awake()
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
 
-    private void OnTaked()
-    {
-        _audioSource.Play();
+        private void OnEnable()
+        {
+            _firstAidKit.Taked += OnTaked;
+        }
+
+        private void OnDestroy()
+        {
+            _firstAidKit.Taked -= OnTaked;
+        }
+
+        private void OnTaked()
+        {
+            _audioSource.Play();
+        }
     }
 }

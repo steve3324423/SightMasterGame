@@ -1,21 +1,24 @@
 using UnityEngine;
 
-public class EducaionText : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    private const string MethodName = "Disable";
-
-    [SerializeField] private float _timeForInvoke = 5f;
-
-    private void Awake()
+    public class EducaionText : MonoBehaviour
     {
-        if(Application.isMobilePlatform)
-            Disable();
+        private const string MethodName = "Disable";
 
-        Invoke(MethodName, _timeForInvoke);
-    }
+        [SerializeField] private float _timeForInvoke = 5f;
 
-    private void Disable()
-    {
-        gameObject.SetActive(false);
+        private void Awake()
+        {
+            if (Application.isMobilePlatform)
+                Disable();
+
+            Invoke(MethodName, _timeForInvoke);
+        }
+
+        private void Disable()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

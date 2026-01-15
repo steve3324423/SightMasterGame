@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface IDamageObject 
+namespace SightMaster.Scripts.DamageObject
 {
-    void TakeDamage(int damage);
+    public interface IDamageObject
+    {
+        void TakeDamage(int damage);
+    }
 }

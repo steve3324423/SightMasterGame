@@ -2,17 +2,20 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UITouchControl : MonoBehaviour, IBeginDragHandler, IEndDragHandler
+namespace SightMaster.Scripts.UI
 {
-    public event Action<bool> Touched;
-
-    public void OnBeginDrag(PointerEventData eventData)
+    public class UITouchControl : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     {
-        Touched?.Invoke(true);
-    }
+        public event Action<bool> Touched;
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        Touched?.Invoke(false);
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            Touched?.Invoke(true);
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            Touched?.Invoke(false);
+        }
     }
 }

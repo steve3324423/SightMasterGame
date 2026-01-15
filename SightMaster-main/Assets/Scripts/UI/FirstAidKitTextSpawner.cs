@@ -1,39 +1,43 @@
-using UnityEngine;
 using TMPro;
+using SightMaster.Scripts.FirstAidKit;
+using UnityEngine;
 
-public class FirstAidKitTextSpawner : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private FirstAidKit[] _firstAidKits;
-
-    private TextMeshProUGUI _text;
-    private float _timeForInvoke = 5f;
-
-    private void Awake()
+    public class FirstAidKitTextSpawner : MonoBehaviour
     {
-        _text = GetComponent<TextMeshProUGUI>();
-        _text.enabled = false;
-    }
+        [SerializeField] private FirstAidKit.FirstAidKit[] _firstAidKits;
 
-    private void OnEnable()
-    {
-        foreach (FirstAidKit firstAidKit in _firstAidKits)
-            firstAidKit.Spawned += OnSpawned;
-    }
+        private TextMeshProUGUI _text;
+        private float _timeForInvoke = 5f;
 
-    private void OnDisable()
-    {
-        foreach (FirstAidKit firstAidKit in _firstAidKits)
-            firstAidKit.Spawned -= OnSpawned;
-    }
+        private void Awake()
+        {
+            _text = GetComponent<TextMeshProUGUI>();
+            _text.enabled = false;
+        }
 
-    private void OnSpawned()
-    {
-        _text.enabled = true;
-        Invoke("DisabledText", _timeForInvoke);
-    }
+        private void OnEnable()
+        {
+            foreach (FirstAidKit.FirstAidKit firstAidKit in _firstAidKits)
+                firstAidKit.Spawned += OnSpawned;
+        }
 
-    private void DisabledText()
-    {
-        _text.enabled = false;
+        private void OnDisable()
+        {
+            foreach (FirstAidKit.FirstAidKit firstAidKit in _firstAidKits)
+                firstAidKit.Spawned -= OnSpawned;
+        }
+
+        private void OnSpawned()
+        {
+            _text.enabled = true;
+            Invoke("DisabledText", _timeForInvoke);
+        }
+
+        private void DisabledText()
+        {
+            _text.enabled = false;
+        }
     }
 }

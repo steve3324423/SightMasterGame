@@ -1,32 +1,35 @@
 using UnityEngine;
 
-public class HitBoxSizeMobile : MonoBehaviour
+namespace SightMaster.Scripts.Enemy
 {
-    private float _valueIncrease = 1.35f;
-    private Collider _collider;
-
-    private void Awake()
+    public class HitBoxSizeMobile : MonoBehaviour
     {
-        _collider = GetComponent<Collider>();
-    }
+        private float _valueIncrease = 1.35f;
+        private Collider _collider;
 
-    private void OnEnable()
-    {
-        ResizeTheCollider();
-    }
-
-    private void ResizeTheCollider()
-    {
-        if(Application.isMobilePlatform)
+        private void Awake()
         {
-            if (_collider is BoxCollider)
+            _collider = GetComponent<Collider>();
+        }
+
+        private void OnEnable()
+        {
+            ResizeTheCollider();
+        }
+
+        private void ResizeTheCollider()
+        {
+            if (Application.isMobilePlatform)
             {
-                ((BoxCollider)_collider).size *= _valueIncrease;
-            }
-            else if (_collider is CapsuleCollider)
-            {
-                CapsuleCollider capsuleCollider = (CapsuleCollider)_collider;
-                capsuleCollider.radius *= _valueIncrease;
+                if (_collider is BoxCollider)
+                {
+                    ((BoxCollider)_collider).size *= _valueIncrease;
+                }
+                else if (_collider is CapsuleCollider)
+                {
+                    CapsuleCollider capsuleCollider = (CapsuleCollider)_collider;
+                    capsuleCollider.radius *= _valueIncrease;
+                }
             }
         }
     }

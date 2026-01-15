@@ -1,15 +1,18 @@
 using UnityEngine;
 
-public class WindmillRotationScript : MonoBehaviour
+namespace SightMaster.Scripts.Enviroment
 {
-    private float _baseRotationSpeed = 30f;
-    private float _windSpeedInfluence = 0.5f;
-    private float _currentWindSpeed = 0f;
-    private Vector3 _rotationAxis = Vector3.forward;
-
-    private void Update()
+    public class WindmillRotation : MonoBehaviour
     {
-        float rotationSpeed = _baseRotationSpeed + (_currentWindSpeed * _windSpeedInfluence);
-        transform.Rotate(_rotationAxis * rotationSpeed * Time.deltaTime);
+        private float _baseRotationSpeed = 30f;
+        private float _windSpeedInfluence = 0.5f;
+        private float _currentWindSpeed = 0f;
+        private Vector3 _rotationAxis = Vector3.forward;
+
+        private void Update()
+        {
+            float rotationSpeed = _baseRotationSpeed + (_currentWindSpeed * _windSpeedInfluence);
+            transform.Rotate(_rotationAxis * rotationSpeed * Time.deltaTime);
+        }
     }
 }

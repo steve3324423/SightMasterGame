@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class MeshRendererHandler : MeshHandler
+namespace SightMaster.Scripts.Player
 {
-    private MeshRenderer _meshRenderer;
-
-    private void Awake()
+    public class MeshRendererHandler : MeshHandler
     {
-        _meshRenderer = GetComponent<MeshRenderer>();
-    }
+        private MeshRenderer _meshRenderer;
 
-    protected override void OnAimed(bool isAimed)
-    {
-        _meshRenderer.enabled = !isAimed;
+        private void Awake()
+        {
+            _meshRenderer = GetComponent<MeshRenderer>();
+        }
+
+        protected override void OnAimed(bool isAimed)
+        {
+            _meshRenderer.enabled = !isAimed;
+        }
     }
 }

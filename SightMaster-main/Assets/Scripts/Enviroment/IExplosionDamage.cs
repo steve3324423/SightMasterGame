@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface IExplosionDamage
+namespace SightMaster.Scripts.Enviroment
 {
-    void TakeExplosion();
+    public interface IExplosionDamage
+    {
+        void TakeExplosion();
+    }
 }

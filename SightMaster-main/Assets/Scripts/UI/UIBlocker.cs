@@ -1,17 +1,20 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIBlocker : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+namespace SightMaster.Scripts.UI
 {
-    public bool IsUIBeingTouched { get; private set; }
-
-    public void OnPointerDown(PointerEventData eventData)
+    public class UIBlocker : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        IsUIBeingTouched = true;
-    }
+        public bool IsUIBeingTouched { get; private set; }
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        IsUIBeingTouched = false;
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            IsUIBeingTouched = true;
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            IsUIBeingTouched = false;
+        }
     }
 }

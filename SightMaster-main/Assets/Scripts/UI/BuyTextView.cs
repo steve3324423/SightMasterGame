@@ -1,45 +1,50 @@
-using UnityEngine;
 using TMPro;
+using SightMaster.Scripts.Shop;
+using UnityEngine;
 using YG;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class BuyTextView : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private WeaponView _weaponView;
-    [SerializeField] private BuyButton _buyButton;
-
-    private TextMeshProUGUI _text;
-
-    private void Awake()
+    [RequireComponent(typeof(TextMeshProUGUI))]
+    public class BuyTextView : MonoBehaviour
     {
-        _text = GetComponent<TextMeshProUGUI>();
-    }
+        [SerializeField] private WeaponView _weaponView;
+        [SerializeField] private BuyButton _buyButton;
 
-    private void OnEnable()
-    {
-        _weaponView.WeaponChanged += OnWeaponChanged;
-        _buyButton.Buyed += OnBuyed;
-    }
+        private TextMeshProUGUI _text;
 
-    private void OnDisable()
-    {
-        _weaponView.WeaponChanged -= OnWeaponChanged;
-        _buyButton.Buyed += OnBuyed;
-    }
-
-    private void OnBuyed(WeaponToBuy weapon)
-    {
-        _text.enabled = false;
-    }
-
-    private void OnWeaponChanged(WeaponToBuy weapon)
-    {
-        _text.enabled = true;
-
-        foreach (int id in YandexGame.savesData.idWeaponBuy)
+        private void Awake()
         {
-            if (id == weapon.GetId())
-                _text.enabled = false;
+            _text = GetComponent<TextMeshProUGUI>();
+        }
+
+        private void OnEnable()
+        {
+            _weaponView.WeaponChanged += OnWeaponChanged;
+            _buyButton.Buyed += OnBuyed;
+        }
+
+        private void OnDisable()
+        {
+            _weaponView.WeaponChanged -= OnWeaponChanged;
+            _buyButton.Buyed += OnBuyed;
+        }
+
+        private void OnBuyed(WeaponToBuy weapon)
+        {
+            _text.enabled = false;
+        }
+
+        private void OnWeaponChanged(WeaponToBuy weapon)
+        {
+            _text.enabled = true;
+
+            foreach (int id in YandexGame.savesData.idWeaponBuy)
+            {
+                if (id == weapon.GetId())
+                    _text.enabled = false;
+            }
         }
     }
 }
+

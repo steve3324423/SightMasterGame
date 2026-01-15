@@ -1,30 +1,34 @@
 using UnityEngine;
 
-public class WaveDirector : MonoBehaviour
+namespace SightMaster.Scripts.Enemy
 {
-    [SerializeField] private WaveDestroyHandler[] _waveDestroyHandlers;
-    [SerializeField] private WaveSpawned[] _waveSpawneds;
-
-    private int _index;
-
-    private void OnEnable()
+    public class WaveDirector : MonoBehaviour
     {
-        foreach (WaveDestroyHandler waveDestroyHandler in _waveDestroyHandlers)
-            waveDestroyHandler.Destroyed += OnDestroyed;
-    }
+        [SerializeField] private WaveDestroyHandler[] _waveDestroyHandlers;
+        [SerializeField] private WaveSpawned[] _waveSpawneds;
 
-    private void OnDisable()
-    {
-        foreach (WaveDestroyHandler waveDestroyHandler in _waveDestroyHandlers)
-            waveDestroyHandler.Destroyed -= OnDestroyed;
-    }
+        private int _index;
 
-    private void OnDestroyed()
-    {
-        if (_index == _waveSpawneds.Length - 1)
-            return;
+        private void OnEnable()
+        {
+            foreach (WaveDestroyHandler waveDestroyHandler in _waveDestroyHandlers)
+                waveDestroyHandler.Destroyed += OnDestroyed;
+        }
 
-        _index++;
-        _waveSpawneds[_index].Start—ountdown();
+        private void OnDisable()
+        {
+            foreach (WaveDestroyHandler waveDestroyHandler in _waveDestroyHandlers)
+                waveDestroyHandler.Destroyed -= OnDestroyed;
+        }
+
+        private void OnDestroyed()
+        {
+            if (_index == _waveSpawneds.Length - 1)
+                return;
+
+            _index++;
+            _waveSpawneds[_index].Start—ountdown();
+        }
     }
 }
+

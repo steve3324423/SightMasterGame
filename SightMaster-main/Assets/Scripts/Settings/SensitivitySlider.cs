@@ -2,35 +2,38 @@ using UnityEngine;
 using UnityEngine.UI;
 using YG;
 
-public class SensitivitySlider : MonoBehaviour
+namespace SightMaster.Scripts.Setting
 {
-    [SerializeField] private float _mobileValue = 15f;
-    [SerializeField] private float _maxValue = 5f;
-
-    private bool _isMobile = Application.isMobilePlatform;
-    private Slider _slider;
-
-    private void Awake()
+    public class SensitivitySlider : MonoBehaviour
     {
-        _slider = GetComponent<Slider>();
-    }
+        [SerializeField] private float _mobileValue = 15f;
+        [SerializeField] private float _maxValue = 5f;
 
-    private void OnEnable()
-    {
-        _slider.maxValue = _isMobile ? _maxValue * _mobileValue : _maxValue;
-        _slider.value = _isMobile ? YG2.saves.sensitivity * _mobileValue : YG2.saves.sensitivity;
-    }
+        private bool _isMobile = Application.isMobilePlatform;
+        private Slider _slider;
 
-    public void ChangeValue()
-    {
-        if (_isMobile)
+        private void Awake()
         {
-            float factor = Mathf.Approximately(_mobileValue, 0f) ? 1f : _mobileValue;
-            YG2.saves.sensitivity = Mathf.Clamp(_slider.value / factor, 0f, _maxValue);
-        }   
-        else
+            _slider = GetComponent<Slider>();
+        }
+
+        private void OnEnable()
         {
-            YG2.saves.sensitivity = Mathf.Clamp(_slider.value, 0f, _maxValue);
+            _slider.maxValue = _isMobile ? _maxValue * _mobileValue : _maxValue;
+            _slider.value = _isMobile ? YG2.saves.sensitivity * _mobileValue : YG2.saves.sensitivity;
+        }
+
+        public void ChangeValue()
+        {
+            if (_isMobile)
+            {
+                float factor = Mathf.Approximately(_mobileValue, 0f) ? 1f : _mobileValue;
+                YG2.saves.sensitivity = Mathf.Clamp(_slider.value / factor, 0f, _maxValue);
+            }
+            else
+            {
+                YG2.saves.sensitivity = Mathf.Clamp(_slider.value, 0f, _maxValue);
+            }
         }
     }
 }

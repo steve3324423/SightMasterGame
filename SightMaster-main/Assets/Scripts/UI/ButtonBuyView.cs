@@ -1,48 +1,52 @@
+using SightMaster.Scripts.Shop;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
 
-[RequireComponent(typeof(BuyButton))]
-public class ButtonBuyView : ShopButton
+namespace SightMaster.Scripts.UI
 {
-    private BuyButton _buyButton;
-
-    protected override void Awake()
+    [RequireComponent(typeof(BuyButton))]
+    public class ButtonBuyView : ShopButton
     {
-        base.Awake();
-        _buyButton = GetComponent<BuyButton>();
-    }
+        private BuyButton _buyButton;
 
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        _buyButton.Buyed += OnBuyed;
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        _buyButton.Buyed -= OnBuyed;
-    }
-
-    protected override void OnWeaponChanged(WeaponToBuy weapon)
-    {
-        foreach(int id in YandexGame.savesData.idWeaponBuy)
+        protected override void Awake()
         {
-            SetViewElements(true, true);
-
-            if (weapon.GetId() == id)
-            {
-                SetViewElements(false, false);
-                break;
-            }    
+            base.Awake();
+            _buyButton = GetComponent<BuyButton>();
         }
 
-        Button.interactable = weapon.GetPrice() <= YandexGame.savesData.money;
-    }
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            _buyButton.Buyed += OnBuyed;
+        }
 
-    private void OnBuyed(WeaponToBuy weapon)
-    {
-        SetViewElements(false,false);
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            _buyButton.Buyed -= OnBuyed;
+        }
+
+        protected override void OnWeaponChanged(WeaponToBuy weapon)
+        {
+            foreach (int id in YandexGame.savesData.idWeaponBuy)
+            {
+                SetViewElements(true, true);
+
+                if (weapon.GetId() == id)
+                {
+                    SetViewElements(false, false);
+                    break;
+                }
+            }
+
+            Button.interactable = weapon.GetPrice() <= YandexGame.savesData.money;
+        }
+
+        private void OnBuyed(WeaponToBuy weapon)
+        {
+            SetViewElements(false, false);
+        }
     }
 }

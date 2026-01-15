@@ -1,32 +1,36 @@
-using UnityEngine;
 using TMPro;
+using SightMaster.Scripts.Shop;
 using YG;
+using UnityEngine;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class MoneyShopView : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private BuyButton _buyButton;
-
-    private TextMeshProUGUI _text;
-
-    private void Awake()
+    [RequireComponent(typeof(TextMeshProUGUI))]
+    public class MoneyShopView : MonoBehaviour
     {
-        _text = GetComponent<TextMeshProUGUI>();
-        _text.text = $"{YG2.saves.money}";
-    }
+        [SerializeField] private BuyButton _buyButton;
 
-    private void OnEnable()
-    {
-        _buyButton.Buyed += OnBuyed;
-    }
+        private TextMeshProUGUI _text;
 
-    private void OnDisable()
-    {
-        _buyButton.Buyed -= OnBuyed;
-    }
+        private void Awake()
+        {
+            _text = GetComponent<TextMeshProUGUI>();
+            _text.text = $"{YG2.saves.money}";
+        }
 
-    private void OnBuyed(WeaponToBuy weapon)
-    {
-        _text.text = $"{YG2.saves.money}";
+        private void OnEnable()
+        {
+            _buyButton.Buyed += OnBuyed;
+        }
+
+        private void OnDisable()
+        {
+            _buyButton.Buyed -= OnBuyed;
+        }
+
+        private void OnBuyed(WeaponToBuy weapon)
+        {
+            _text.text = $"{YG2.saves.money}";
+        }
     }
 }

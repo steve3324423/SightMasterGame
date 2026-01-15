@@ -1,139 +1,146 @@
+using SightMaster.Scripts.Camera;
+using SightMaster.Scripts.LevelHandler;
+using SightMaster.Scripts.HandlerPause;
+using SightMaster.Scripts.UI;
 using UnityEngine;
 using Zenject;
 
-public class PlayerCameraController : MonoBehaviour
+namespace SightMaster.Scripts.Player
 {
-    [Header("References")]
-    [SerializeField] private Transform _player;          
-    [SerializeField] private Transform _cameraTransform;
-
-    [Header("Third Person Settings")]
-    [SerializeField] private float _thirdPersonDistance = 3f;
-    [SerializeField] private float _cameraCollisionRadius = 0.2f;
-    [SerializeField] private LayerMask _cameraCollisionMask;
-
-    [Header("First Person Settings")]
-    [SerializeField] private Vector3 _firstPersonOffset = new Vector3(0f, 1.7f, 0f);
-
-    [Header("Mode")]
-    [SerializeField] private bool _isFirstPerson = false;
-
-    [SerializeField] private SettingPanelHandler _settingPanelHandler;
-    [SerializeField] private PauseHandler _pauseHandler;
-    [SerializeField] private LevelEnder _levelEnder;
-    [SerializeField] private PlayerHealth _playerHealth;
-
-    private CameraFollowBullet _cameraFollowBullet;
-    private bool _isCanRotate = true;
-    private IInput _desktopInput;
-
-    [Inject]
-    public void Construct(IInput input)
+    public class PlayerCameraController : MonoBehaviour
     {
-        _desktopInput = input;
-    }
+        [Header("References")]
+        [SerializeField] private Transform _player;
+        [SerializeField] private Transform _cameraTransform;
 
-    private void Awake()
-    {
-        _cameraFollowBullet = GetComponent<CameraFollowBullet>();
-    }
+        [Header("Third Person Settings")]
+        [SerializeField] private float _thirdPersonDistance = 3f;
+        [SerializeField] private float _cameraCollisionRadius = 0.2f;
+        [SerializeField] private LayerMask _cameraCollisionMask;
 
-    private void OnEnable()
-    {
-        _cameraFollowBullet.Followed += OnFollowed;
-        _settingPanelHandler.Toggled += OnToggled;
-        _pauseHandler.Paused += OnPaused;
-        _playerHealth.Dead += OnDead;
-        _levelEnder.Wined += OnWined;
-    }
+        [Header("First Person Settings")]
+        [SerializeField] private Vector3 _firstPersonOffset = new Vector3(0f, 1.7f, 0f);
 
-    private void OnDisable()
-    {
-        _cameraFollowBullet.Followed -= OnFollowed;
-        _settingPanelHandler.Toggled -= OnToggled;
-        _pauseHandler.Paused -= OnPaused;
-        _playerHealth.Dead -= OnDead;
-        _levelEnder.Wined -= OnWined;
-    }
+        [Header("Mode")]
+        [SerializeField] private bool _isFirstPerson = false;
 
-    private void LateUpdate()
-    {
-        if (_player == null || _cameraTransform == null || _desktopInput == null)
-            return;
+        [SerializeField] private SettingPanelHandler _settingPanelHandler;
+        [SerializeField] private PauseHandler _pauseHandler;
+        [SerializeField] private LevelEnder _levelEnder;
+        [SerializeField] private PlayerHealth _playerHealth;
 
-        Quaternion cameraRotation = _desktopInput.GetCameraRotation();
+        private CameraFollowBullet _cameraFollowBullet;
+        private bool _isCanRotate = true;
+        private IInput _desktopInput;
 
-        if (_isFirstPerson && _isCanRotate)
-            UpdateFirstPerson(cameraRotation);
-        else if(_isCanRotate)
-            UpdateThirdPerson(cameraRotation);
-    }
-
-    private void UpdateFirstPerson(Quaternion cameraRotation)
-    {
-        _cameraTransform.rotation = cameraRotation;
-        Vector3 targetPos = _player.position + _player.TransformVector(_firstPersonOffset);
-        _cameraTransform.position = targetPos;
-    }
-
-    private void UpdateThirdPerson(Quaternion cameraRotation)
-    {
-        _cameraTransform.rotation = cameraRotation;
-
-        Vector3 pivot = _player.position + _player.TransformVector(_firstPersonOffset);
-        Vector3 desiredCameraPos = pivot -  _cameraTransform.forward * _thirdPersonDistance;
-        RaycastHit hit;
-
-        if (Physics.SphereCast(
-            pivot,
-            _cameraCollisionRadius,
-            (desiredCameraPos - pivot).normalized,
-            out hit,
-            _thirdPersonDistance,
-            _cameraCollisionMask,
-            QueryTriggerInteraction.Ignore))
+        [Inject]
+        public void Construct(IInput input)
         {
-            float distance = hit.distance;
-            desiredCameraPos = pivot + (desiredCameraPos - pivot).normalized * (distance - 0.05f);
+            _desktopInput = input;
         }
 
-        _cameraTransform.position = desiredCameraPos;
-    }
+        private void Awake()
+        {
+            _cameraFollowBullet = GetComponent<CameraFollowBullet>();
+        }
 
-    private void OnFollowed(bool isFollwed)
-    {
-        _isCanRotate = !isFollwed;
-    }
+        private void OnEnable()
+        {
+            _cameraFollowBullet.Followed += OnFollowed;
+            _settingPanelHandler.Toggled += OnToggled;
+            _pauseHandler.Paused += OnPaused;
+            _playerHealth.Dead += OnDead;
+            _levelEnder.Wined += OnWined;
+        }
 
-    private void OnToggled(bool isToggled)
-    {
-        _isCanRotate = !isToggled;
-    }
+        private void OnDisable()
+        {
+            _cameraFollowBullet.Followed -= OnFollowed;
+            _settingPanelHandler.Toggled -= OnToggled;
+            _pauseHandler.Paused -= OnPaused;
+            _playerHealth.Dead -= OnDead;
+            _levelEnder.Wined -= OnWined;
+        }
 
-    private void OnWined()
-    {
-        _isCanRotate = false;
-    }
+        private void LateUpdate()
+        {
+            if (_player == null || _cameraTransform == null || _desktopInput == null)
+                return;
 
-    private void OnPaused(bool isPaused)
-    {
-        _isCanRotate = !isPaused;
-    }
+            Quaternion cameraRotation = _desktopInput.GetCameraRotation();
 
-    private void OnDead()
-    {
-        _isCanRotate = false;
-    }
+            if (_isFirstPerson && _isCanRotate)
+                UpdateFirstPerson(cameraRotation);
+            else if (_isCanRotate)
+                UpdateThirdPerson(cameraRotation);
+        }
 
-    public void SetFirstPerson(bool value)
-    {
-        _isFirstPerson = value;
-        float currentYaw = _player.eulerAngles.y;
-        _desktopInput.SetYaw(currentYaw);
-    }
+        private void UpdateFirstPerson(Quaternion cameraRotation)
+        {
+            _cameraTransform.rotation = cameraRotation;
+            Vector3 targetPos = _player.position + _player.TransformVector(_firstPersonOffset);
+            _cameraTransform.position = targetPos;
+        }
 
-    public void ToggleView()
-    {
-        SetFirstPerson(!_isFirstPerson);
+        private void UpdateThirdPerson(Quaternion cameraRotation)
+        {
+            _cameraTransform.rotation = cameraRotation;
+
+            Vector3 pivot = _player.position + _player.TransformVector(_firstPersonOffset);
+            Vector3 desiredCameraPos = pivot - _cameraTransform.forward * _thirdPersonDistance;
+            RaycastHit hit;
+
+            if (Physics.SphereCast(
+                pivot,
+                _cameraCollisionRadius,
+                (desiredCameraPos - pivot).normalized,
+                out hit,
+                _thirdPersonDistance,
+                _cameraCollisionMask,
+                QueryTriggerInteraction.Ignore))
+            {
+                float distance = hit.distance;
+                desiredCameraPos = pivot + (desiredCameraPos - pivot).normalized * (distance - 0.05f);
+            }
+
+            _cameraTransform.position = desiredCameraPos;
+        }
+
+        private void OnFollowed(bool isFollwed)
+        {
+            _isCanRotate = !isFollwed;
+        }
+
+        private void OnToggled(bool isToggled)
+        {
+            _isCanRotate = !isToggled;
+        }
+
+        private void OnWined()
+        {
+            _isCanRotate = false;
+        }
+
+        private void OnPaused(bool isPaused)
+        {
+            _isCanRotate = !isPaused;
+        }
+
+        private void OnDead()
+        {
+            _isCanRotate = false;
+        }
+
+        public void SetFirstPerson(bool value)
+        {
+            _isFirstPerson = value;
+            float currentYaw = _player.eulerAngles.y;
+            _desktopInput.SetYaw(currentYaw);
+        }
+
+        public void ToggleView()
+        {
+            SetFirstPerson(!_isFirstPerson);
+        }
     }
 }

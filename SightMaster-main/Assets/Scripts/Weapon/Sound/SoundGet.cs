@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class SoundGet : MonoBehaviour
+namespace SightMaster.Scripts.Weapon.Sound
 {
-    [SerializeField] private AudioClip _clip;
+    public class SoundGet : MonoBehaviour
+    {
+        [SerializeField] private AudioClip _clip;
 
-    public AudioClip GetClip()
-    { 
-        return _clip; 
+        public AudioClip GetClip()
+        {
+            return _clip;
+        }
     }
 }

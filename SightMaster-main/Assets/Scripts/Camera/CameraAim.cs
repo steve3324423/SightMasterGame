@@ -1,19 +1,23 @@
+using SightMaster.Scripts.Player;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(CameraAimEnableHandler))]
-public class CameraAim : MonoBehaviour
+namespace SightMaster.Scripts.Camera
 {
-    private IInput _input;
-
-    [Inject]
-    public void Construct(IInput input)
+    [RequireComponent(typeof(CameraAimEnableHandler))]
+    public class CameraAim : MonoBehaviour
     {
-        _input = input;
-    }
+        private IInput _input;
 
-    private void Update()
-    {
-        transform.localRotation = Quaternion.Euler(_input.Pitch,0, 0);
+        [Inject]
+        public void Construct(IInput input)
+        {
+            _input = input;
+        }
+
+        private void Update()
+        {
+            transform.localRotation = Quaternion.Euler(_input.Pitch, 0, 0);
+        }
     }
 }

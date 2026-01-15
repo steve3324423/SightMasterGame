@@ -1,31 +1,35 @@
+using SightMaster.Scripts.Enviroment;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-public class ExplosionSound : MonoBehaviour
+namespace SightMaster.Scripts.Audios
 {
-    [SerializeField] private Barrel[] _barrels;
-
-    private AudioSource _audioSource;
-
-    private void Awake()
+    [RequireComponent(typeof(AudioSource))]
+    public class ExplosionSound : MonoBehaviour
     {
-        _audioSource = GetComponent<AudioSource>();
-    }
+        [SerializeField] private Barrel[] _barrels;
 
-    private void OnEnable()
-    {
-        foreach(Barrel barrel in _barrels)
-            barrel.Exploided += OnExploided;
-    }
+        private AudioSource _audioSource;
 
-    private void OnDisable()
-    {
-        foreach (Barrel barrel in _barrels)
-            barrel.Exploided -= OnExploided;
-    }
+        private void Awake()
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
 
-    private void OnExploided()
-    {
-        _audioSource.Play();
+        private void OnEnable()
+        {
+            foreach (Barrel barrel in _barrels)
+                barrel.Exploided += OnExploided;
+        }
+
+        private void OnDisable()
+        {
+            foreach (Barrel barrel in _barrels)
+                barrel.Exploided -= OnExploided;
+        }
+
+        private void OnExploided()
+        {
+            _audioSource.Play();
+        }
     }
 }

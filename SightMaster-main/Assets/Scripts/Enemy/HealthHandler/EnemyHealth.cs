@@ -1,54 +1,57 @@
 using System;
-using System.Collections;
+using SightMaster.Scripts.DamageObject;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour , IDamageObject
+namespace SightMaster.Scripts.Enemy.HealthHandler
 {
-    private HeadEnemy _head;
-    protected float TimeForDead = 1.7f;
-    private int _health = 100;
-    private bool _isDead;
-
-    public event Action<int> ChangedHealth;
-    public event Action Dead;
-
-    private void Awake()
+    public class EnemyHealth : MonoBehaviour, IDamageObject
     {
-        _head = GetComponentInChildren<HeadEnemy>();
-    }
+        private HeadEnemy _head;
+        protected float TimeForDead = 1.7f;
+        private int _health = 100;
+        private bool _isDead;
 
-    private void OnEnable()
-    {
-        _head.Hited += OnHited;
-    }
+        public event Action<int> ChangedHealth;
+        public event Action Dead;
 
-    private void OnDisable()
-    {
-        _head.Hited -= OnHited;
-    }
-
-    public virtual void TakeDamage(int damage)
-    {
-        _health -= damage;
-
-        if (_health <= 0 && _isDead == false)
+        private void Awake()
         {
-            Dead?.Invoke();
-            Disable();
-
-            _isDead = true;
+            _head = GetComponentInChildren<HeadEnemy>();
         }
 
-        ChangedHealth?.Invoke(_health);
-    }
+        private void OnEnable()
+        {
+            _head.Hited += OnHited;
+        }
 
-    protected virtual void Disable()
-    {
-        Destroy(gameObject, TimeForDead);
-    }
+        private void OnDisable()
+        {
+            _head.Hited -= OnHited;
+        }
 
-    private void OnHited(int damage)
-    {
-        TakeDamage(damage);
+        public virtual void TakeDamage(int damage)
+        {
+            _health -= damage;
+
+            if (_health <= 0 && _isDead == false)
+            {
+                Dead?.Invoke();
+                Disable();
+
+                _isDead = true;
+            }
+
+            ChangedHealth?.Invoke(_health);
+        }
+
+        protected virtual void Disable()
+        {
+            Destroy(gameObject, TimeForDead);
+        }
+
+        private void OnHited(int damage)
+        {
+            TakeDamage(damage);
+        }
     }
 }

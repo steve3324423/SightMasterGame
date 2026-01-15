@@ -1,68 +1,72 @@
+using SightMaster.Scripts.Shop;
 using UnityEngine;
 using UnityEngine.UI;
 using YG;
 
-[RequireComponent(typeof(SelectButton))]
-[RequireComponent(typeof(Image))]
-public class SelectButtonSprite : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private Sprite _defaultSprite;
-    [SerializeField] private Sprite _selectedSprite;
-    [SerializeField] private WeaponView _weaponView;
-    [SerializeField] private BuyButton _buyButton;
-
-    private SelectButton _selectButton;
-    private Image _image;
-    private int _index;
-
-    private void Awake()
+    [RequireComponent(typeof(SelectButton))]
+    [RequireComponent(typeof(Image))]
+    public class SelectButtonSprite : MonoBehaviour
     {
-        _selectButton = GetComponent<SelectButton>();
-        _image = GetComponent<Image>();
+        [SerializeField] private Sprite _defaultSprite;
+        [SerializeField] private Sprite _selectedSprite;
+        [SerializeField] private WeaponView _weaponView;
+        [SerializeField] private BuyButton _buyButton;
 
-        GetDataEvent();
-    }
+        private SelectButton _selectButton;
+        private Image _image;
+        private int _index;
 
-    protected virtual void OnEnable()
-    {
-        _selectButton.Selected += OnSelected;
-        _weaponView.WeaponChanged += OnWeaponChanged;
-        _buyButton.Buyed += OnBuyed;
-    }
+        private void Awake()
+        {
+            _selectButton = GetComponent<SelectButton>();
+            _image = GetComponent<Image>();
 
-    protected virtual void OnDisable()
-    {
-        _selectButton.Selected -= OnSelected;
-        _weaponView.WeaponChanged -= OnWeaponChanged;
-        _buyButton.Buyed -= OnBuyed;
-    }
+            GetDataEvent();
+        }
 
-    private void OnBuyed(WeaponToBuy weapon)
-    {
-        SetSprite(_selectedSprite);
-    }
+        protected virtual void OnEnable()
+        {
+            _selectButton.Selected += OnSelected;
+            _weaponView.WeaponChanged += OnWeaponChanged;
+            _buyButton.Buyed += OnBuyed;
+        }
 
-    private void OnSelected(int id)
-    {
-        _index = id;
-        SetSprite(_selectedSprite);
-    }
+        protected virtual void OnDisable()
+        {
+            _selectButton.Selected -= OnSelected;
+            _weaponView.WeaponChanged -= OnWeaponChanged;
+            _buyButton.Buyed -= OnBuyed;
+        }
 
-    private void SetSprite(Sprite sprite)
-    {
-        _image.sprite = sprite;
-    }
-
-    private void GetDataEvent()
-    {
-        _index = YG2.saves.idWeaponSelect;
-    }
-
-    private void OnWeaponChanged(WeaponToBuy weapon)
-    {
-        if (weapon.GetId() == _index)
+        private void OnBuyed(WeaponToBuy weapon)
+        {
             SetSprite(_selectedSprite);
-        else
-            SetSprite(_defaultSprite);
+        }
+
+        private void OnSelected(int id)
+        {
+            _index = id;
+            SetSprite(_selectedSprite);
+        }
+
+        private void SetSprite(Sprite sprite)
+        {
+            _image.sprite = sprite;
+        }
+
+        private void GetDataEvent()
+        {
+            _index = YG2.saves.idWeaponSelect;
+        }
+
+        private void OnWeaponChanged(WeaponToBuy weapon)
+        {
+            if (weapon.GetId() == _index)
+                SetSprite(_selectedSprite);
+            else
+                SetSprite(_defaultSprite);
+        }
     }
 }

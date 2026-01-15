@@ -1,28 +1,32 @@
 using System;
+using SightMaster.Scripts.Weapon.Aim;
 using UnityEngine;
 
-public class CameraAimEnableHandler : CameraEnableHandler
+namespace SightMaster.Scripts.Camera
 {
-    public event Action<bool> Aimed;
-    
-    protected override void OnWined()
+    public class CameraAimEnableHandler : CameraEnableHandler
     {
-        if(IsFollowed == false)
-            Camera.enabled = false;
-    }
+        public event Action<bool> Aimed;
 
-    protected override void OnFollowed(bool isFollowed)
-    {
-        Camera.enabled = !isFollowed;
-        IsFollowed = isFollowed;
-    }
-
-    protected override void OnAimed(bool isAimed)
-    {
-        if(IsFollowed == false)
+        protected override void OnWined()
         {
-            Camera.enabled = isAimed;
-            Aimed?.Invoke(isAimed);
+            if (IsFollowed == false)
+                Camera.enabled = false;
+        }
+
+        protected override void OnFollowed(bool isFollowed)
+        {
+            Camera.enabled = !isFollowed;
+            IsFollowed = isFollowed;
+        }
+
+        protected override void OnAimed(bool isAimed)
+        {
+            if (IsFollowed == false)
+            {
+                Camera.enabled = isAimed;
+                Aimed?.Invoke(isAimed);
+            }
         }
     }
 }

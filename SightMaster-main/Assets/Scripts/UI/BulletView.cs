@@ -1,32 +1,36 @@
-using UnityEngine;
 using TMPro;
+using SightMaster.Scripts.Weapon;
+using UnityEngine;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class BulletView : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private WeaponAmmo[] _weaponAmmo;
-
-    private TextMeshProUGUI _text;
-
-    private void Awake()
+    [RequireComponent(typeof(TextMeshProUGUI))]
+    public class BulletView : MonoBehaviour
     {
-        _text = GetComponent<TextMeshProUGUI>();
-    }
+        [SerializeField] private WeaponAmmo[] _weaponAmmo;
 
-    private void OnEnable()
-    {
-        foreach (WeaponAmmo weapon in _weaponAmmo)
-            weapon.BulletChanged += OnBulletChanged;
-    }
+        private TextMeshProUGUI _text;
 
-    private void OnDisable()
-    {
-        foreach (WeaponAmmo weapon in _weaponAmmo)
-            weapon.BulletChanged -= OnBulletChanged;
-    }
+        private void Awake()
+        {
+            _text = GetComponent<TextMeshProUGUI>();
+        }
 
-    private void OnBulletChanged(int currentAmmo,int ammoInReserve)
-    {
-        _text.text = $"{currentAmmo}/{ammoInReserve}";
+        private void OnEnable()
+        {
+            foreach (WeaponAmmo weapon in _weaponAmmo)
+                weapon.BulletChanged += OnBulletChanged;
+        }
+
+        private void OnDisable()
+        {
+            foreach (WeaponAmmo weapon in _weaponAmmo)
+                weapon.BulletChanged -= OnBulletChanged;
+        }
+
+        private void OnBulletChanged(int currentAmmo, int ammoInReserve)
+        {
+            _text.text = $"{currentAmmo}/{ammoInReserve}";
+        }
     }
 }

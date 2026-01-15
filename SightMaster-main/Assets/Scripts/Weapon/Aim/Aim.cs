@@ -2,20 +2,23 @@ using System;
 using UnityEngine;
 using Zenject;
 
-public class Aim : MonoBehaviour
+namespace SightMaster.Scripts.Weapon.Aim
 {
-    private IInputWeapon _inputWeapon;
-
-    public event Action<bool> Aimed;
-
-    [Inject]
-    public void Construct(IInputWeapon inputWeapon)
+    public class Aim : MonoBehaviour
     {
-        _inputWeapon = inputWeapon;
-    }
+        private IInputWeapon _inputWeapon;
 
-    private void Update()
-    {
-        Aimed?.Invoke(_inputWeapon.IsAimed());
+        public event Action<bool> Aimed;
+
+        [Inject]
+        public void Construct(IInputWeapon inputWeapon)
+        {
+            _inputWeapon = inputWeapon;
+        }
+
+        private void Update()
+        {
+            Aimed?.Invoke(_inputWeapon.IsAimed());
+        }
     }
 }

@@ -1,20 +1,23 @@
 using UnityEngine;
 using YG;
 
-public class WeaponSpawn : MonoBehaviour
+namespace SightMaster.Scripts.Weapon
 {
-    [SerializeField] private int _index = 1;
-
-    private int _indexWeaponSave;
-
-    private void Awake()
+    public class WeaponSpawn : MonoBehaviour
     {
-        GetSavesData();
-    }
+        [SerializeField] private int _index = 1;
 
-    private void GetSavesData()
-    {
-        _indexWeaponSave = YG2.saves.idWeaponSelect;
-        gameObject.SetActive(_indexWeaponSave == _index);
+        private int _indexWeaponSave;
+
+        private void Awake()
+        {
+            GetSavesData();
+        }
+
+        private void GetSavesData()
+        {
+            _indexWeaponSave = YG2.saves.idWeaponSelect;
+            gameObject.SetActive(_indexWeaponSave == _index);
+        }
     }
 }

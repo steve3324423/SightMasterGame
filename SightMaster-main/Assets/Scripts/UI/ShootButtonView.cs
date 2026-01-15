@@ -1,30 +1,34 @@
 using UnityEngine;
+using SightMaster.Scripts.UI.Android;
 using UnityEngine.UI;
 
-public class ShootButtonView : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private AimButton _aim;
-
-    private Image _image;
-
-    private void Awake()
+    public class ShootButtonView : MonoBehaviour
     {
-        _image = GetComponent<Image>();
-        _image.enabled = false;
-    }
+        [SerializeField] private AimButton _aim;
 
-    private void OnEnable()
-    {
-        _aim.Aimed += OnAimed;
-    }
+        private Image _image;
 
-    private void OnDisable()
-    {
-        _aim.Aimed -= OnAimed;
-    }
+        private void Awake()
+        {
+            _image = GetComponent<Image>();
+            _image.enabled = false;
+        }
 
-    private void OnAimed(bool isAimed)
-    {
-        _image.enabled = isAimed;
+        private void OnEnable()
+        {
+            _aim.Aimed += OnAimed;
+        }
+
+        private void OnDisable()
+        {
+            _aim.Aimed -= OnAimed;
+        }
+
+        private void OnAimed(bool isAimed)
+        {
+            _image.enabled = isAimed;
+        }
     }
 }

@@ -1,9 +1,12 @@
 using System;
 using UnityEngine;
 
-public interface IInputWeapon
+namespace SightMaster.Scripts.Weapon
 {
-    bool IsAimed();
+    public interface IInputWeapon
+    {
+        bool IsAimed();
 
-    bool IsShoot();
+        bool IsShoot();
+    }
 }

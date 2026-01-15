@@ -1,29 +1,32 @@
 using UnityEngine;
 
-[RequireComponent(typeof(ParticleSystem))]
-public class MuzzleEffect : MonoBehaviour
+namespace SightMaster.Scripts.Enemy.EnemyWeapon
 {
-    [SerializeField] private EnemyWeapon _weapon;
-
-    private ParticleSystem _particleSystem;
-
-    private void Awake()
+    [RequireComponent(typeof(ParticleSystem))]
+    public class MuzzleEffect : MonoBehaviour
     {
-        _particleSystem = GetComponent<ParticleSystem>();
-    }
+        [SerializeField] private EnemyWeapon _weapon;
 
-    private void OnEnable()
-    {
-        _weapon.Shooted += OnShooted;
-    }
+        private ParticleSystem _particleSystem;
 
-    private void OnDestroy()
-    {
-        _weapon.Shooted -= OnShooted;
-    }
+        private void Awake()
+        {
+            _particleSystem = GetComponent<ParticleSystem>();
+        }
 
-    private void OnShooted(int damage)
-    {
-        _particleSystem.Play();
+        private void OnEnable()
+        {
+            _weapon.Shooted += OnShooted;
+        }
+
+        private void OnDestroy()
+        {
+            _weapon.Shooted -= OnShooted;
+        }
+
+        private void OnShooted(int damage)
+        {
+            _particleSystem.Play();
+        }
     }
 }

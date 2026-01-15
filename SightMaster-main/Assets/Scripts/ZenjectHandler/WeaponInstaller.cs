@@ -1,26 +1,36 @@
+using SightMaster.Scripts.UI;
+using SightMaster.Scripts.Player;
+using SightMaster.Scripts.HandlerPause;
+using SightMaster.Scripts.LevelHandler;
+using SightMaster.Scripts.Weapon;
+using SightMaster.Scripts.Weapon.Aim;
+using SightMaster.Scripts.UI.Android;
 using UnityEngine;
 using Zenject;
 
-public class WeaponInstaller : MonoInstaller
+namespace SightMaster.Scripts.ZenjectHandler
 {
-    [SerializeField] private PlayerHealth _playerHealth;
-    [SerializeField] private PauseHandler _pauseHandler;
-    [SerializeField] private ShootButton _shootButton;
-    [SerializeField] private LevelEnder _levelEnder;
-    [SerializeField] private AimButton _aimButton;
-
-    public override void InstallBindings()
+    public class WeaponInstaller : MonoInstaller
     {
-        if (Application.isMobilePlatform)
-            Container.Bind<IInputWeapon>().To<MobileInput>().AsSingle();
-        else
-            Container.Bind<IInputWeapon>().To<DekstopWeapon>().AsSingle();
+        [SerializeField] private PlayerHealth _playerHealth;
+        [SerializeField] private PauseHandler _pauseHandler;
+        [SerializeField] private ShootButton _shootButton;
+        [SerializeField] private LevelEnder _levelEnder;
+        [SerializeField] private AimButton _aimButton;
 
-        Container.Bind<PlayerHealth>().FromInstance(_playerHealth).AsSingle();
-        Container.Bind<AimButton>().FromInstance(_aimButton).AsSingle();
-        Container.Bind<ShootButton>().FromInstance(_shootButton).AsSingle();
-        Container.Bind<PauseHandler>().FromInstance(_pauseHandler).AsSingle();
-        Container.Bind<LevelEnder>().FromInstance(_levelEnder).AsSingle();
-        Container.Bind<Aim>().FromComponentOnRoot().AsSingle();
+        public override void InstallBindings()
+        {
+            if (Application.isMobilePlatform)
+                Container.Bind<IInputWeapon>().To<MobileInput>().AsSingle();
+            else
+                Container.Bind<IInputWeapon>().To<DekstopWeapon>().AsSingle();
+
+            Container.Bind<PlayerHealth>().FromInstance(_playerHealth).AsSingle();
+            Container.Bind<AimButton>().FromInstance(_aimButton).AsSingle();
+            Container.Bind<ShootButton>().FromInstance(_shootButton).AsSingle();
+            Container.Bind<PauseHandler>().FromInstance(_pauseHandler).AsSingle();
+            Container.Bind<LevelEnder>().FromInstance(_levelEnder).AsSingle();
+            Container.Bind<Aim>().FromComponentOnRoot().AsSingle();
+        }
     }
 }

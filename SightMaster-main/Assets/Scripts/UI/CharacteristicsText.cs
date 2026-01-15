@@ -1,47 +1,52 @@
-using UnityEngine;
 using TMPro;
+using SightMaster.Scripts.Shop;
+using UnityEngine;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class CharacteristicsText : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private WeaponView _weaponView;
-    [SerializeField] private CharacteriticsWeapon[] _weapons;
-    [SerializeField] private bool _isReloadTime;
-    [SerializeField] private bool _isMagazineCapacity;
-    [SerializeField] private bool _isDamage;
-
-    private TextMeshProUGUI _text;
-
-    private void Awake()
+    [RequireComponent(typeof(TextMeshProUGUI))]
+    public class CharacteristicsText : MonoBehaviour
     {
-        _text = GetComponent<TextMeshProUGUI>();
-    }
+        [SerializeField] private WeaponView _weaponView;
+        [SerializeField] private CharacteriticsWeapon[] _weapons;
+        [SerializeField] private bool _isReloadTime;
+        [SerializeField] private bool _isMagazineCapacity;
+        [SerializeField] private bool _isDamage;
 
-    private void OnEnable()
-    {
-        _weaponView.WeaponChanged += OnWeaponChanged;
-    }
+        private TextMeshProUGUI _text;
 
-    private void OnDisable()
-    {
-        _weaponView.WeaponChanged += OnWeaponChanged;
-    }
-
-    private void OnWeaponChanged(WeaponToBuy weapon)
-    {
-        foreach(CharacteriticsWeapon weaponCharacteritics in _weapons)
+        private void Awake()
         {
-            if(weaponCharacteritics.Id == weapon.GetId())
+            _text = GetComponent<TextMeshProUGUI>();
+        }
+
+        private void OnEnable()
+        {
+            _weaponView.WeaponChanged += OnWeaponChanged;
+        }
+
+        private void OnDisable()
+        {
+            _weaponView.WeaponChanged += OnWeaponChanged;
+        }
+
+        private void OnWeaponChanged(WeaponToBuy weapon)
+        {
+            foreach (CharacteriticsWeapon weaponCharacteritics in _weapons)
             {
-                if(_isDamage)
-                    _text.text = $"{weaponCharacteritics.GetDamage()}";
+                if (weaponCharacteritics.Id == weapon.GetId())
+                {
+                    if (_isDamage)
+                        _text.text = $"{weaponCharacteritics.GetDamage()}";
 
-                if (_isReloadTime)
-                    _text.text = $"{weaponCharacteritics.GetTimeReload()}";
+                    if (_isReloadTime)
+                        _text.text = $"{weaponCharacteritics.GetTimeReload()}";
 
-                if(_isMagazineCapacity)
-                    _text.text = $"{weaponCharacteritics.GetMagazineCapacity()}";
+                    if (_isMagazineCapacity)
+                        _text.text = $"{weaponCharacteritics.GetMagazineCapacity()}";
+                }
             }
         }
     }
 }
+

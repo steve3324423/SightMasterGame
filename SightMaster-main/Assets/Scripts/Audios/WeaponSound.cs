@@ -1,44 +1,49 @@
+using SightMaster.Scripts.Weapon;
+using SightMaster.Scripts.Weapon.Sound;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-public class WeaponSound : MonoBehaviour
+namespace SightMaster.Scripts.Audios
 {
-    [SerializeField] private WeaponAmmo[] _ammos;
-
-    private AudioSource _audioSource;
-    private AudioClip _clip;
-
-    private void Awake()
+    [RequireComponent(typeof(AudioSource))]
+    public class WeaponSound : MonoBehaviour
     {
-        _audioSource = GetComponent<AudioSource>();
-    }
+        [SerializeField] private WeaponAmmo[] _ammos;
 
-    private void OnEnable()
-    {
-        foreach (WeaponAmmo ammo in _ammos)
-            ammo.Shooted += OnShooted;
-    }
+        private AudioSource _audioSource;
+        private AudioClip _clip;
 
-    private void OnDisable()
-    {
-        foreach (WeaponAmmo ammo in _ammos)
-            ammo.Shooted -= OnShooted;
-    }
-
-    private void SetClip()
-    {
-        foreach (WeaponAmmo ammo in _ammos)
+        private void Awake()
         {
-            if (ammo.gameObject.activeSelf)
-                _audioSource.clip = ammo.GetComponent<SoundGet>().GetClip(); ;
+            _audioSource = GetComponent<AudioSource>();
         }
-    }
 
-    private void OnShooted()
-    {
-        if (_audioSource.clip == null)
-            SetClip();
+        private void OnEnable()
+        {
+            foreach (WeaponAmmo ammo in _ammos)
+                ammo.Shooted += OnShooted;
+        }
 
-        _audioSource.Play();
+        private void OnDisable()
+        {
+            foreach (WeaponAmmo ammo in _ammos)
+                ammo.Shooted -= OnShooted;
+        }
+
+        private void SetClip()
+        {
+            foreach (WeaponAmmo ammo in _ammos)
+            {
+                if (ammo.gameObject.activeSelf)
+                    _audioSource.clip = ammo.GetComponent<SoundGet>().GetClip();
+            }
+        }
+
+        private void OnShooted()
+        {
+            if (_audioSource.clip == null)
+                SetClip();
+
+            _audioSource.Play();
+        }
     }
 }

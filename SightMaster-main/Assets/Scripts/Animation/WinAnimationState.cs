@@ -1,8 +1,13 @@
+using SightMaster.Scripts.FSM;
 using UnityEngine;
 
-public class WinAnimationState : AnimationState
+namespace SightMaster.Scripts.Animation
 {
-    private const string Win = "Win";
+    public class WinAnimationState : AnimationState
+    {
+        private const string Win = "Win";
 
-    public WinAnimationState(FSM fsm, Animator animator) : base(fsm, animator, Win) { }
+        public WinAnimationState(FSM.FSM fsm, Animator animator)
+            : base(fsm, animator, Win) { }
+    }
 }

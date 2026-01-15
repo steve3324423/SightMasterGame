@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public class MobileUIView : MonoBehaviour
+namespace SightMaster.Scripts.UI.Android
 {
-    private void Awake()
+    public class MobileUIView : MonoBehaviour
     {
-        if(Application.isMobilePlatform == false)
-            Destroy(gameObject);
+        private void Awake()
+        {
+            if (Application.isMobilePlatform == false)
+                Destroy(gameObject);
+        }
     }
 }

@@ -1,17 +1,20 @@
 using UnityEngine;
 
-public class WeaponToBuy : MonoBehaviour
+namespace SightMaster.Scripts.Shop
 {
-    [SerializeField] private int _price;
-    [SerializeField] private int _id;
-
-    public int GetId()
+    public class WeaponToBuy : MonoBehaviour
     {
-        return _id;
-    }
+        [SerializeField] private int _price;
+        [SerializeField] private int _id;
 
-    public int GetPrice()
-    {
-        return _price;
+        public int GetId()
+        {
+            return _id;
+        }
+
+        public int GetPrice()
+        {
+            return _price;
+        }
     }
 }

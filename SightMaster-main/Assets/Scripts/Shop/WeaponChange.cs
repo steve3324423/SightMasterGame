@@ -1,15 +1,18 @@
 using System;
 using UnityEngine;
 
-public class WeaponChange : MonoBehaviour
+namespace SightMaster.Scripts.Shop
 {
-    [SerializeField] private WeaponToBuy _weaponToBuy;
-
-    public void Selected()
+    public class WeaponChange : MonoBehaviour
     {
-        int index = _weaponToBuy.GetId() - 1;
-        IndexChanged?.Invoke(index);
-    }
+        [SerializeField] private WeaponToBuy _weaponToBuy;
 
-    public event Action<int> IndexChanged;
+        public event Action<int> IndexChanged;
+
+        public void Selected()
+        {
+            int index = _weaponToBuy.GetId() - 1;
+            IndexChanged?.Invoke(index);
+        }
+    }
 }

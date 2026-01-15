@@ -1,10 +1,13 @@
 using UnityEngine;
 using YG;
 
-public class GetOutLevelButton : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    public void Touched()
+    public class GetOutLevelButton : MonoBehaviour
     {
-        YandexGame.FullscreenShow();
+        public void Touched()
+        {
+            YandexGame.FullscreenShow();
+        }
     }
 }

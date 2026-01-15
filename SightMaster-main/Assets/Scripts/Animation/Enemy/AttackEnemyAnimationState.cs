@@ -1,8 +1,13 @@
+using SightMaster.Scripts.FSM;
 using UnityEngine;
 
-public class AttackEnemyAnimationState : EnemyAnimationState
+namespace SightMaster.Scripts.Animation.Enemy
 {
-    private const string Attack = "Shoot";
+    public class AttackEnemyAnimationState : EnemyAnimationState
+    {
+        private const string Attack = "Shoot";
 
-    public AttackEnemyAnimationState(Animator animator,FSM fsm) : base(animator,Attack,fsm) {}
+        public AttackEnemyAnimationState(Animator animator, FSM.FSM fsm)
+            : base(animator, Attack, fsm) { }
+    }
 }

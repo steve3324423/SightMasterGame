@@ -1,73 +1,79 @@
 using System;
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using SightMaster.Scripts.Enemy;
+using SightMaster.Scripts.Player;
+using UnityEngine;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class WaveTimerText : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private WaveSpawned[] _waveSpawned;
-    [SerializeField] private PlayerHealth _playerHealth;
-
-    private WaitForSeconds _waitSeconds;
-    private float _timeForCoroutine = 1f;
-    private TextMeshProUGUI _text;
-
-    public event Action<bool> EnabledText;
-
-    private void Awake()
+    [RequireComponent(typeof(TextMeshProUGUI))]
+    public class WaveTimerText : MonoBehaviour
     {
-        _text = GetComponent<TextMeshProUGUI>();
+        [SerializeField] private WaveSpawned[] _waveSpawned;
+        [SerializeField] private PlayerHealth _playerHealth;
 
-        _waitSeconds = new WaitForSeconds(_timeForCoroutine);
-        EnableText(false);
-    }
+        private WaitForSeconds _waitSeconds;
+        private float _timeForCoroutine = 1f;
+        private TextMeshProUGUI _text;
 
-    private void OnEnable()
-    {
-        foreach (WaveSpawned enemySpawned in _waveSpawned)
-            enemySpawned.WarningBeforeSpawned += OnWarningBeforeSpawned;
+        public event Action<bool> EnabledText;
 
-        _playerHealth.Dead += OnDead;
-    }
-
-    private void OnDisable()
-    {
-        foreach (WaveSpawned enemySpawned in _waveSpawned)
-            enemySpawned.WarningBeforeSpawned -= OnWarningBeforeSpawned;
-
-        _playerHealth.Dead -= OnDead;
-    }
-
-    private void OnWarningBeforeSpawned(List<GameObject> childs)
-    {
-        StartCoroutine(SetText());
-    }
-
-    private IEnumerator SetText()
-    {
-        float timeValue = 4f;
-        EnableText(true);
-
-        while (timeValue > 1)
+        private void Awake()
         {
-            timeValue--;
-            _text.text = timeValue.ToString();
+            _text = GetComponent<TextMeshProUGUI>();
 
-            yield return _waitSeconds;
+            _waitSeconds = new WaitForSeconds(_timeForCoroutine);
+            EnableText(false);
         }
-        EnableText(false);
-    }
 
-    private void EnableText(bool isEnabled)
-    {
-        _text.enabled = isEnabled;
-        EnabledText?.Invoke(isEnabled);
-    }
+        private void OnEnable()
+        {
+            foreach (WaveSpawned enemySpawned in _waveSpawned)
+                enemySpawned.WarningBeforeSpawned += OnWarningBeforeSpawned;
 
-    private void OnDead()
-    {
-        EnableText(false);
+            _playerHealth.Dead += OnDead;
+        }
+
+        private void OnDisable()
+        {
+            foreach (WaveSpawned enemySpawned in _waveSpawned)
+                enemySpawned.WarningBeforeSpawned -= OnWarningBeforeSpawned;
+
+            _playerHealth.Dead -= OnDead;
+        }
+
+        private void OnWarningBeforeSpawned(List<GameObject> childs)
+        {
+            StartCoroutine(SetText());
+        }
+
+        private IEnumerator SetText()
+        {
+            float timeValue = 4f;
+            EnableText(true);
+
+            while (timeValue > 1)
+            {
+                timeValue--;
+                _text.text = timeValue.ToString();
+
+                yield return _waitSeconds;
+            }
+
+            EnableText(false);
+        }
+
+        private void EnableText(bool isEnabled)
+        {
+            _text.enabled = isEnabled;
+            EnabledText?.Invoke(isEnabled);
+        }
+
+        private void OnDead()
+        {
+            EnableText(false);
+        }
     }
 }

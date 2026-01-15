@@ -1,53 +1,58 @@
 using System;
 using System.Collections;
+using SightMaster.Scripts.Camera;
+using SightMaster.Scripts.Enemy;
 using UnityEngine;
 
-public class VisiblePlayer : MonoBehaviour
+namespace SightMaster.Scripts.Player
 {
-    [SerializeField] private DepletionPlayer _depletionPlayer;
-    [SerializeField] private Transform _cameraAim;
-    [SerializeField] private LayerMask _layerMask;
-
-    private LayerMask _actualLayerMask;
-    private Ray _ray;
-    private RaycastHit _hit;
-
-    public Action<bool> PlayerDisappeared;
-
-    private void Awake()
+    public class VisiblePlayer : MonoBehaviour
     {
-        _actualLayerMask = ~_layerMask;
-    }
+        [SerializeField] private DepletionPlayer _depletionPlayer;
+        [SerializeField] private Transform _cameraAim;
+        [SerializeField] private LayerMask _layerMask;
 
-    private void OnEnable()
-    {
-        _depletionPlayer.Depleted += OnDepleted;
-    }
+        private LayerMask _actualLayerMask;
+        private Ray _ray;
+        private RaycastHit _hit;
 
-    private void OnDisable()
-    {
-        _depletionPlayer.Depleted -= OnDepleted;
-    }
+        public Action<bool> PlayerDisappeared;
 
-    private IEnumerator Tracked()
-    {
-        while (enabled)
+        private void Awake()
         {
-            Vector3 directionToPlayer = (_cameraAim.transform.position - transform.position).normalized;
-            _ray = new Ray(transform.position, directionToPlayer);
-
-            if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, _actualLayerMask))
-            {
-                print(_hit.transform.name);
-                PlayerDisappeared?.Invoke(_hit.transform.TryGetComponent(out CameraAim camera));
-            }
-
-            yield return null;
+            _actualLayerMask = ~_layerMask;
         }
-    }
 
-    private void OnDepleted()
-    {
-        StartCoroutine(Tracked());
+        private void OnEnable()
+        {
+            _depletionPlayer.Depleted += OnDepleted;
+        }
+
+        private void OnDisable()
+        {
+            _depletionPlayer.Depleted -= OnDepleted;
+        }
+
+        private IEnumerator Tracked()
+        {
+            while (enabled)
+            {
+                Vector3 directionToPlayer = (_cameraAim.transform.position - transform.position).normalized;
+                _ray = new Ray(transform.position, directionToPlayer);
+
+                if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, _actualLayerMask))
+                {
+                    print(_hit.transform.name);
+                    PlayerDisappeared?.Invoke(_hit.transform.TryGetComponent(out CameraAim camera));
+                }
+
+                yield return null;
+            }
+        }
+
+        private void OnDepleted()
+        {
+            StartCoroutine(Tracked());
+        }
     }
 }

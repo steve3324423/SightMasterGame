@@ -1,29 +1,32 @@
 using UnityEngine;
 
-public class SpawnerBlood : Spawner<Blood>
+namespace SightMaster.Scripts.SpawnerObjects
 {
-    [SerializeField] private Blood _blood;
-
-    private Vector3 _spawnPosition;
-    private Vector3 _rotate;
-
-    public void SetPositionAndRotate(Vector3 spawnPosition,Vector3 rotate)
+    public class SpawnerBlood : Spawner<Blood>
     {
-        _spawnPosition = spawnPosition;
-        _rotate = rotate;
-    }
+        [SerializeField] private Blood _blood;
 
-    protected override Blood Create()
-    {
-        Blood newBlood = Instantiate(_blood,_spawnPosition,Quaternion.LookRotation(_rotate));
-        newBlood.SetSpawner(this);
-        return newBlood;
-    }
+        private Vector3 _spawnPosition;
+        private Vector3 _rotate;
 
-    protected override void OnTakeFromPool(Blood objectGame)
-    {
-        objectGame.transform.position = _spawnPosition;
-        objectGame.transform.rotation = Quaternion.LookRotation(_rotate);
-        base.OnTakeFromPool(objectGame);
+        public void SetPositionAndRotate(Vector3 spawnPosition, Vector3 rotate)
+        {
+            _spawnPosition = spawnPosition;
+            _rotate = rotate;
+        }
+
+        protected override Blood Create()
+        {
+            Blood newBlood = Instantiate(_blood, _spawnPosition, Quaternion.LookRotation(_rotate));
+            newBlood.SetSpawner(this);
+            return newBlood;
+        }
+
+        protected override void OnTakeFromPool(Blood objectGame)
+        {
+            objectGame.transform.position = _spawnPosition;
+            objectGame.transform.rotation = Quaternion.LookRotation(_rotate);
+            base.OnTakeFromPool(objectGame);
+        }
     }
 }

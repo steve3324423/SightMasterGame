@@ -1,54 +1,58 @@
 using System;
+using SightMaster.Scripts.LevelHandler;
 using UnityEngine;
 
-public abstract class InputControl : IInput
+namespace SightMaster.Scripts.Player
 {
-    private float _xRotation;
-    private float _yRotation;
-    private float _zRotation = 0f;
-    protected bool IsCanGetValue = true;
-    private PlayerHealth _playerHealth;
-    private LevelEnder _levelEnder;
-
-    public event Action<float, float> RotationValuesChanged;
-
-    protected InputControl(LevelEnder levelEnder, PlayerHealth playerHealth)
+    public abstract class InputControl : IInput
     {
-        _levelEnder = levelEnder;
-        _playerHealth = playerHealth;
+        private float _xRotation;
+        private float _yRotation;
+        private float _zRotation = 0f;
+        protected bool IsCanGetValue = true;
+        private PlayerHealth _playerHealth;
+        private LevelEnder _levelEnder;
 
-        _levelEnder.Wined += OnWined;
-        _playerHealth.Dead += OnDead;
-    }
+        public event Action<float, float> RotationValuesChanged;
 
-    public abstract float Pitch { get; }
-    public abstract float Yaw { get; }
+        public abstract float Pitch { get; }
+        public abstract float Yaw { get; }
 
-    public virtual Vector3 GetDirection(Transform transformPlayer)
-    {
-        return Vector3.zero;
-    }
+        protected InputControl(LevelEnder levelEnder, PlayerHealth playerHealth)
+        {
+            _levelEnder = levelEnder;
+            _playerHealth = playerHealth;
 
-    public abstract Quaternion GetCameraRotation();
+            _levelEnder.Wined += OnWined;
+            _playerHealth.Dead += OnDead;
+        }
 
-    public abstract void SetYaw(float yaw);
+        public virtual Vector3 GetDirection(Transform transformPlayer)
+        {
+            return Vector3.zero;
+        }
 
-    protected Quaternion SetCameraRotation(float xValue, float yValue)
-    {
-        _xRotation = xValue;
-        _yRotation = yValue;
+        public abstract Quaternion GetCameraRotation();
 
-        RotationValuesChanged?.Invoke(xValue, yValue);
-        return Quaternion.Euler(_xRotation, _yRotation, _zRotation);
-    }
+        public abstract void SetYaw(float yaw);
 
-    private void OnWined()
-    {
-        IsCanGetValue = false;
-    }
+        protected Quaternion SetCameraRotation(float xValue, float yValue)
+        {
+            _xRotation = xValue;
+            _yRotation = yValue;
 
-    private void OnDead()
-    {
-        IsCanGetValue = false;
+            RotationValuesChanged?.Invoke(xValue, yValue);
+            return Quaternion.Euler(_xRotation, _yRotation, _zRotation);
+        }
+
+        private void OnWined()
+        {
+            IsCanGetValue = false;
+        }
+
+        private void OnDead()
+        {
+            IsCanGetValue = false;
+        }
     }
 }

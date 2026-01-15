@@ -1,59 +1,63 @@
-using UnityEngine;
 using TMPro;
 using YG.LanguageLegacy;
 using YG;
+using UnityEngine;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class SelectWeaponText : MonoBehaviour
+namespace SightMaster.Scripts.Shop
 {
-    [SerializeField] private BuyButton _buyButton;
-    [SerializeField] private WeaponView _weaponView;
-    [SerializeField] private LanguageYG _selectLanguageText;
-    [SerializeField] private LanguageYG _selectedLanguageText;
-    [SerializeField] private int _index = 1;
-
-    private TextMeshProUGUI _text;
-
-    private void Awake()
+    [RequireComponent(typeof(TextMeshProUGUI))]
+    public class SelectWeaponText : MonoBehaviour
     {
-        _text = GetComponent<TextMeshProUGUI>();
-    }
+        [SerializeField] private BuyButton _buyButton;
+        [SerializeField] private WeaponView _weaponView;
+        [SerializeField] private LanguageYG _selectLanguageText;
+        [SerializeField] private LanguageYG _selectedLanguageText;
+        [SerializeField] private int _index = 1;
 
-    private void OnEnable()
-    {
-        _weaponView.WeaponChanged += OnWeaponChanged;
-        _buyButton.Buyed += OnBuyed;
-    }
+        private TextMeshProUGUI _text;
 
-    private void OnDisable()
-    {
-        _weaponView.WeaponChanged -= OnWeaponChanged;
-        _buyButton.Buyed -= OnBuyed;
-    }
-
-    private void OnWeaponChanged(WeaponToBuy weapon)
-    {
-        foreach(int id in YG2.saves.idWeaponBuy)
+        private void Awake()
         {
-            if (_index == id)
-                _text.enabled = true;
+            _text = GetComponent<TextMeshProUGUI>();
         }
 
-        if (weapon.GetId() == _index)
-            SetLanguageText(true, false);
-        else
-            SetLanguageText(false, true);
-    }
+        private void OnEnable()
+        {
+            _weaponView.WeaponChanged += OnWeaponChanged;
+            _buyButton.Buyed += OnBuyed;
+        }
 
-    private void OnBuyed(WeaponToBuy weapon)
-    {
-        if(weapon.GetId() == _index)
-            OnWeaponChanged(weapon);
-    }
+        private void OnDisable()
+        {
+            _weaponView.WeaponChanged -= OnWeaponChanged;
+            _buyButton.Buyed -= OnBuyed;
+        }
 
-    private void SetLanguageText(bool isSelected,bool isSelect)
-    {
-        _selectedLanguageText.enabled = isSelected;
-        _selectLanguageText.enabled = isSelect;
+        private void OnWeaponChanged(WeaponToBuy weapon)
+        {
+            foreach (int id in YG2.saves.idWeaponBuy)
+            {
+                if (_index == id)
+                    _text.enabled = true;
+            }
+
+            if (weapon.GetId() == _index)
+                SetLanguageText(true, false);
+            else
+                SetLanguageText(false, true);
+        }
+
+        private void OnBuyed(WeaponToBuy weapon)
+        {
+            if (weapon.GetId() == _index)
+                OnWeaponChanged(weapon);
+        }
+
+        private void SetLanguageText(bool isSelected, bool isSelect)
+        {
+            _selectedLanguageText.enabled = isSelected;
+            _selectLanguageText.enabled = isSelect;
+        }
     }
 }
+

@@ -1,68 +1,73 @@
-using Unity.VisualScripting;
+using SightMaster.Scripts.LevelHandler;
+using SightMaster.Scripts.UI;
+using SightMaster.Scripts.HandlerPause;
 using UnityEngine;
 using Zenject;
 
-public class PlayerYawRotator : MonoBehaviour
+namespace SightMaster.Scripts.Player
 {
-    [SerializeField] private SettingPanelHandler _settingPanelHandler;
-    [SerializeField] private Transform _playerRoot;
-    [SerializeField] private PauseHandler _pauseHandler;
-    [SerializeField] private LevelEnder _levelEnder;
-    [SerializeField] private PlayerHealth _playerHealth;
-
-    private bool _isCanRotate = true;
-    private IInput _input;
-
-    [Inject]
-    public void Construct(IInput input)
+    public class PlayerYawRotator : MonoBehaviour
     {
-        _input = input;
-    }
+        [SerializeField] private SettingPanelHandler _settingPanelHandler;
+        [SerializeField] private Transform _playerRoot;
+        [SerializeField] private PauseHandler _pauseHandler;
+        [SerializeField] private LevelEnder _levelEnder;
+        [SerializeField] private PlayerHealth _playerHealth;
 
-    private void OnEnable()
-    {
-        _settingPanelHandler.Toggled += OnToggled;
-        _playerHealth.Dead += OnDead;
-        _pauseHandler.Paused += OnPaused;
-        _levelEnder.Wined += OnWined;
-    }
+        private bool _isCanRotate = true;
+        private IInput _input;
 
-    private void OnDisable()
-    {
-        _settingPanelHandler.Toggled -= OnToggled;
-        _playerHealth.Dead -= OnDead;
-        _pauseHandler.Paused -= OnPaused;
-        _levelEnder.Wined -= OnWined;
-    }
+        [Inject]
+        public void Construct(IInput input)
+        {
+            _input = input;
+        }
 
-    private void LateUpdate()
-    {
-        if (_isCanRotate == false || _playerRoot == null || _input == null)
-            return;
+        private void OnEnable()
+        {
+            _settingPanelHandler.Toggled += OnToggled;
+            _playerHealth.Dead += OnDead;
+            _pauseHandler.Paused += OnPaused;
+            _levelEnder.Wined += OnWined;
+        }
 
-        float yaw = _input.Yaw;
-        Vector3 euler = _playerRoot.eulerAngles;
-        euler.y = yaw;
-        _playerRoot.rotation = Quaternion.Euler(euler);
-    }
+        private void OnDisable()
+        {
+            _settingPanelHandler.Toggled -= OnToggled;
+            _playerHealth.Dead -= OnDead;
+            _pauseHandler.Paused -= OnPaused;
+            _levelEnder.Wined -= OnWined;
+        }
 
-    private void OnToggled(bool isToggled)
-    {
-        _isCanRotate = !isToggled;
-    }
+        private void LateUpdate()
+        {
+            if (_isCanRotate == false || _playerRoot == null || _input == null)
+                return;
 
-    private void OnWined()
-    {
-        _isCanRotate = false;
-    }
+            float yaw = _input.Yaw;
+            Vector3 euler = _playerRoot.eulerAngles;
+            euler.y = yaw;
+            _playerRoot.rotation = Quaternion.Euler(euler);
+        }
 
-    private void OnPaused(bool isPaused)
-    {
-        _isCanRotate = !isPaused;
-    }
+        private void OnToggled(bool isToggled)
+        {
+            _isCanRotate = !isToggled;
+        }
 
-    private void OnDead()
-    {
-        _isCanRotate = false;
+        private void OnWined()
+        {
+            _isCanRotate = false;
+        }
+
+        private void OnPaused(bool isPaused)
+        {
+            _isCanRotate = !isPaused;
+        }
+
+        private void OnDead()
+        {
+            _isCanRotate = false;
+        }
     }
 }

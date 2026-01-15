@@ -2,36 +2,39 @@ using System;
 using UnityEngine;
 using YG;
 
-public class BuyButton : MonoBehaviour
+namespace SightMaster.Scripts.Shop
 {
-    [SerializeField] private WeaponView _weaaponView;
-
-    private WeaponToBuy _currentWeapon;
-
-    public event Action<WeaponToBuy> Buyed;
-
-    public void Buy()
+    public class BuyButton : MonoBehaviour
     {
-        YG2.saves.money -= _currentWeapon.GetPrice();
-        YG2.saves.idWeaponBuy.Add(_currentWeapon.GetId());
-        YG2.saves.idWeaponSelect = _currentWeapon.GetId();
+        [SerializeField] private WeaponView _weaaponView;
 
-        YG2.SaveProgress();
-        Buyed?.Invoke(_currentWeapon);
-    }
+        private WeaponToBuy _currentWeapon;
 
-    private void OnEnable()
-    {
-        _weaaponView.WeaponChanged += OnWeaponChanged;
-    }
+        public event Action<WeaponToBuy> Buyed;
 
-    private void OnDisable()
-    {
-        _weaaponView.WeaponChanged -= OnWeaponChanged;
-    }
+        public void Buy()
+        {
+            YG2.saves.money -= _currentWeapon.GetPrice();
+            YG2.saves.idWeaponBuy.Add(_currentWeapon.GetId());
+            YG2.saves.idWeaponSelect = _currentWeapon.GetId();
 
-    private void OnWeaponChanged(WeaponToBuy weapon)
-    {
-        _currentWeapon = weapon;
+            YG2.SaveProgress();
+            Buyed?.Invoke(_currentWeapon);
+        }
+
+        private void OnEnable()
+        {
+            _weaaponView.WeaponChanged += OnWeaponChanged;
+        }
+
+        private void OnDisable()
+        {
+            _weaaponView.WeaponChanged -= OnWeaponChanged;
+        }
+
+        private void OnWeaponChanged(WeaponToBuy weapon)
+        {
+            _currentWeapon = weapon;
+        }
     }
 }

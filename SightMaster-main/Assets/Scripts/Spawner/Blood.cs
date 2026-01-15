@@ -1,30 +1,33 @@
 using System.Collections;
 using UnityEngine;
 
-public class Blood : MonoBehaviour
+namespace SightMaster.Scripts.SpawnerObjects
 {
-    private SpawnerBlood _spawner;
-    private WaitForSeconds _waitSeconds;
-    private float _timeForCoroutine = .5f;
-
-    public void SetSpawner(SpawnerBlood spawner)
+    public class Blood : MonoBehaviour
     {
-        _spawner = spawner;
-    }
+        private SpawnerBlood _spawner;
+        private WaitForSeconds _waitSeconds;
+        private float _timeForCoroutine = .5f;
 
-    private void Awake()
-    {
-        _waitSeconds = new WaitForSeconds(_timeForCoroutine);
-    }
+        public void SetSpawner(SpawnerBlood spawner)
+        {
+            _spawner = spawner;
+        }
 
-    private void OnEnable()
-    {
-        StartCoroutine(DisableBlood());
-    }
+        private void Awake()
+        {
+            _waitSeconds = new WaitForSeconds(_timeForCoroutine);
+        }
 
-    private IEnumerator DisableBlood()
-    {
-        yield return _waitSeconds;
-        _spawner.Pool.Release(this);
+        private void OnEnable()
+        {
+            StartCoroutine(DisableBlood());
+        }
+
+        private IEnumerator DisableBlood()
+        {
+            yield return _waitSeconds;
+            _spawner.Pool.Release(this);
+        }
     }
 }

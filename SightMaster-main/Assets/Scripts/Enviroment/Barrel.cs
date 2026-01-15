@@ -1,16 +1,20 @@
 using System;
+using SightMaster.Scripts.DamageObject;
 using UnityEngine;
 
-public class Barrel : MonoBehaviour , IDamageObject
+namespace SightMaster.Scripts.Enviroment
 {
-    [SerializeField] private GameObject _explosionEffect;
-
-    public event Action Exploided;
-
-    public void TakeDamage(int damage)
+    public class Barrel : MonoBehaviour, IDamageObject
     {
-        Exploided?.Invoke();
-        Instantiate(_explosionEffect,transform.position,Quaternion.identity);
-        Destroy(gameObject);
+        [SerializeField] private GameObject _explosionEffect;
+
+        public event Action Exploided;
+
+        public void TakeDamage(int damage)
+        {
+            Exploided?.Invoke();
+            Instantiate(_explosionEffect, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
 }

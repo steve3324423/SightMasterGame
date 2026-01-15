@@ -1,32 +1,34 @@
 using UnityEngine;
-using YG;
 using YG.LanguageLegacy;
 
-public class LeadboardText : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private LanguageYG _languageLeadboardText;
-    [SerializeField] private LanguageYG _languageBackText;
-
-    private LeaderboardButton _leardboardButton;
-
-    private void Awake()
+    public class LeadboardText : MonoBehaviour
     {
-        _leardboardButton = transform.parent.GetComponent<LeaderboardButton>();
-    }
+        [SerializeField] private LanguageYG _languageLeadboardText;
+        [SerializeField] private LanguageYG _languageBackText;
 
-    private void OnEnable()
-    {
-        _leardboardButton.Clicked += OnClicked;
-    }
+        private LeaderboardButton _leardboardButton;
 
-    private void OnDestroy()
-    {
-        _leardboardButton.Clicked -= OnClicked;
-    }
+        private void Awake()
+        {
+            _leardboardButton = transform.parent.GetComponent<LeaderboardButton>();
+        }
 
-    private void OnClicked(bool isEnabled)
-    {
-        _languageBackText.enabled = isEnabled;
-        _languageLeadboardText.enabled = !isEnabled;
+        private void OnEnable()
+        {
+            _leardboardButton.Clicked += OnClicked;
+        }
+
+        private void OnDestroy()
+        {
+            _leardboardButton.Clicked -= OnClicked;
+        }
+
+        private void OnClicked(bool isEnabled)
+        {
+            _languageBackText.enabled = isEnabled;
+            _languageLeadboardText.enabled = !isEnabled;
+        }
     }
 }

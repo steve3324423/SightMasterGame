@@ -1,18 +1,21 @@
 using UnityEngine;
 
-public class ShootButton : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    private float _timeForInvoke = .01f;
-    public bool IsClickShoot { get; private set; }
-
-    public void Shoot()
+    public class ShootButton : MonoBehaviour
     {
-        IsClickShoot = true;
-        Invoke("DisableShoot", _timeForInvoke);
-    }
+        private float _timeForInvoke = .01f;
+        public bool IsClickShoot { get; private set; }
 
-    private void DisableShoot()
-    {
-        IsClickShoot = false;
+        public void Shoot()
+        {
+            IsClickShoot = true;
+            Invoke("DisableShoot", _timeForInvoke);
+        }
+
+        private void DisableShoot()
+        {
+            IsClickShoot = false;
+        }
     }
 }

@@ -1,50 +1,53 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BorderSelectWeapon : MonoBehaviour
+namespace SightMaster.Scripts.Shop
 {
-    [SerializeField] private BuyButton _buyButton;
-    [SerializeField] private WeaponView _weaponView;
-    [SerializeField] private int _index = 1;
-
-    private Color _colorImage;
-    private RawImage _image;
-
-    private void Awake()
+    public class BorderSelectWeapon : MonoBehaviour
     {
-        _image = GetComponent<RawImage>();
-        _colorImage = _image.color;
-    }
+        [SerializeField] private BuyButton _buyButton;
+        [SerializeField] private WeaponView _weaponView;
+        [SerializeField] private int _index = 1;
 
-    private void OnEnable()
-    {
-        _weaponView.WeaponChanged += OnWeaponChanged;
-        _buyButton.Buyed += OnBuyed;
-    }
+        private Color _colorImage;
+        private RawImage _image;
 
-    private void OnDisable()
-    {
-        _weaponView.WeaponChanged -= OnWeaponChanged;
-        _buyButton.Buyed -= OnBuyed;
-    }
+        private void Awake()
+        {
+            _image = GetComponent<RawImage>();
+            _colorImage = _image.color;
+        }
 
-    private void OnWeaponChanged(WeaponToBuy weapon)
-    {
-        if (weapon.GetId() == _index)
-            SetTransparency(1);
-        else
-            SetTransparency(0);
-    }
+        private void OnEnable()
+        {
+            _weaponView.WeaponChanged += OnWeaponChanged;
+            _buyButton.Buyed += OnBuyed;
+        }
 
-    private void OnBuyed(WeaponToBuy weapon)
-    {
-        if (weapon.GetId() == _index)
-            OnWeaponChanged(weapon);
-    }
+        private void OnDisable()
+        {
+            _weaponView.WeaponChanged -= OnWeaponChanged;
+            _buyButton.Buyed -= OnBuyed;
+        }
 
-    private void SetTransparency(float value)
-    {
-        _colorImage.a = value;
-        _image.color = _colorImage;
+        private void OnWeaponChanged(WeaponToBuy weapon)
+        {
+            if (weapon.GetId() == _index)
+                SetTransparency(1);
+            else
+                SetTransparency(0);
+        }
+
+        private void OnBuyed(WeaponToBuy weapon)
+        {
+            if (weapon.GetId() == _index)
+                OnWeaponChanged(weapon);
+        }
+
+        private void SetTransparency(float value)
+        {
+            _colorImage.a = value;
+            _image.color = _colorImage;
+        }
     }
 }

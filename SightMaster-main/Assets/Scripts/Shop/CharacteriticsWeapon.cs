@@ -1,33 +1,37 @@
 using UnityEngine;
 
-public class CharacteriticsWeapon : MonoBehaviour
+namespace SightMaster.Scripts.Shop
 {
-    [SerializeField] private int _damage;
-    [SerializeField] private int _timeReload;
-    [SerializeField] private int _magazineÑapacity;
-
-    private WeaponToBuy _weapon;
-
-    public int Id { get; private set; }
-
-    private void Awake()
+    public class CharacteriticsWeapon : MonoBehaviour
     {
-        _weapon = GetComponent<WeaponToBuy>();
-        Id = _weapon.GetId();
+        [SerializeField] private int _damage;
+        [SerializeField] private int _timeReload;
+        [SerializeField] private int _magazineÑapacity;
+
+        private WeaponToBuy _weapon;
+
+        public int Id { get; private set; }
+
+        private void Awake()
+        {
+            _weapon = GetComponent<WeaponToBuy>();
+            Id = _weapon.GetId();
+        }
+
+        public int GetDamage()
+        {
+            return _damage;
+        }
+
+        public int GetTimeReload()
+        {
+            return _timeReload;
+        }
+
+        public int GetMagazineCapacity()
+        {
+            return _magazineÑapacity;
+        }
     }
 
-    public int GetDamage()
-    {
-        return _damage;
-    }
-
-    public int GetTimeReload()
-    {
-        return _timeReload;
-    }
-
-    public int GetMagazineCapacity()
-    {
-        return _magazineÑapacity;
-    }
 }

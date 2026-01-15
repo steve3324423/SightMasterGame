@@ -1,18 +1,21 @@
 using UnityEngine;
 
-public class AudioGames : MonoBehaviour
+namespace SightMaster.Scripts.Audios
 {
-    private static AudioGames _instance;
-
-    private void Awake()
+    public class AudioGames : MonoBehaviour
     {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        private static AudioGames _instance;
 
-        _instance = this;
-        DontDestroyOnLoad(this);
+        private void Awake()
+        {
+            if (_instance != null && _instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            _instance = this;
+            DontDestroyOnLoad(this);
+        }
     }
 }

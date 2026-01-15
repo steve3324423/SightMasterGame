@@ -1,30 +1,33 @@
 using UnityEngine;
 using TMPro;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class WaveText : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    private WaveTimerText _timerText;
-    private TextMeshProUGUI _text;
-
-    private void Awake()
+    [RequireComponent(typeof(TextMeshProUGUI))]
+    public class WaveText : MonoBehaviour
     {
-        _timerText = transform.parent.GetComponent<WaveTimerText>();
-        _text = GetComponent<TextMeshProUGUI>();
-    }
+        private WaveTimerText _timerText;
+        private TextMeshProUGUI _text;
 
-    private void OnEnable()
-    {
-        _timerText.EnabledText += OnEnabledText;
-    }
+        private void Awake()
+        {
+            _timerText = transform.parent.GetComponent<WaveTimerText>();
+            _text = GetComponent<TextMeshProUGUI>();
+        }
 
-    private void OnDisable()
-    {
-        _timerText.EnabledText -= OnEnabledText;
-    }
+        private void OnEnable()
+        {
+            _timerText.EnabledText += OnEnabledText;
+        }
 
-    private void OnEnabledText(bool isEnabled)
-    {
-        _text.enabled = isEnabled;
+        private void OnDisable()
+        {
+            _timerText.EnabledText -= OnEnabledText;
+        }
+
+        private void OnEnabledText(bool isEnabled)
+        {
+            _text.enabled = isEnabled;
+        }
     }
 }

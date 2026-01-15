@@ -1,10 +1,13 @@
 using UnityEngine;
 
-public class TimePauseHandler : MonoBehaviour
+namespace SightMaster.Scripts.Enviroment
 {
-    private void Awake()
+    public class TimePauseHandler : MonoBehaviour
     {
-        if(Time.timeScale <= 0)
-            Time.timeScale = 1;
+        private void Awake()
+        {
+            if (Time.timeScale <= 0)
+                Time.timeScale = 1;
+        }
     }
 }

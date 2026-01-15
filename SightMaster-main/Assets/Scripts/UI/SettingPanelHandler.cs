@@ -1,66 +1,71 @@
 using System;
-using Unity.VisualScripting;
+using SightMaster.Scripts.Player;
+using SightMaster.Scripts.LevelHandler;
+using SightMaster.Scripts.HandlerPause;
 using UnityEngine;
 
-public class SettingPanelHandler : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private GameObject _settingPanel;
-    [SerializeField] private PauseHandler _pauseHandler;
-    [SerializeField] private LevelEnder _levelEnder;
-    [SerializeField] private PlayerHealth _playerHealth;
-
-    private bool _isTouched;
-    private bool _canEnable = true;
-
-    public event Action<bool> Toggled;
-
-    private void OnEnable()
+    public class SettingPanelHandler : MonoBehaviour
     {
-        _pauseHandler.Paused += OnPaused;
-        _levelEnder.Wined += OnWined;
-        _playerHealth.Dead += OnDead;
-    }
+        [SerializeField] private GameObject _settingPanel;
+        [SerializeField] private PauseHandler _pauseHandler;
+        [SerializeField] private LevelEnder _levelEnder;
+        [SerializeField] private PlayerHealth _playerHealth;
 
-    private void OnDisable()
-    {
-        _pauseHandler.Paused -= OnPaused;
-        _levelEnder.Wined -= OnWined;
-        _playerHealth.Dead -= OnDead;
-    }
+        private bool _isTouched;
+        private bool _canEnable = true;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-            TogglePanel();
-    }
+        public event Action<bool> Toggled;
 
-    public void Touched()
-    {
-        TogglePanel();
-    }
-
-    private void OnPaused(bool isPaused)
-    {
-        _canEnable = !isPaused;
-    }
-
-    private void OnWined()
-    {
-        _canEnable = false;
-    }
-
-    private void OnDead()
-    {
-        _canEnable = false;
-    }
-
-    private void TogglePanel()
-    {
-        if(_canEnable)
+        private void OnEnable()
         {
-            _isTouched = !_isTouched;
-            _settingPanel.SetActive(_isTouched);
-            Toggled?.Invoke(_isTouched);
+            _pauseHandler.Paused += OnPaused;
+            _levelEnder.Wined += OnWined;
+            _playerHealth.Dead += OnDead;
         }
-    }    
+
+        private void OnDisable()
+        {
+            _pauseHandler.Paused -= OnPaused;
+            _levelEnder.Wined -= OnWined;
+            _playerHealth.Dead -= OnDead;
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+                TogglePanel();
+        }
+
+        public void Touched()
+        {
+            TogglePanel();
+        }
+
+        private void OnPaused(bool isPaused)
+        {
+            _canEnable = !isPaused;
+        }
+
+        private void OnWined()
+        {
+            _canEnable = false;
+        }
+
+        private void OnDead()
+        {
+            _canEnable = false;
+        }
+
+        private void TogglePanel()
+        {
+            if (_canEnable)
+            {
+                _isTouched = !_isTouched;
+                _settingPanel.SetActive(_isTouched);
+                Toggled?.Invoke(_isTouched);
+            }
+        }
+    }
 }

@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class MobileUISize : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private float _valueIncrease = 2f;
-
-    private void Awake()
+    public class MobileUISize : MonoBehaviour
     {
-        if(Application.isMobilePlatform)
-            transform.localScale *= _valueIncrease;
+        [SerializeField] private float _valueIncrease = 2f;
+
+        private void Awake()
+        {
+            if (Application.isMobilePlatform)
+                transform.localScale *= _valueIncrease;
+        }
     }
 }

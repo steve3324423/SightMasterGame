@@ -1,12 +1,14 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-public class SpriteGet : MonoBehaviour
+namespace SightMaster.Scripts.Weapon.Aim
 {
-    [SerializeField] private Texture _aim;
-
-    public Texture GetTexture()
+    public class SpriteGet : MonoBehaviour
     {
-        return _aim;
+        [SerializeField] private Texture _aim;
+
+        public Texture GetTexture()
+        {
+            return _aim;
+        }
     }
 }

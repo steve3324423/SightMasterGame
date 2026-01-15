@@ -1,42 +1,48 @@
 using System;
+using SightMaster.Scripts.Camera;
+using SightMaster.Scripts.DamageObject;
+using SightMaster.Scripts.Enemy.HealthHandler;
 using UnityEngine;
 
-public class RayWeapon : MonoBehaviour
+namespace SightMaster.Scripts.Weapon
 {
-    [SerializeField] private WeaponAmmo _weaponAmmo;
-    [SerializeField] private int _damage = 10;
-    [SerializeField] private Camera _camera;
-
-    private float _positionCameraScreen = .5f;
-    private float _defaultPositionValue = 0f;
-    private RaycastHit _hit;
-
-    public event Action<Vector3,Vector3> HitedBody;
-    public event Action<Vector3,Vector3> HitedHead;
-
-    private void OnEnable()
+    public class RayWeapon : MonoBehaviour
     {
-        _weaponAmmo.Shooted += OnShooted;
-    }
+        [SerializeField] private WeaponAmmo _weaponAmmo;
+        [SerializeField] private int _damage = 10;
+        [SerializeField] private UnityEngine.Camera _camera;
 
-    private void OnDestroy()
-    {
-        _weaponAmmo.Shooted -= OnShooted;
-    }
+        private float _positionCameraScreen = .5f;
+        private float _defaultPositionValue = 0f;
+        private RaycastHit _hit;
 
-    private void OnShooted()
-    {
-        Ray ray = _camera.ViewportPointToRay(new Vector3(_positionCameraScreen, _positionCameraScreen, _defaultPositionValue));
+        public event Action<Vector3, Vector3> HitedBody;
+        public event Action<Vector3, Vector3> HitedHead;
 
-        if (Physics.Raycast(ray,out _hit) && _hit.collider.TryGetComponent(out IDamageObject damageObject))
+        private void OnEnable()
         {
-            damageObject.TakeDamage(_damage);
+            _weaponAmmo.Shooted += OnShooted;
+        }
 
-            if (_hit.collider.TryGetComponent(out EnemyHealth enemy))
-                HitedBody?.Invoke(_hit.point, _hit.normal);
+        private void OnDestroy()
+        {
+            _weaponAmmo.Shooted -= OnShooted;
+        }
 
-            if (_hit.collider.TryGetComponent(out HeadEnemy head))
-                HitedHead?.Invoke(_hit.point, _hit.normal);
+        private void OnShooted()
+        {
+            Ray ray = _camera.ViewportPointToRay(new Vector3(_positionCameraScreen, _positionCameraScreen, _defaultPositionValue));
+
+            if (Physics.Raycast(ray, out _hit) && _hit.collider.TryGetComponent(out IDamageObject damageObject))
+            {
+                damageObject.TakeDamage(_damage);
+
+                if (_hit.collider.TryGetComponent(out EnemyHealth enemy))
+                    HitedBody?.Invoke(_hit.point, _hit.normal);
+
+                if (_hit.collider.TryGetComponent(out HeadEnemy head))
+                    HitedHead?.Invoke(_hit.point, _hit.normal);
+            }
         }
     }
 }

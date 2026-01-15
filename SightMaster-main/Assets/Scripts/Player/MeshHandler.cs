@@ -1,18 +1,22 @@
+using SightMaster.Scripts.Weapon.Aim;
 using UnityEngine;
 
-public abstract class MeshHandler : MonoBehaviour
+namespace SightMaster.Scripts.Player
 {
-    [SerializeField] private Aim _aim;
-
-    private void OnEnable()
+    public abstract class MeshHandler : MonoBehaviour
     {
-        _aim.Aimed += OnAimed;
-    }
+        [SerializeField] private Aim _aim;
 
-    private void OnDisable()
-    {
-        _aim.Aimed -= OnAimed;
-    }
+        private void OnEnable()
+        {
+            _aim.Aimed += OnAimed;
+        }
 
-    protected abstract void OnAimed(bool isAimed);
+        private void OnDisable()
+        {
+            _aim.Aimed -= OnAimed;
+        }
+
+        protected abstract void OnAimed(bool isAimed);
+    }
 }

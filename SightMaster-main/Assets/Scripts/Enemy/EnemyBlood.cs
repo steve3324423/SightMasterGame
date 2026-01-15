@@ -1,42 +1,46 @@
-using System.Drawing;
+using SightMaster.Scripts.Weapon;
+using SightMaster.Scripts.SpawnerObjects;
 using UnityEngine;
 
-public class EnemyBlood : MonoBehaviour
+namespace SightMaster.Scripts.Enemy
 {
-    [SerializeField] private RayWeapon[] _rays;
-    [SerializeField] private SpawnerBlood _spawner;
-
-    private void OnEnable()
+    public class EnemyBlood : MonoBehaviour
     {
-        foreach (RayWeapon weapon in _rays)
+        [SerializeField] private RayWeapon[] _rays;
+        [SerializeField] private SpawnerBlood _spawner;
+
+        private void OnEnable()
         {
-            weapon.HitedHead += OnHitedHead;
-            weapon.HitedBody += OnHited;
+            foreach (RayWeapon weapon in _rays)
+            {
+                weapon.HitedHead += OnHitedHead;
+                weapon.HitedBody += OnHited;
+            }
         }
-    }
 
-    private void OnDisable()
-    {
-        foreach (RayWeapon weapon in _rays)
+        private void OnDisable()
         {
-            weapon.HitedHead -= OnHitedHead;
-            weapon.HitedBody -= OnHited;
+            foreach (RayWeapon weapon in _rays)
+            {
+                weapon.HitedHead -= OnHitedHead;
+                weapon.HitedBody -= OnHited;
+            }
         }
-    }
 
-    private void SpawnerActive(Vector3 normal, Vector3 point)
-    {
-        _spawner.SetPositionAndRotate(normal, point);
-        _spawner.Pool.Get();
-    }
+        private void SpawnerActive(Vector3 normal, Vector3 point)
+        {
+            _spawner.SetPositionAndRotate(normal, point);
+            _spawner.Pool.Get();
+        }
 
-    private void OnHited(Vector3 normal,Vector3 point)
-    {
-        SpawnerActive(normal,point);
-    }
+        private void OnHited(Vector3 normal, Vector3 point)
+        {
+            SpawnerActive(normal, point);
+        }
 
-    private void OnHitedHead(Vector3 normal, Vector3 point)
-    {
-        SpawnerActive(normal, point);
+        private void OnHitedHead(Vector3 normal, Vector3 point)
+        {
+            SpawnerActive(normal, point);
+        }
     }
 }

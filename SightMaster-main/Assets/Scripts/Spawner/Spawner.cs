@@ -1,33 +1,37 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-public abstract class Spawner<T> : MonoBehaviour where T : Component
+namespace SightMaster.Scripts.SpawnerObjects
 {
-    private bool _collectionChecks = true;
-    private int _defaultCapacity = 10;
-    private int _maxCapacity = 100;
-
-    public ObjectPool<T> Pool { get; private set; }
-
-    private void Awake()
+    public abstract class Spawner<T> : MonoBehaviour
+    where T : Component
     {
-        Pool = new ObjectPool<T>(Create, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject, _collectionChecks, _defaultCapacity, _maxCapacity);
-    }
+        private bool _collectionChecks = true;
+        private int _defaultCapacity = 10;
+        private int _maxCapacity = 100;
 
-    protected abstract T Create();
+        public ObjectPool<T> Pool { get; private set; }
 
-    protected virtual void OnTakeFromPool(T objectGame)
-    {
-        objectGame.gameObject.SetActive(true);
-    }
+        private void Awake()
+        {
+            Pool = new ObjectPool<T>(Create, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject, _collectionChecks, _defaultCapacity, _maxCapacity);
+        }
 
-    private void OnReturnedToPool(T objectGame)
-    {
-        objectGame.gameObject.SetActive(false);
-    }
+        protected abstract T Create();
 
-    private void OnDestroyPoolObject(T objectGame)
-    {
-        Destroy(objectGame.gameObject);
+        protected virtual void OnTakeFromPool(T objectGame)
+        {
+            objectGame.gameObject.SetActive(true);
+        }
+
+        private void OnReturnedToPool(T objectGame)
+        {
+            objectGame.gameObject.SetActive(false);
+        }
+
+        private void OnDestroyPoolObject(T objectGame)
+        {
+            Destroy(objectGame.gameObject);
+        }
     }
 }

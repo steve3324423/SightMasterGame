@@ -1,45 +1,50 @@
+using SightMaster.Scripts.Player;
+using SightMaster.Scripts.Enemy.EnemyWeapon;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-public class EnemyWeaponSound : MonoBehaviour
+namespace SightMaster.Scripts.Audios
 {
-    [SerializeField] private PlayerHealth _playerHealth;
-    [SerializeField] private WeaponDeadHandler _weaponDeadHandler;
-    [SerializeField] private EnemyWeapon _enemyWeapon;
-
-    private AudioSource _audioSource;
-
-    private void Awake()
+    [RequireComponent(typeof(AudioSource))]
+    public class EnemyWeaponSound : MonoBehaviour
     {
-        _audioSource = GetComponent<AudioSource>();
-    }
+        [SerializeField] private PlayerHealth _playerHealth;
+        [SerializeField] private WeaponDeadHandler _weaponDeadHandler;
+        [SerializeField] private EnemyWeapon _enemyWeapon;
 
-    private void OnEnable()
-    {
-        _playerHealth.Dead += OnDead;
-        _weaponDeadHandler.Falled += OnFalled;
-        _enemyWeapon.Shooted += OnShooted;
-    }
+        private AudioSource _audioSource;
 
-    private void OnDisable()
-    {
-        _playerHealth.Dead -= OnDead;
-        _weaponDeadHandler.Falled -= OnFalled;
-        _enemyWeapon.Shooted -= OnShooted;
-    }
+        private void Awake()
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
 
-    private void OnShooted(int damage)
-    {
-        _audioSource.Play();
-    }
+        private void OnEnable()
+        {
+            _playerHealth.Dead += OnDead;
+            _weaponDeadHandler.Falled += OnFalled;
+            _enemyWeapon.Shooted += OnShooted;
+        }
 
-    private void OnDead()
-    {
-        _audioSource.Stop();
-    }
+        private void OnDisable()
+        {
+            _playerHealth.Dead -= OnDead;
+            _weaponDeadHandler.Falled -= OnFalled;
+            _enemyWeapon.Shooted -= OnShooted;
+        }
 
-    private void OnFalled()
-    {
-        _audioSource.Stop();
+        private void OnShooted(int damage)
+        {
+            _audioSource.Play();
+        }
+
+        private void OnDead()
+        {
+            _audioSource.Stop();
+        }
+
+        private void OnFalled()
+        {
+            _audioSource.Stop();
+        }
     }
 }

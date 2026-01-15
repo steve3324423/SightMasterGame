@@ -1,18 +1,21 @@
 using System;
 using UnityEngine;
 
-public class LeaderboardButton : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private GameObject _leaderboardPanel;
-
-    private bool _enabled;
-
-    public event Action<bool> Clicked;
-
-    public void Touched()
+    public class LeaderboardButton : MonoBehaviour
     {
-        _enabled = !_enabled;
-        _leaderboardPanel.SetActive(_enabled);
-        Clicked?.Invoke(_enabled);
+        [SerializeField] private GameObject _leaderboardPanel;
+
+        private bool _enabled;
+
+        public event Action<bool> Clicked;
+
+        public void Touched()
+        {
+            _enabled = !_enabled;
+            _leaderboardPanel.SetActive(_enabled);
+            Clicked?.Invoke(_enabled);
+        }
     }
 }

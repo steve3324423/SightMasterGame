@@ -1,35 +1,40 @@
 using System;
+using SightMaster.Scripts.Enemy.HealthHandler;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class WeaponDeadHandler : MonoBehaviour
+namespace SightMaster.Scripts.Enemy.EnemyWeapon
 {
-    [SerializeField] private EnemyHealth _health;
-
-    private Rigidbody _rigidbody;
-
-    public event Action Falled;
-
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody))]
+    public class WeaponDeadHandler : MonoBehaviour
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        [SerializeField] private EnemyHealth _health;
+
+        private Rigidbody _rigidbody;
+
+        public event Action Falled;
+
+        private void Awake()
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+        }
+
+        private void OnEnable()
+        {
+            _health.Dead += OnDead;
+        }
+
+        private void OnDisable()
+        {
+            _health.Dead -= OnDead;
+        }
+
+        private void OnDead()
+        {
+            _rigidbody.isKinematic = false;
+            transform.parent = null;
+
+            Falled?.Invoke();
+        }
     }
 
-    private void OnEnable()
-    {
-        _health.Dead += OnDead;
-    }
-
-    private void OnDisable()
-    {
-        _health.Dead -= OnDead;
-    }
-
-    private void OnDead()
-    {
-        _rigidbody.isKinematic = false;
-        transform.parent = null;
-
-        Falled?.Invoke();
-    }
 }

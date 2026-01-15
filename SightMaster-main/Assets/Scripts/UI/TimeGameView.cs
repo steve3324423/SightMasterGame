@@ -1,24 +1,28 @@
-using UnityEngine;
 using TMPro;
+using SightMaster.Scripts.LevelHandler;
+using UnityEngine;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class TimeGameView : MonoBehaviour
+namespace SightMaster.Scripts.UI
 {
-    [SerializeField] private GameplayTime _time;
-
-    private TextMeshProUGUI _text;
-
-    private void Awake()
+    [RequireComponent(typeof(TextMeshProUGUI))]
+    public class TimeGameView : MonoBehaviour
     {
-        _text = GetComponent<TextMeshProUGUI>();
-    }
+        [SerializeField] private GameplayTime _time;
 
-    private void OnEnable()
-    {
-        float minutes = Mathf.FloorToInt(_time.TimeGame / 60);
-        float seconds = Mathf.FloorToInt(_time.TimeGame % 60);
+        private TextMeshProUGUI _text;
 
-        string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
-        _text.text = timeString;
+        private void Awake()
+        {
+            _text = GetComponent<TextMeshProUGUI>();
+        }
+
+        private void OnEnable()
+        {
+            float minutes = Mathf.FloorToInt(_time.TimeGame / 60);
+            float seconds = Mathf.FloorToInt(_time.TimeGame % 60);
+
+            string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
+            _text.text = timeString;
+        }
     }
 }

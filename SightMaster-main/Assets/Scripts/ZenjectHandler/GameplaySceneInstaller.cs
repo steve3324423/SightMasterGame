@@ -1,26 +1,32 @@
 using UnityEngine;
+using SightMaster.Scripts.Player;
+using SightMaster.Scripts.Camera;
+using SightMaster.Scripts.Setting;
 using Zenject;
 
-public class GameplaySceneInstaller : MonoInstaller
+namespace SightMaster.Scripts.ZenjectHandler
 {
-    [SerializeField] private CameraRotationMobile _cameraRotation;
-    [SerializeField] private PlayerCameraController _playerCameraController;
-    [SerializeField] private PlayerYawRotator _playerYawRotate;
-    [SerializeField] private CameraAimEnableHandler _cameraAim;
-    [SerializeField] private Sensitivity _sensitivity;
-
-    public override void InstallBindings()
+    public class GameplaySceneInstaller : MonoInstaller
     {
-        if (Application.isMobilePlatform)
-            Container.Bind<IInput>().To<MobileWeaponInput>().AsSingle();
-        else
-            Container.Bind<IInput>().To<DekstopInput>().AsSingle();
+        [SerializeField] private CameraRotationMobile _cameraRotation;
+        [SerializeField] private PlayerCameraController _playerCameraController;
+        [SerializeField] private PlayerYawRotator _playerYawRotate;
+        [SerializeField] private CameraAimEnableHandler _cameraAim;
+        [SerializeField] private Sensitivity _sensitivity;
 
-        Container.Bind<CameraAimEnableHandler>().FromInstance(_cameraAim).AsSingle();
-        Container.Bind<PlayerCameraController>().FromInstance(_playerCameraController).AsSingle();
-        Container.Bind<CameraRotationMobile>().FromInstance(_cameraRotation).AsSingle();
-        Container.Bind<PlayerYawRotator>().FromInstance(_playerYawRotate).AsSingle();
-        Container.Bind<Sensitivity>().FromInstance(_sensitivity).AsSingle();
-        Container.Bind<Mover>().FromComponentOnRoot().AsSingle();
+        public override void InstallBindings()
+        {
+            if (Application.isMobilePlatform)
+                Container.Bind<IInput>().To<MobileWeaponInput>().AsSingle();
+            else
+                Container.Bind<IInput>().To<DekstopInput>().AsSingle();
+
+            Container.Bind<CameraAimEnableHandler>().FromInstance(_cameraAim).AsSingle();
+            Container.Bind<PlayerCameraController>().FromInstance(_playerCameraController).AsSingle();
+            Container.Bind<CameraRotationMobile>().FromInstance(_cameraRotation).AsSingle();
+            Container.Bind<PlayerYawRotator>().FromInstance(_playerYawRotate).AsSingle();
+            Container.Bind<Sensitivity>().FromInstance(_sensitivity).AsSingle();
+            Container.Bind<Mover>().FromComponentOnRoot().AsSingle();
+        }
     }
 }

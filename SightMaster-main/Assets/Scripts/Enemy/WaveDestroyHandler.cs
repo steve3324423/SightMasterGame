@@ -1,36 +1,40 @@
 using System;
+using SightMaster.Scripts.Enemy.HealthHandler;
 using UnityEngine;
 
-public class WaveDestroyHandler : MonoBehaviour
+namespace SightMaster.Scripts.Enemy
 {
-    private EnemyHealth[] _enemyHealths;
-    private int _enemiesAlive;
-
-    public event Action Destroyed;
-
-    private void Awake()
+    public class WaveDestroyHandler : MonoBehaviour
     {
-        _enemyHealths = GetComponentsInChildren<EnemyHealth>();
-        _enemiesAlive = _enemyHealths.Length;
-    }
+        private EnemyHealth[] _enemyHealths;
+        private int _enemiesAlive;
 
-    private void OnEnable()
-    {
-        foreach (EnemyHealth enemyHealth in _enemyHealths)
-            enemyHealth.Dead += OnDeadEnemy;
-    }
+        public event Action Destroyed;
 
-    private void OnDisable()
-    {
-        foreach (EnemyHealth enemyHealth in _enemyHealths)
-            enemyHealth.Dead -= OnDeadEnemy;
-    }
+        private void Awake()
+        {
+            _enemyHealths = GetComponentsInChildren<EnemyHealth>();
+            _enemiesAlive = _enemyHealths.Length;
+        }
 
-    private void OnDeadEnemy()
-    {
-        _enemiesAlive--;
+        private void OnEnable()
+        {
+            foreach (EnemyHealth enemyHealth in _enemyHealths)
+                enemyHealth.Dead += OnDeadEnemy;
+        }
 
-        if (_enemiesAlive <= 0)
-            Destroyed?.Invoke();
+        private void OnDisable()
+        {
+            foreach (EnemyHealth enemyHealth in _enemyHealths)
+                enemyHealth.Dead -= OnDeadEnemy;
+        }
+
+        private void OnDeadEnemy()
+        {
+            _enemiesAlive--;
+
+            if (_enemiesAlive <= 0)
+                Destroyed?.Invoke();
+        }
     }
 }

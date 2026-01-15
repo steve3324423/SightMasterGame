@@ -1,8 +1,13 @@
+using SightMaster.Scripts.FSM;
 using UnityEngine;
 
-public class IdleEnemyAnimationState : EnemyAnimationState
+namespace SightMaster.Scripts.Animation.Enemy
 {
-    private const string Walk = "Walk";
+    public class IdleEnemyAnimationState : EnemyAnimationState
+    {
+        private const string Walk = "Walk";
 
-    public IdleEnemyAnimationState(Animator animator, FSM fsm) : base(animator, Walk, fsm) { }
+        public IdleEnemyAnimationState(Animator animator, FSM.FSM fsm)
+            : base(animator, Walk, fsm) { }
+    }
 }

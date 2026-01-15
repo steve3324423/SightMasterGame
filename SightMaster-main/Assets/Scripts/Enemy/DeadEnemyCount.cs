@@ -1,30 +1,34 @@
 using System;
+using SightMaster.Scripts.Enemy.HealthHandler;
 using UnityEngine;
 
-
-public class DeadEnemyCount : MonoBehaviour
+namespace SightMaster.Scripts.Enemy
 {
-    [SerializeField] private EnemyHealth[] _enemies;
-
-    public event Action<int> Deaded; 
-
-    public int Count { get; private set; } = 0;
-
-    private void OnEnable()
+    public class DeadEnemyCount : MonoBehaviour
     {
-        foreach (EnemyHealth enemy in _enemies)
-            enemy.Dead += OnDead;
-    }
+        [SerializeField] private EnemyHealth[] _enemies;
 
-    private void OnDestroy()
-    {
-        foreach (EnemyHealth enemy in _enemies)
-            enemy.Dead -= OnDead;
-    }
+        public event Action<int> Deaded;
 
-    private void OnDead()
-    {
-        Count++;
-        Deaded?.Invoke(Count);
+        public int Count { get; private set; } = 0;
+
+        private void OnEnable()
+        {
+            foreach (EnemyHealth enemy in _enemies)
+                enemy.Dead += OnDead;
+        }
+
+        private void OnDestroy()
+        {
+            foreach (EnemyHealth enemy in _enemies)
+                enemy.Dead -= OnDead;
+        }
+
+        private void OnDead()
+        {
+            Count++;
+            Deaded?.Invoke(Count);
+        }
     }
 }
+

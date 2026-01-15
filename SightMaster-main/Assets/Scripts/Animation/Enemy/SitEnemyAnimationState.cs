@@ -1,8 +1,13 @@
+using SightMaster.Scripts.FSM;
 using UnityEngine;
 
-public class SitEnemyAnimationState : EnemyAnimationState
+namespace SightMaster.Scripts.Animation.Enemy
 {
-    private const string Sit = "Sit";
+    public class SitEnemyAnimationState : EnemyAnimationState
+    {
+        private const string Sit = "Sit";
 
-    public SitEnemyAnimationState(Animator animator, FSM fsm) : base(animator,Sit,fsm) { }
+        public SitEnemyAnimationState(Animator animator, FSM.FSM fsm)
+            : base(animator, Sit, fsm) { }
+    }
 }
