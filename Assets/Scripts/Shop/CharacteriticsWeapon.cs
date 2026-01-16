@@ -6,7 +6,7 @@ namespace SightMaster.Scripts.Shop
     {
         [SerializeField] private int _damage;
         [SerializeField] private int _timeReload;
-        [SerializeField] private int _magazine—apacity;
+        [SerializeField] private int _magazine–°apacity;
 
         private WeaponToBuy _weapon;
 
@@ -30,7 +30,7 @@ namespace SightMaster.Scripts.Shop
 
         public int GetMagazineCapacity()
         {
-            return _magazine—apacity;
+            return _magazine–°apacity;
         }
     }
 

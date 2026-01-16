@@ -27,7 +27,7 @@ namespace SightMaster.Scripts.Enemy
                 return;
 
             _index++;
-            _waveSpawneds[_index].Start—ountdown();
+            _waveSpawneds[_index].Start–°ountdown();
         }
     }
 }
