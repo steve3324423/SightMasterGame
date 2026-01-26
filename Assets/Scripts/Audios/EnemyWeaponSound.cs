@@ -1,5 +1,5 @@
-using SightMaster.Scripts.Player;
 using SightMaster.Scripts.Enemy.EnemyWeapon;
+using SightMaster.Scripts.Player;
 using UnityEngine;
 
 namespace SightMaster.Scripts.Audios
@@ -32,7 +32,7 @@ namespace SightMaster.Scripts.Audios
             _enemyWeapon.Shooted -= OnShooted;
         }
 
-        private void OnShooted(int damage)
+        private void OnShooted()
         {
             _audioSource.Play();
         }

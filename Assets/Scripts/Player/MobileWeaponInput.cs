@@ -8,14 +8,14 @@ namespace SightMaster.Scripts.Player
     {
         private CameraRotationMobile _cameraRotation;
 
-        public override float Pitch => _cameraRotation.RotationX;
-        public override float Yaw => _cameraRotation.RotationY;
-
         public MobileWeaponInput(LevelEnder levelEnder, PlayerHealth playerHealth, CameraRotationMobile cameraRotation)
             : base(levelEnder, playerHealth)
         {
             _cameraRotation = cameraRotation;
         }
+
+        public override float Pitch => _cameraRotation.RotationX;
+        public override float Yaw => _cameraRotation.RotationY;
 
         public override Vector3 GetDirection(Transform transformPlayer)
         {

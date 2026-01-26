@@ -24,10 +24,9 @@ namespace SightMaster.Scripts.Enemy.EnemyWeapon
             _enemyWeapon.Shooted -= OnShooted;
         }
 
-        private void OnShooted(int value)
+        private void OnShooted()
         {
             _audio.Play();
         }
     }
 }
-

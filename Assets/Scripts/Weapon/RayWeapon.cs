@@ -1,5 +1,5 @@
 using System;
-using SightMaster.Scripts.Camera;
+using SightMaster.Scripts.CameraHandlers;
 using SightMaster.Scripts.DamageObject;
 using SightMaster.Scripts.Enemy.HealthHandler;
 using UnityEngine;
@@ -8,16 +8,21 @@ namespace SightMaster.Scripts.Weapon
 {
     public class RayWeapon : MonoBehaviour
     {
-        [SerializeField] private WeaponAmmo _weaponAmmo;
         [SerializeField] private int _damage = 10;
-        [SerializeField] private UnityEngine.Camera _camera;
+        [SerializeField] private Camera _camera;
 
+        private AmmoHandler _weaponAmmo;
         private float _positionCameraScreen = .5f;
         private float _defaultPositionValue = 0f;
         private RaycastHit _hit;
 
         public event Action<Vector3, Vector3> HitedBody;
         public event Action<Vector3, Vector3> HitedHead;
+
+        private void Awake()
+        {
+            _weaponAmmo = GetComponent<AmmoHandler>();
+        }
 
         private void OnEnable()
         {

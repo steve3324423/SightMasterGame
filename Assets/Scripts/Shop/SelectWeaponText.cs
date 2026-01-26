@@ -1,7 +1,7 @@
 using TMPro;
-using YG.LanguageLegacy;
-using YG;
 using UnityEngine;
+using YG;
+using YG.LanguageLegacy;
 
 namespace SightMaster.Scripts.Shop
 {
@@ -60,4 +60,3 @@ namespace SightMaster.Scripts.Shop
         }
     }
 }
-

@@ -1,6 +1,5 @@
 using System;
 using SightMaster.Scripts.Enemy.HealthHandler;
-using SightMaster.Scripts.Enemy.EnemyWeapon;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -96,7 +95,7 @@ namespace SightMaster.Scripts.Enemy
             enabled = false;
         }
 
-        private void OnShooted(int value)
+        private void OnShooted()
         {
             enabled = false;
         }

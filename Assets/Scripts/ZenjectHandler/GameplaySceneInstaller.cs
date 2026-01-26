@@ -1,7 +1,7 @@
-using UnityEngine;
+using SightMaster.Scripts.CameraHandlers;
 using SightMaster.Scripts.Player;
-using SightMaster.Scripts.Camera;
 using SightMaster.Scripts.Setting;
+using UnityEngine;
 using Zenject;
 
 namespace SightMaster.Scripts.ZenjectHandler

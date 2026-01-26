@@ -1,12 +1,12 @@
-using SightMaster.Scripts.Camera;
-using SightMaster.Scripts.Weapon.Aim;
+using SightMaster.Scripts.CameraHandlers;
+using SightMaster.Scripts.Weapon.AimHandler;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace SightMaster.Scripts.UI
 {
     [RequireComponent(typeof(RawImage))]
-    public class SpriteAimGet : MonoBehaviour
+    public class AimSprite : MonoBehaviour
     {
         [SerializeField] private CameraFollowBullet _cameraFollowBullet;
         [SerializeField] private SpriteGet[] _spriteGet;
@@ -62,4 +62,3 @@ namespace SightMaster.Scripts.UI
         }
     }
 }
-

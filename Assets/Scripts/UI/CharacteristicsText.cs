@@ -1,5 +1,5 @@
-using TMPro;
 using SightMaster.Scripts.Shop;
+using TMPro;
 using UnityEngine;
 
 namespace SightMaster.Scripts.UI
@@ -49,4 +49,3 @@ namespace SightMaster.Scripts.UI
         }
     }
 }
-

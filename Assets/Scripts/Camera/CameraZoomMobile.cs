@@ -1,40 +1,41 @@
-using System;
+using SightMaster.Scripts.CameraHandlers;
 using SightMaster.Scripts.UI;
 using UnityEngine;
 
-namespace SightMaster.Scripts.Camera
+public class CameraZoomMobile : BaseCameraZoom
 {
-    public class CameraZoomMobile : MonoBehaviour
+    [SerializeField] private SliderZoom _sliderZoom;
+
+    protected override void Awake()
     {
-        [SerializeField] private SliderZoom _sliderZoom;
+        base.Awake();
 
-        private UnityEngine.Camera _camera;
-
-        public event Action<float> ZoomChanged;
-
-        private void Awake()
+        if (!Application.isMobilePlatform)
         {
-            if (Application.isMobilePlatform == false)
-                enabled = false;
-
-            _camera = GetComponent<UnityEngine.Camera>();
+            enabled = false;
+            return;
         }
+    }
 
-        private void OnEnable()
+    protected override void InitializeZoom()
+    {
+        if (_sliderZoom != null)
         {
             _sliderZoom.ValueChanged += OnValueChanged;
         }
+    }
 
-        private void OnDestroy()
+    protected override void Cleanup()
+    {
+        if (_sliderZoom != null)
         {
             _sliderZoom.ValueChanged -= OnValueChanged;
         }
+    }
 
-        private void OnValueChanged(float value)
-        {
-            _camera.fieldOfView = value;
-            ZoomChanged?.Invoke(value);
-        }
-
+    private void OnValueChanged(float value)
+    {
+        float newFov = Mathf.Lerp(_maxFov, _minFov, value);
+        UpdateCameraFOV(newFov);
     }
 }

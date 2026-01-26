@@ -1,5 +1,5 @@
-using SightMaster.Scripts.Weapon;
 using SightMaster.Scripts.SpawnerObjects;
+using SightMaster.Scripts.Weapon;
 using UnityEngine;
 
 namespace SightMaster.Scripts.Enemy

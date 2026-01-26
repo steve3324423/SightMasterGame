@@ -1,8 +1,8 @@
-using SightMaster.Scripts.Player;
 using SightMaster.Scripts.LevelHandler;
+using SightMaster.Scripts.Player;
 using UnityEngine;
 
-namespace SightMaster.Scripts.Camera
+namespace SightMaster.Scripts.CameraHandlers
 {
     public class CameraFollower : MonoBehaviour
     {
@@ -30,6 +30,15 @@ namespace SightMaster.Scripts.Camera
             transform.position = initialDesiredPosition;
         }
 
+        private void LateUpdate()
+        {
+            if (_canRotate)
+            {
+                Vector3 localOffset = new Vector3(0, _height, -_rearDistance);
+                Vector3 desiredPosition = _target.position + _target.rotation * localOffset;
+            }
+        }
+
         private void OnDisable()
         {
             _levelEnder.Wined -= OnWined;
@@ -44,15 +53,6 @@ namespace SightMaster.Scripts.Camera
         private void OnDead()
         {
             _canRotate = false;
-        }
-
-        private void LateUpdate()
-        {
-            if (_canRotate)
-            {
-                Vector3 localOffset = new Vector3(0, _height, -_rearDistance);
-                Vector3 desiredPosition = _target.position + _target.rotation * localOffset;
-            }
         }
     }
 }

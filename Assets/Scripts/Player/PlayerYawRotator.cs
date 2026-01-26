@@ -1,6 +1,6 @@
+using SightMaster.Scripts.HandlerPause;
 using SightMaster.Scripts.LevelHandler;
 using SightMaster.Scripts.UI;
-using SightMaster.Scripts.HandlerPause;
 using UnityEngine;
 using Zenject;
 

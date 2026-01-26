@@ -36,5 +36,4 @@ namespace SightMaster.Scripts.Enemy.EnemyWeapon
             Falled?.Invoke();
         }
     }
-
 }

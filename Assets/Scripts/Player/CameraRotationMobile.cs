@@ -1,7 +1,7 @@
+using SightMaster.Scripts.Setting;
 using SightMaster.Scripts.UI;
 using SightMaster.Scripts.UI.Android;
-using SightMaster.Scripts.Weapon.Aim;
-using SightMaster.Scripts.Setting;
+using SightMaster.Scripts.Weapon.AimHandler;
 using UnityEngine;
 using YG;
 

@@ -1,10 +1,10 @@
-using SightMaster.Scripts.Camera;
+using SightMaster.Scripts.CameraHandlers;
 using SightMaster.Scripts.LevelHandler;
 using UnityEngine;
 
-namespace SightMaster.Scripts.Weapon.Aim
+namespace SightMaster.Scripts.Weapon.AimHandler
 {
-    [RequireComponent(typeof(UnityEngine.Camera))]
+    [RequireComponent(typeof(Camera))]
     public abstract class CameraEnableHandler : MonoBehaviour
     {
         [SerializeField] private CameraFollowBullet _cameraFollowBullet;
@@ -13,11 +13,11 @@ namespace SightMaster.Scripts.Weapon.Aim
 
         protected bool IsFollowed;
 
-        protected UnityEngine.Camera Camera;
+        protected Camera Camera;
 
         private void Awake()
         {
-            Camera = GetComponent<UnityEngine.Camera>();
+            Camera = GetComponent<Camera>();
         }
 
         private void OnEnable()

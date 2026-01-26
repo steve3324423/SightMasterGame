@@ -15,9 +15,6 @@ namespace SightMaster.Scripts.Player
 
         public event Action<float, float> RotationValuesChanged;
 
-        public abstract float Pitch { get; }
-        public abstract float Yaw { get; }
-
         protected InputControl(LevelEnder levelEnder, PlayerHealth playerHealth)
         {
             _levelEnder = levelEnder;
@@ -26,6 +23,9 @@ namespace SightMaster.Scripts.Player
             _levelEnder.Wined += OnWined;
             _playerHealth.Dead += OnDead;
         }
+
+        public abstract float Pitch { get; }
+        public abstract float Yaw { get; }
 
         public virtual Vector3 GetDirection(Transform transformPlayer)
         {

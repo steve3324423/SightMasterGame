@@ -1,5 +1,5 @@
-using TMPro;
 using SightMaster.Scripts.InGameCurrency;
+using TMPro;
 using UnityEngine;
 
 namespace SightMaster.Scripts.UI

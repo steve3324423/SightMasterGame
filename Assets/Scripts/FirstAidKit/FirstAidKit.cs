@@ -27,7 +27,7 @@ namespace SightMaster.Scripts.FirstAidKit
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out PlayerHealth player) && player.Health < _maxValue)
+            if (other.TryGetComponent(out PlayerHealth player) && player.CurrentHealth < _maxValue)
             {
                 Taked?.Invoke();
                 player.SetHealth(_maxValue);

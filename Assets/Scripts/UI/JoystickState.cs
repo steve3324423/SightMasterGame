@@ -1,5 +1,5 @@
+using SightMaster.Scripts.Weapon.AimHandler;
 using UI_Inputs;
-using SightMaster.Scripts.Weapon.Aim;
 using UnityEngine;
 
 namespace SightMaster.Scripts.UI

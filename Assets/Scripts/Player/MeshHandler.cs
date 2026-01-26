@@ -1,4 +1,4 @@
-using SightMaster.Scripts.Weapon.Aim;
+using SightMaster.Scripts.Weapon.AimHandler;
 using UnityEngine;
 
 namespace SightMaster.Scripts.Player

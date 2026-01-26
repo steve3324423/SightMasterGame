@@ -1,6 +1,6 @@
- using UnityEngine;
- using UnityEngine.UI;
- using YG;
+using UnityEngine;
+using UnityEngine.UI;
+using YG;
 
 namespace SightMaster.Scripts.LevelHandler
 {

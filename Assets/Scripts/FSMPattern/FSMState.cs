@@ -1,13 +1,12 @@
-
 namespace SightMaster.Scripts.FSM
 {
     public abstract class FSMState
     {
-        protected readonly FSM Fsm;
+        protected readonly StateMachine StateMachine;
 
-        public FSMState(FSM fsm)
+        public FSMState(StateMachine stateMachine)
         {
-            Fsm = fsm;
+            StateMachine = stateMachine;
         }
 
         public virtual void Enter() { }

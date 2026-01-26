@@ -19,7 +19,7 @@ namespace SightMaster.Scripts.Enemy
                 ResetEnemies(false);
         }
 
-        public void Start–°ountdown()
+        public void Start—ountdown()
         {
             List<GameObject> directChildren = GetDirectChildren(transform);
             WarningBeforeSpawned?.Invoke(directChildren);

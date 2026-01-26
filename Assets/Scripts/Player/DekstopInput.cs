@@ -1,4 +1,4 @@
-using SightMaster.Scripts.Camera;
+using SightMaster.Scripts.CameraHandlers;
 using SightMaster.Scripts.LevelHandler;
 using SightMaster.Scripts.Setting;
 using UnityEngine;
@@ -23,11 +23,11 @@ namespace SightMaster.Scripts.Player
         private float _targetPitch = 15f;
         private float _targetYaw = 0f;
 
-        public override float Pitch => _pitch;
-        public override float Yaw => _yaw;
-
-        public DekstopInput(LevelEnder levelEnder, PlayerHealth playerHealth,
-            CameraAimEnableHandler cameraAim, Sensitivity sensitivity)
+        public DekstopInput(
+            LevelEnder levelEnder,
+            PlayerHealth playerHealth,
+            CameraAimEnableHandler cameraAim,
+            Sensitivity sensitivity)
             : base(levelEnder, playerHealth)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -35,6 +35,9 @@ namespace SightMaster.Scripts.Player
             _targetPitch = _pitch;
             _targetYaw = _yaw;
         }
+
+        public override float Pitch => _pitch;
+        public override float Yaw => _yaw;
 
         public override Vector3 GetDirection(Transform transformPlayer)
         {

@@ -1,5 +1,5 @@
-using SightMaster.Scripts.Enemy;
 using System.Collections.Generic;
+using SightMaster.Scripts.Enemy;
 using UnityEngine;
 using UnityEngine.Pool;
 

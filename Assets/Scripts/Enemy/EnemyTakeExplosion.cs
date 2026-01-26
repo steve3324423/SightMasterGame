@@ -1,5 +1,5 @@
-using SightMaster.Scripts.Enviroment;
 using SightMaster.Scripts.Enemy.HealthHandler;
+using SightMaster.Scripts.Enviroment;
 using UnityEngine;
 
 namespace SightMaster.Scripts.Enemy

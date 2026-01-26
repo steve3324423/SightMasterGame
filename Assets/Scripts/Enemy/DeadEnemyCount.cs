@@ -31,4 +31,3 @@ namespace SightMaster.Scripts.Enemy
         }
     }
 }
-

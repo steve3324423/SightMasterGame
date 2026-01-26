@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-namespace SightMaster.Scripts.Weapon.Aim
+namespace SightMaster.Scripts.Weapon.AimHandler
 {
     public class Aim : MonoBehaviour
     {
@@ -14,11 +14,12 @@ namespace SightMaster.Scripts.Weapon.Aim
         public void Construct(IInputWeapon inputWeapon)
         {
             _inputWeapon = inputWeapon;
+            _inputWeapon.Aiming += OnAiming;
         }
 
-        private void Update()
+        private void OnAiming(bool isAiming)
         {
-            Aimed?.Invoke(_inputWeapon.IsAimed());
+            Aimed?.Invoke(isAiming);
         }
     }
 }

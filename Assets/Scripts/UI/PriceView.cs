@@ -1,7 +1,7 @@
-using TMPro;
 using SightMaster.Scripts.Shop;
-using YG;
+using TMPro;
 using UnityEngine;
+using YG;
 
 namespace SightMaster.Scripts.UI
 {
