@@ -32,7 +32,6 @@ namespace SightMaster.Scripts.ZenjectHandler
             Container.Bind<PauseHandler>().FromInstance(_pauseHandler).AsSingle();
             Container.Bind<LevelEnder>().FromInstance(_levelEnder).AsSingle();
             Container.Bind<DekstopInputHandler>().FromInstance(_dekstopHandler).AsSingle();
-            Container.Bind<Aim>().FromComponentOnRoot().AsSingle();
         }
     }
 }

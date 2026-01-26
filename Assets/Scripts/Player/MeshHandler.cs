@@ -1,20 +1,24 @@
+using SightMaster.Scripts.Weapon;
 using SightMaster.Scripts.Weapon.AimHandler;
 using UnityEngine;
+using Zenject;
 
 namespace SightMaster.Scripts.Player
 {
     public abstract class MeshHandler : MonoBehaviour
     {
-        [SerializeField] private Aim _aim;
+        private IInputWeapon _inputWeapon;
 
-        private void OnEnable()
+        [Inject]
+        public void Construct(IInputWeapon inputWeapon)
         {
-            _aim.Aimed += OnAimed;
+            _inputWeapon = inputWeapon;
+            _inputWeapon.Aiming += OnAimed;
         }
 
         private void OnDisable()
         {
-            _aim.Aimed -= OnAimed;
+            _inputWeapon.Aiming -= OnAimed;
         }
 
         protected abstract void OnAimed(bool isAimed);

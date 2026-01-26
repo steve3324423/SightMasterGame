@@ -1,14 +1,23 @@
-using System.Collections;
 using SightMaster.Scripts.CameraHandlers;
+using SightMaster.Scripts.Weapon;
 using SightMaster.Scripts.Weapon.AimHandler;
+using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class CameraZoom : BaseCameraZoom
 {
     [SerializeField] private float _zoomSpeed = 5f;
-    [SerializeField] private Aim _aim;
 
+    private IInputWeapon _inputWeapon;
     private Coroutine _zoomCoroutine;
+
+    [Inject]
+    public void Construct(IInputWeapon inputWeapon)
+    {
+        _inputWeapon = inputWeapon;
+        _inputWeapon.Aiming += OnAimed;
+    }
 
     protected override void Awake()
     {
@@ -23,17 +32,17 @@ public class CameraZoom : BaseCameraZoom
 
     protected override void InitializeZoom()
     {
-        if (_aim != null)
+        if (_inputWeapon != null)
         {
-            _aim.Aimed += OnAimed;
+            _inputWeapon.Aiming += OnAimed;
         }
     }
 
     protected override void Cleanup()
     {
-        if (_aim != null)
+        if (_inputWeapon != null)
         {
-            _aim.Aimed -= OnAimed;
+            _inputWeapon.Aiming -= OnAimed;
         }
         StopZoomCoroutine();
     }

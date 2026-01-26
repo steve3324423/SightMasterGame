@@ -6,8 +6,6 @@ namespace SightMaster.Scripts.CameraHandlers
 {
     public class CameraAimEnableHandler : CameraEnableHandler
     {
-        public event Action<bool> Aimed;
-
         protected override void OnWined()
         {
             if (IsFollowed == false)
@@ -23,10 +21,7 @@ namespace SightMaster.Scripts.CameraHandlers
         protected override void OnAimed(bool isAimed)
         {
             if (IsFollowed == false)
-            {
                 Camera.enabled = isAimed;
-                Aimed?.Invoke(isAimed);
-            }
         }
     }
 }

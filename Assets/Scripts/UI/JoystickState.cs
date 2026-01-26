@@ -1,22 +1,27 @@
+using SightMaster.Scripts.Weapon;
 using SightMaster.Scripts.Weapon.AimHandler;
 using UI_Inputs;
 using UnityEngine;
+using Zenject;
 
 namespace SightMaster.Scripts.UI
 {
     public class JoystickState : MonoBehaviour
     {
         [SerializeField] private UIInputJoystick _movementJoystick;
-        [SerializeField] private Aim _aim;
 
-        private void OnEnable()
+        private IInputWeapon _inputWeapon;
+
+        [Inject]
+        public void Construct(IInputWeapon inputWeapon)
         {
-            _aim.Aimed += OnAimed;
+            _inputWeapon = inputWeapon;
+            _inputWeapon.Aiming += OnAimed;
         }
 
         private void OnDisable()
         {
-            _aim.Aimed -= OnAimed;
+           _inputWeapon.Aiming -= OnAimed;
         }
 
         private void OnAimed(bool isAimed)

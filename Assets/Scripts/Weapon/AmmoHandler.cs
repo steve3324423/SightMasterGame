@@ -9,7 +9,6 @@ namespace SightMaster.Scripts.Weapon
     public class AmmoHandler : MonoBehaviour
     {
         [SerializeField] private int _magazineSize = 30;
-        [SerializeField] private Aim _aim;
 
         private bool _isShooting;
         private bool _isCanShoot = true;
@@ -26,6 +25,7 @@ namespace SightMaster.Scripts.Weapon
         public void Construct(IInputWeapon inputWeapon)
         {
             _inputWeapon = inputWeapon;
+            _inputWeapon.Aiming += OnAimed;
             _inputWeapon.Shooting += OnShooting;
         }
 
@@ -37,15 +37,10 @@ namespace SightMaster.Scripts.Weapon
             BulletChanged?.Invoke(_currentAmmo, _ammoInReserve);
         }
 
-        private void OnEnable()
-        {
-            _aim.Aimed += OnAimed;
-        }
-
         private void OnDisable()
         {
             _inputWeapon.Shooting -= OnShooting;
-            _aim.Aimed -= OnAimed;
+            _inputWeapon.Aiming -= OnAimed;
         }
 
         private void OnShooting(bool isShooting)

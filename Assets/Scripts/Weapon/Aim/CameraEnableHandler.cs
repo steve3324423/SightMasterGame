@@ -1,6 +1,7 @@
 using SightMaster.Scripts.CameraHandlers;
 using SightMaster.Scripts.LevelHandler;
 using UnityEngine;
+using Zenject;
 
 namespace SightMaster.Scripts.Weapon.AimHandler
 {
@@ -9,11 +10,17 @@ namespace SightMaster.Scripts.Weapon.AimHandler
     {
         [SerializeField] private CameraFollowBullet _cameraFollowBullet;
         [SerializeField] private LevelEnder _levelEnder;
-        [SerializeField] private Aim _aim;
 
+        private IInputWeapon _inputWeapon;
         protected bool IsFollowed;
-
         protected Camera Camera;
+
+        [Inject]
+        public void Construct(IInputWeapon inputWeapon)
+        {
+            _inputWeapon = inputWeapon;
+            _inputWeapon.Aiming += OnAimed;
+        }
 
         private void Awake()
         {
@@ -24,14 +31,12 @@ namespace SightMaster.Scripts.Weapon.AimHandler
         {
             _cameraFollowBullet.Followed += OnFollowed;
             _levelEnder.Wined += OnWined;
-            _aim.Aimed += OnAimed;
         }
 
         private void OnDisable()
         {
             _cameraFollowBullet.Followed -= OnFollowed;
             _levelEnder.Wined -= OnWined;
-            _aim.Aimed -= OnAimed;
         }
 
         protected abstract void OnWined();
