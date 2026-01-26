@@ -1,5 +1,5 @@
-using TMPro;
 using SightMaster.Scripts.Weapon;
+using TMPro;
 using UnityEngine;
 
 namespace SightMaster.Scripts.UI
@@ -7,7 +7,7 @@ namespace SightMaster.Scripts.UI
     [RequireComponent(typeof(TextMeshProUGUI))]
     public class BulletView : MonoBehaviour
     {
-        [SerializeField] private WeaponAmmo[] _weaponAmmo;
+        [SerializeField] private AmmoHandler[] _weaponAmmo;
 
         private TextMeshProUGUI _text;
 
@@ -18,13 +18,13 @@ namespace SightMaster.Scripts.UI
 
         private void OnEnable()
         {
-            foreach (WeaponAmmo weapon in _weaponAmmo)
+            foreach (AmmoHandler weapon in _weaponAmmo)
                 weapon.BulletChanged += OnBulletChanged;
         }
 
         private void OnDisable()
         {
-            foreach (WeaponAmmo weapon in _weaponAmmo)
+            foreach (AmmoHandler weapon in _weaponAmmo)
                 weapon.BulletChanged -= OnBulletChanged;
         }
 

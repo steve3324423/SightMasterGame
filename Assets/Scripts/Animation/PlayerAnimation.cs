@@ -1,6 +1,6 @@
-using SightMaster.Scripts.Player;
-using SightMaster.Scripts.LevelHandler;
 using SightMaster.Scripts.FSM;
+using SightMaster.Scripts.LevelHandler;  
+using SightMaster.Scripts.Player;
 using UnityEngine;
 
 namespace SightMaster.Scripts.Animation
@@ -10,14 +10,14 @@ namespace SightMaster.Scripts.Animation
     {
         [SerializeField] private LevelEnder _levelEnder;
 
-        private IdleAnimationState _idleState;
-        private WinAnimationState _winState;
-        private MoveAnimationState _moveState;
-        private DeadAnimationState _deadState;
+        private AnimationState _idleState;
+        private AnimationState _winState;
+        private AnimationState _moveState;
+        private AnimationState _deadState;
         private PlayerHealth _health;
         private Animator _animator;
         private Mover _mover;
-        private FSM.FSM _fsm;
+        private StateMachine _stateMachine;
         private bool _isDead;
         private bool _isWin;
 
@@ -27,18 +27,18 @@ namespace SightMaster.Scripts.Animation
             _animator = GetComponent<Animator>();
             _mover = GetComponent<Mover>();
 
-            _fsm = new FSM.FSM();
-            _idleState = new IdleAnimationState(_fsm, _animator);
-            _moveState = new MoveAnimationState(_fsm, _animator);
-            _deadState = new DeadAnimationState(_fsm, _animator);
-            _winState = new WinAnimationState(_fsm, _animator);
+            _stateMachine = new StateMachine();
+            _idleState = new AnimationState(_stateMachine, _animator, PlayerAnimationNames.Idle);
+            _moveState = new AnimationState(_stateMachine, _animator, PlayerAnimationNames.Move);
+            _deadState = new AnimationState(_stateMachine, _animator, PlayerAnimationNames.Dead);
+            _winState = new AnimationState(_stateMachine, _animator, PlayerAnimationNames.Win);
 
-            _fsm.AddState(_idleState);
-            _fsm.AddState(_moveState);
-            _fsm.AddState(_deadState);
-            _fsm.AddState(_winState);
+            _stateMachine.AddState(PlayerAnimationNames.Idle, _idleState);
+            _stateMachine.AddState(PlayerAnimationNames.Move, _moveState);
+            _stateMachine.AddState(PlayerAnimationNames.Dead, _deadState);
+            _stateMachine.AddState(PlayerAnimationNames.Win, _winState);
 
-            _fsm.SetState<IdleAnimationState>();
+            _stateMachine.SetState(PlayerAnimationNames.Idle);
         }
 
         private void OnEnable()
@@ -58,22 +58,21 @@ namespace SightMaster.Scripts.Animation
         private void OnMoved(bool isMove)
         {
             if (isMove && _isDead == false)
-                _fsm.SetState<MoveAnimationState>();
+                _stateMachine.SetState(PlayerAnimationNames.Move);
             else if (_isDead == false && _isWin == false)
-                _fsm.SetState<IdleAnimationState>();
+                _stateMachine.SetState(PlayerAnimationNames.Idle);
         }
 
         private void OnWined()
         {
             _isWin = true;
-            _fsm.SetState<WinAnimationState>();
+            _stateMachine.SetState(PlayerAnimationNames.Win);
         }
 
         private void OnDead()
         {
-            _fsm.SetState<DeadAnimationState>();
+            _stateMachine.SetState(PlayerAnimationNames.Dead);
             _isDead = true;
         }
     }
-
 }

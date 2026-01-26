@@ -2,7 +2,7 @@ using SightMaster.Scripts.Player;
 using UnityEngine;
 using Zenject;
 
-namespace SightMaster.Scripts.Camera
+namespace SightMaster.Scripts.CameraHandlers
 {
     [RequireComponent(typeof(CameraAimEnableHandler))]
     public class CameraAim : MonoBehaviour

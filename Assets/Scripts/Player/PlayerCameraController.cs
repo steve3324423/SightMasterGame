@@ -1,6 +1,6 @@
-using SightMaster.Scripts.Camera;
-using SightMaster.Scripts.LevelHandler;
+using SightMaster.Scripts.CameraHandlers;
 using SightMaster.Scripts.HandlerPause;
+using SightMaster.Scripts.LevelHandler;
 using SightMaster.Scripts.UI;
 using UnityEngine;
 using Zenject;

@@ -1,5 +1,7 @@
 using SightMaster.Scripts.UI;
 using SightMaster.Scripts.UI.Android;
+using System;
+using UnityEngine;
 
 namespace SightMaster.Scripts.Weapon
 {
@@ -8,20 +10,26 @@ namespace SightMaster.Scripts.Weapon
         private AimButton _aimButtom;
         private ShootButton _shootButton;
 
+        public event Action<bool> Shooting;
+        public event Action<bool> Aiming;
+
         public MobileInput(AimButton aimButtom, ShootButton shootButton)
         {
             _aimButtom = aimButtom;
             _shootButton = shootButton;
+
+            _shootButton.Shooting += OnShooting;
+            _aimButtom.Aimed += OnAimed;
         }
 
-        public bool IsAimed()
+        private void OnAimed(bool isAiming)
         {
-            return _aimButtom.IsAimed;
+            Aiming?.Invoke(isAiming);
         }
 
-        public bool IsShoot()
+        private void OnShooting(bool isShooting)
         {
-            return _shootButton.IsClickShoot;
+            Shooting?.Invoke(isShooting);
         }
     }
 }

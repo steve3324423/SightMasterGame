@@ -1,88 +1,79 @@
-using System;
 using System.Collections;
-using SightMaster.Scripts.Weapon.Aim;
+using SightMaster.Scripts.CameraHandlers;
+using SightMaster.Scripts.Weapon.AimHandler;
 using UnityEngine;
 
-namespace SightMaster.Scripts.Camera
+public class CameraZoom : BaseCameraZoom
 {
-    public class CameraZoom : MonoBehaviour
+    [SerializeField] private float _zoomSpeed = 5f;
+    [SerializeField] private Aim _aim;
+
+    private Coroutine _zoomCoroutine;
+
+    protected override void Awake()
     {
-        [SerializeField] private float _zoomSpeed = 5f;
-        [SerializeField] private float _minFov = 30f;
-        [SerializeField] private float _aimedFov = 8f;
-        [SerializeField] private Aim _aim;
+        base.Awake();
 
-        private Coroutine _zoomCoroutine;
-        private UnityEngine.Camera _camera;
-
-        public event Action<float> ZoomChanged;
-
-        private void Awake()
+        if (Application.isMobilePlatform)
         {
-            if (Application.isMobilePlatform)
-                enabled = false;
-
-            _camera = GetComponent<UnityEngine.Camera>();
-            _camera.fieldOfView = _minFov;
+            enabled = false;
+            return;
         }
+    }
 
-        private void OnEnable()
+    protected override void InitializeZoom()
+    {
+        if (_aim != null)
         {
             _aim.Aimed += OnAimed;
         }
+    }
 
-        private void OnDisable()
+    protected override void Cleanup()
+    {
+        if (_aim != null)
         {
             _aim.Aimed -= OnAimed;
-
-            if (_zoomCoroutine != null)
-            {
-                StopCoroutine(_zoomCoroutine);
-                _zoomCoroutine = null;
-            }
         }
+        StopZoomCoroutine();
+    }
 
-        private IEnumerator ChangeZoom()
+    private IEnumerator ChangeZoom()
+    {
+        while (enabled)
         {
-            while (enabled)
+            float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
+
+            if (scrollDelta != 0)
             {
-                float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
-
-                if (scrollDelta != 0)
-                {
-                    float newFov = _camera.fieldOfView - scrollDelta * _zoomSpeed;
-                    newFov = Mathf.Clamp(newFov, _aimedFov, _minFov);
-                    _camera.fieldOfView = newFov;
-
-                    ZoomChanged?.Invoke(newFov);
-                }
-
-                yield return null;
+                float newFov = _camera.fieldOfView - scrollDelta * _zoomSpeed;
+                UpdateCameraFOV(newFov);
             }
+
+            yield return null;
         }
+    }
 
-        private void OnAimed(bool isAimed)
+    private void StopZoomCoroutine()
+    {
+        if (_zoomCoroutine != null)
         {
-            if (isAimed)
-            {
-                if (_zoomCoroutine != null)
-                {
-                    StopCoroutine(_zoomCoroutine);
-                }
+            StopCoroutine(_zoomCoroutine);
+            _zoomCoroutine = null;
+        }
+    }
 
-                _zoomCoroutine = StartCoroutine(ChangeZoom());
-            }
-            else
-            {
-                if (_zoomCoroutine != null)
-                {
-                    StopCoroutine(_zoomCoroutine);
-                    _zoomCoroutine = null;
-                }
-
-                _camera.fieldOfView = _minFov;
-                ZoomChanged?.Invoke(_minFov);
-            }
+    private void OnAimed(bool isAimed)
+    {
+        if (isAimed)
+        {
+            StopZoomCoroutine();
+            _zoomCoroutine = StartCoroutine(ChangeZoom());
+        }
+        else
+        {
+            StopZoomCoroutine();
+            UpdateCameraFOV(_minFov);
         }
     }
 }

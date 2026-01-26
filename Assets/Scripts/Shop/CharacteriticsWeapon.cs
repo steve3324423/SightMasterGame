@@ -33,5 +33,4 @@ namespace SightMaster.Scripts.Shop
             return _magazine—apacity;
         }
     }
-
 }

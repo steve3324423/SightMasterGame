@@ -5,14 +5,22 @@ using UnityEngine;
 
 namespace SightMaster.Scripts.Animation.Enemy
 {
+    [RequireComponent(typeof(EnemyHealth))]
+    [RequireComponent(typeof(DepletionPlayer))]
     [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(EnemyAI))]
     public class EnemyAnimation : MonoBehaviour
     {
         private EnemyHealth _enemyHealth;
         private DepletionPlayer _depletion;
         private Animator _animator;
         private EnemyAI _enemyAI;
-        private FSM.FSM _fsm;
+        private StateMachine _stateMachine;
+        private AnimationState _idleState;
+        private AnimationState _moveState;
+        private AnimationState _attackState;
+        private AnimationState _sitState;
+        private AnimationState _deathState;
 
         private void Awake()
         {
@@ -21,15 +29,21 @@ namespace SightMaster.Scripts.Animation.Enemy
             _animator = GetComponent<Animator>();
             _enemyAI = GetComponent<EnemyAI>();
 
-            _fsm = new FSM.FSM();
+            _stateMachine = new StateMachine();
 
-            _fsm.AddState(new DeadEnemyAnimationState(_animator, _fsm));
-            _fsm.AddState(new MoveEnemyAnimationState(_animator, _fsm));
-            _fsm.AddState(new IdleEnemyAnimationState(_animator, _fsm));
-            _fsm.AddState(new SitEnemyAnimationState(_animator, _fsm));
-            _fsm.AddState(new AttackEnemyAnimationState(_animator, _fsm));
+            _idleState = new AnimationState(_stateMachine, _animator, EnemyAnimationNames.Idle);
+            _moveState = new AnimationState(_stateMachine, _animator, EnemyAnimationNames.Run);
+            _attackState = new AnimationState(_stateMachine, _animator, EnemyAnimationNames.Shoot);
+            _sitState = new AnimationState(_stateMachine, _animator, EnemyAnimationNames.Sit);
+            _deathState = new AnimationState(_stateMachine, _animator, EnemyAnimationNames.Death);
 
-            _fsm.SetState<IdleEnemyAnimationState>();
+            _stateMachine.AddState(EnemyAnimationNames.Idle, _idleState);
+            _stateMachine.AddState(EnemyAnimationNames.Run, _moveState);
+            _stateMachine.AddState(EnemyAnimationNames.Shoot, _attackState);
+            _stateMachine.AddState(EnemyAnimationNames.Sit, _sitState);
+            _stateMachine.AddState(EnemyAnimationNames.Death, _deathState);
+
+            _stateMachine.SetState(EnemyAnimationNames.Idle);
         }
 
         private void OnEnable()
@@ -58,22 +72,22 @@ namespace SightMaster.Scripts.Animation.Enemy
 
         private void OnDepleted()
         {
-            _fsm.SetState<AttackEnemyAnimationState>();
+            _stateMachine.SetState(EnemyAnimationNames.Shoot);
         }
 
         private void OnReachedShelter()
         {
-            _fsm.SetState<SitEnemyAnimationState>();
+            _stateMachine.SetState(EnemyAnimationNames.Sit);
         }
 
         private void OnScared()
         {
-            _fsm.SetState<MoveEnemyAnimationState>();
+            _stateMachine.SetState(EnemyAnimationNames.Run);
         }
 
         private void OnDead()
-        {
-            _fsm.SetState<DeadEnemyAnimationState>();
+        { 
+            _stateMachine.SetState(EnemyAnimationNames.Death);
         }
     }
 }

@@ -1,5 +1,5 @@
-using UnityEngine;
 using SightMaster.Scripts.UI.Android;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace SightMaster.Scripts.UI

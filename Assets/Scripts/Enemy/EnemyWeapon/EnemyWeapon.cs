@@ -19,7 +19,7 @@ namespace SightMaster.Scripts.Enemy.EnemyWeapon
         private WaitForSeconds _waitForSeconds;
         private VisiblePlayer _hiddenPlace;
 
-        public event Action<int> Shooted;
+        public event Action Shooted;
 
         private void Awake()
         {
@@ -62,8 +62,9 @@ namespace SightMaster.Scripts.Enemy.EnemyWeapon
         {
             while (enabled)
             {
-                int damage = _isPlayerDisappeared == false ? 0 : UnityEngine.Random.Range(_minDamage, _damage + 1);
-                Shooted?.Invoke(damage);
+                int damage =  UnityEngine.Random.Range(_minDamage, _damage + 1);
+                _playerHealth.TakeDamage(_isPlayerDisappeared == false ? 0 : damage);
+                Shooted?.Invoke();
 
                 yield return _waitForSeconds;
             }

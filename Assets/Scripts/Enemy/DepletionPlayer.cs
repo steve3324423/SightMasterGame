@@ -1,15 +1,16 @@
 using System;
-using SightMaster.Scripts.Camera;
-using SightMaster.Scripts.Weapon;
+using SightMaster.Scripts.CameraHandlers;
 using SightMaster.Scripts.Enemy.HealthHandler;
+using SightMaster.Scripts.Weapon;
 using UnityEngine;
 
 namespace SightMaster.Scripts.Enemy
 {
+    [RequireComponent(typeof(EnemyHealth))]
     public class DepletionPlayer : MonoBehaviour
     {
         [SerializeField] private CameraFollowBullet _cameraFollowBullet;
-        [SerializeField] private WeaponAmmo[] _ammos;
+        [SerializeField] private AmmoHandler[] _ammos;
         [SerializeField] private int _deplectionChance = 1;
         [SerializeField] private int _minValue = 0;
         [SerializeField] private int _maxValue = 2;
@@ -29,8 +30,8 @@ namespace SightMaster.Scripts.Enemy
 
         private void OnEnable()
         {
-            foreach (WeaponAmmo weapon in _ammos)
-                weapon.Shooted += OnShooted;
+            foreach (AmmoHandler ammo in _ammos)
+                ammo.Shooted += OnShooted;
 
             _cameraFollowBullet.Followed += OnFollowed;
             _enemyHealth.Dead += OnDead;
@@ -38,8 +39,8 @@ namespace SightMaster.Scripts.Enemy
 
         private void OnDisable()
         {
-            foreach (WeaponAmmo weapon in _ammos)
-                weapon.Shooted -= OnShooted;
+            foreach (AmmoHandler ammo in _ammos)
+                ammo.Shooted -= OnShooted;
 
             _cameraFollowBullet.Followed -= OnFollowed;
             _enemyHealth.Dead -= OnDead;
@@ -47,10 +48,10 @@ namespace SightMaster.Scripts.Enemy
 
         private void OnShooted()
         {
-            Invoke("ReactedToShoot", _timeForInvoke);
+            Invoke("HandleShootReaction", _timeForInvoke);
         }
 
-        private void ReactedToShoot()
+        private void HandleShootReaction()
         {
             int randomMumber = UnityEngine.Random.Range(_minValue, _maxValue);
 
@@ -72,7 +73,7 @@ namespace SightMaster.Scripts.Enemy
             _canDepletion = !isFollowed;
 
             if (_canDepletion && _canScared)
-                ReactedToShoot();
+                HandleShootReaction();
         }
 
         private void OnDead()

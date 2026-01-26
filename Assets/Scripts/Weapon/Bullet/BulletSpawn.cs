@@ -1,4 +1,3 @@
-using SightMaster.Scripts.Weapon;
 using System;
 using UnityEngine;
 
@@ -31,5 +30,4 @@ namespace SightMaster.Scripts.Weapon.Bullet
             Created?.Invoke(_bullet);
         }
     }
-
 }

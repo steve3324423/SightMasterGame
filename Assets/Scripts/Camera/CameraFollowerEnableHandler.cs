@@ -1,7 +1,7 @@
-using SightMaster.Scripts.Weapon.Aim;
+using SightMaster.Scripts.Weapon.AimHandler;
 using UnityEngine;
 
-namespace SightMaster.Scripts.Camera
+namespace SightMaster.Scripts.CameraHandlers
 {
     public class CameraFollowerEnableHandler : CameraEnableHandler
     {

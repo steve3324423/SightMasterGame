@@ -1,5 +1,5 @@
-using TMPro;
 using SightMaster.Scripts.Enemy;
+using TMPro;
 using UnityEngine;
 
 namespace SightMaster.Scripts.UI

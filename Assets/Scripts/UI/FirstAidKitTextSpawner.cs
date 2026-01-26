@@ -1,5 +1,4 @@
 using TMPro;
-using SightMaster.Scripts.FirstAidKit;
 using UnityEngine;
 
 namespace SightMaster.Scripts.UI

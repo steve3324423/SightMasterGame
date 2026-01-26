@@ -8,8 +8,8 @@ namespace SightMaster.Scripts.Animation
         protected Animator _animator;
         protected string _animationName;
 
-        public AnimationState(FSM.FSM fsm, Animator animator, string animationName)
-            : base(fsm)
+        public AnimationState(StateMachine stateMachine, Animator animator, string animationName)
+            : base(stateMachine)
         {
             _animator = animator;
             _animationName = animationName;

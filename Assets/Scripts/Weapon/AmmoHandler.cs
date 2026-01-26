@@ -1,16 +1,17 @@
 using System;
 using System.Collections;
-using SightMaster.Scripts.Weapon.Aim;
+using SightMaster.Scripts.Weapon.AimHandler;
 using UnityEngine;
 using Zenject;
 
 namespace SightMaster.Scripts.Weapon
 {
-    public class WeaponAmmo : MonoBehaviour
+    public class AmmoHandler : MonoBehaviour
     {
         [SerializeField] private int _magazineSize = 30;
-        [SerializeField] private Aim.Aim _aim;
+        [SerializeField] private Aim _aim;
 
+        private bool _isShooting;
         private bool _isCanShoot = true;
         private IInputWeapon _inputWeapon;
         private int _currentAmmo;
@@ -25,6 +26,7 @@ namespace SightMaster.Scripts.Weapon
         public void Construct(IInputWeapon inputWeapon)
         {
             _inputWeapon = inputWeapon;
+            _inputWeapon.Shooting += OnShooting;
         }
 
         private void Awake()
@@ -42,12 +44,18 @@ namespace SightMaster.Scripts.Weapon
 
         private void OnDisable()
         {
+            _inputWeapon.Shooting -= OnShooting;
             _aim.Aimed -= OnAimed;
+        }
+
+        private void OnShooting(bool isShooting)
+        {
+            _isShooting = isShooting;
         }
 
         private void Update()
         {
-            if (_isAimed && _isCanShoot && _inputWeapon.IsShoot())
+            if (_isAimed && _isCanShoot && _isShooting)
                 Shoot();
         }
 

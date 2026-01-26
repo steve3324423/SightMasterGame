@@ -1,60 +1,55 @@
-using SightMaster.Scripts.Camera;
+using SightMaster.Scripts.CameraHandlers;
+using SightMaster.Scripts.CameraHandler;
 using UnityEngine;
 
-namespace SightMaster.Scripts.Setting
+public class Sensitivity : MonoBehaviour
 {
-    public class Sensitivity : MonoBehaviour
+    private const float MinZoomValue = 8f;
+    private const float MaxZoomValue = 30f;
+
+    private ICameraZoom _cameraZoom;
+    private int _defaultPCValue = 1;
+    private float _mobileMultiplier = 15f;
+
+    public float SensitivityValue { get; private set; }
+
+    private void Awake()
     {
-        private const float MinZoomValue = 8f;
-        private const float MaxZoomValue = 30f;
+        _cameraZoom = GetComponent<BaseCameraZoom>();
 
-        private CameraZoomMobile _zoomMobile;
-        private CameraZoom _zoomPC;
-        private int _defaultValue = 1;
-        private float _mobileValue = 15f;
+        if (_cameraZoom != null)
+            SensitivityValue = CalculateZoomDependentSensitivity(_cameraZoom.CurrentZoom, Application.isMobilePlatform ? _mobileMultiplier : _defaultPCValue);
+    }
 
-        public float SensitivityValue { get; private set; }
-
-        private void Awake()
+    private void OnEnable()
+    {
+        if (_cameraZoom != null)
         {
-            _zoomMobile = GetComponent<CameraZoomMobile>();
-            _zoomPC = GetComponent<CameraZoom>();
-
-            float initialFOV = MaxZoomValue;
-            SensitivityValue = CalculateZoomDependentSensitivity(initialFOV, Application.isMobilePlatform ? _mobileValue : _defaultValue);
+            _cameraZoom.ZoomChanged += OnZoomChanged;
         }
+    }
 
-        private void OnEnable()
+    private void OnDisable()
+    {
+        if (_cameraZoom != null)
         {
-            if (_zoomMobile != null)
-                _zoomMobile.ZoomChanged += OnZoomChanged;
-
-            if (Application.isMobilePlatform == false)
-                _zoomPC.ZoomChanged += OnZoomChanged;
+            _cameraZoom.ZoomChanged -= OnZoomChanged;
         }
+    }
 
-        private void OnDisable()
-        {
-            if (_zoomMobile != null)
-                _zoomMobile.ZoomChanged -= OnZoomChanged;
+    private void OnZoomChanged(float zoomValue)
+    {
+        SensitivityValue = CalculateZoomDependentSensitivity(
+            zoomValue,
+            Application.isMobilePlatform ? _mobileMultiplier : _defaultPCValue
+        );
+    }
 
-            if (Application.isMobilePlatform == false)
-                _zoomPC.ZoomChanged -= OnZoomChanged;
-        }
+    private float CalculateZoomDependentSensitivity(float currentZoomValue, float platformBaseMultiplier)
+    {
+        float clampedZoomValue = Mathf.Clamp(currentZoomValue, MinZoomValue, MaxZoomValue);
+        float zoomMultiplier = clampedZoomValue / MaxZoomValue;
 
-        private void OnZoomChanged(float zoomValue)
-        {
-            SensitivityValue = CalculateZoomDependentSensitivity(zoomValue, Application.isMobilePlatform ? _mobileValue : _defaultValue);
-        }
-
-        private float CalculateZoomDependentSensitivity(float currentZoomValue, float platformBaseMultiplier)
-        {
-            float clampedZoomValue = Mathf.Clamp(currentZoomValue, MinZoomValue, MaxZoomValue);
-            float zoomMultiplier = clampedZoomValue / MaxZoomValue;
-
-            float finalSensitivityMultiplier = zoomMultiplier * platformBaseMultiplier;
-
-            return finalSensitivityMultiplier;
-        }
+        return zoomMultiplier * platformBaseMultiplier;
     }
 }

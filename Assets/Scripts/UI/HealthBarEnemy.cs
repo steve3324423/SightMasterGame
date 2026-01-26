@@ -18,12 +18,12 @@ namespace SightMaster.Scripts.UI
 
         private void OnEnable()
         {
-            _health.ChangedHealth += OnChangedHealth;
+            _health.HealthChanged += OnChangedHealth;
         }
 
         private void OnDestroy()
         {
-            _health.ChangedHealth -= OnChangedHealth;
+            _health.HealthChanged -= OnChangedHealth;
         }
 
         private void LateUpdate()

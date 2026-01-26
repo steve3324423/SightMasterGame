@@ -46,5 +46,4 @@ namespace SightMaster.Scripts.Enemy
             _isDeplection = true;
         }
     }
-
 }

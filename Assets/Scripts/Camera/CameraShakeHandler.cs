@@ -2,23 +2,23 @@ using System.Collections;
 using SightMaster.Scripts.Weapon;
 using UnityEngine;
 
-namespace SightMaster.Scripts.Camera
+namespace SightMaster.Scripts.CameraHandlers
 {
     public class CameraShakeHandler : MonoBehaviour
     {
-        [SerializeField] private WeaponAmmo[] _weaponAmmo;
+        [SerializeField] private AmmoHandler[] _weaponAmmo;
 
         private float _speed = 30f;
 
         private void OnEnable()
         {
-            foreach (WeaponAmmo weapon in _weaponAmmo)
+            foreach (AmmoHandler weapon in _weaponAmmo)
                 weapon.Shooted += OnShooted;
         }
 
         private void OnDisable()
         {
-            foreach (WeaponAmmo weapon in _weaponAmmo)
+            foreach (AmmoHandler weapon in _weaponAmmo)
                 weapon.Shooted -= OnShooted;
         }
 
@@ -53,5 +53,4 @@ namespace SightMaster.Scripts.Camera
             return new Vector3(-xValue, 0, zValue);
         }
     }
-
 }

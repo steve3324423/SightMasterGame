@@ -4,49 +4,33 @@ using UnityEngine;
 
 namespace SightMaster.Scripts.Enemy.HealthHandler
 {
-    public class EnemyHealth : MonoBehaviour, IDamageObject
+    public class EnemyHealth : HealthSystem
     {
-        private HeadEnemy _head;
-        protected float TimeForDead = 1.7f;
-        private int _health = 100;
-        private bool _isDead;
+        [SerializeField] private float _timeForDead = 1.7f;
+        [SerializeField] private HeadEnemy head;
 
-        public event Action<int> ChangedHealth;
-        public event Action Dead;
-
-        private void Awake()
+        protected override void Awake()
         {
-            _head = GetComponentInChildren<HeadEnemy>();
+            base.Awake();
+            head = GetComponentInChildren<HeadEnemy>();
         }
 
         private void OnEnable()
         {
-            _head.Hited += OnHited;
+            if (head != null)
+                head.Hited += OnHited;
         }
 
         private void OnDisable()
         {
-            _head.Hited -= OnHited;
+            if (head != null)
+                head.Hited -= OnHited;
         }
 
-        public virtual void TakeDamage(int damage)
+        protected override void Die()
         {
-            _health -= damage;
-
-            if (_health <= 0 && _isDead == false)
-            {
-                Dead?.Invoke();
-                Disable();
-
-                _isDead = true;
-            }
-
-            ChangedHealth?.Invoke(_health);
-        }
-
-        protected virtual void Disable()
-        {
-            Destroy(gameObject, TimeForDead);
+            base.Die();
+            Destroy(gameObject, _timeForDead);
         }
 
         private void OnHited(int damage)

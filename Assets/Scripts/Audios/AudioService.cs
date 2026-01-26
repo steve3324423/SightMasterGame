@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace SightMaster.Scripts.Audios
 {
-    public class AudioGames : MonoBehaviour
+    public class AudioService : MonoBehaviour
     {
-        private static AudioGames _instance;
+        private static AudioService _instance;
 
         private void Awake()
         {

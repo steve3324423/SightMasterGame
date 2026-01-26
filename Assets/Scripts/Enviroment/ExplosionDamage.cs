@@ -36,4 +36,3 @@ namespace SightMaster.Scripts.Enviroment
         }
     }
 }
-

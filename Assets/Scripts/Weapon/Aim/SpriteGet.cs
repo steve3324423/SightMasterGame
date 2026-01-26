@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace SightMaster.Scripts.Weapon.Aim
+namespace SightMaster.Scripts.Weapon.AimHandler
 {
     public class SpriteGet : MonoBehaviour
     {

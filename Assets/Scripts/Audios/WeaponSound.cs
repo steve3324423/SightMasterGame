@@ -7,7 +7,7 @@ namespace SightMaster.Scripts.Audios
     [RequireComponent(typeof(AudioSource))]
     public class WeaponSound : MonoBehaviour
     {
-        [SerializeField] private WeaponAmmo[] _ammos;
+        [SerializeField] private AmmoHandler[] _ammos;
 
         private AudioSource _audioSource;
         private AudioClip _clip;
@@ -19,19 +19,19 @@ namespace SightMaster.Scripts.Audios
 
         private void OnEnable()
         {
-            foreach (WeaponAmmo ammo in _ammos)
+            foreach (AmmoHandler ammo in _ammos)
                 ammo.Shooted += OnShooted;
         }
 
         private void OnDisable()
         {
-            foreach (WeaponAmmo ammo in _ammos)
+            foreach (AmmoHandler ammo in _ammos)
                 ammo.Shooted -= OnShooted;
         }
 
         private void SetClip()
         {
-            foreach (WeaponAmmo ammo in _ammos)
+            foreach (AmmoHandler ammo in _ammos)
             {
                 if (ammo.gameObject.activeSelf)
                     _audioSource.clip = ammo.GetComponent<SoundGet>().GetClip();

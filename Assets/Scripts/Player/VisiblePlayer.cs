@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using SightMaster.Scripts.Camera;
+using SightMaster.Scripts.CameraHandlers;
 using SightMaster.Scripts.Enemy;
 using UnityEngine;
 
@@ -41,10 +41,7 @@ namespace SightMaster.Scripts.Player
                 _ray = new Ray(transform.position, directionToPlayer);
 
                 if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, _actualLayerMask))
-                {
-                    print(_hit.transform.name);
                     PlayerDisappeared?.Invoke(_hit.transform.TryGetComponent(out CameraAim camera));
-                }
 
                 yield return null;
             }
