@@ -26,6 +26,10 @@ namespace SightMaster.Scripts.Player
         public DekstopInput(
             LevelEnder levelEnder,
             PlayerHealth playerHealth,
+<<<<<<< HEAD
+=======
+            CameraAimEnableHandler cameraAim,
+>>>>>>> 260d11f54f0a553fd0d0ae97e7000bb9c9251ea8
             Sensitivity sensitivity)
             : base(levelEnder, playerHealth)
         {

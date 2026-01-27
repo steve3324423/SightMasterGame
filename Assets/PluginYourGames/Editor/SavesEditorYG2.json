@@ -7,17 +7,24 @@
         false,
         false
     ],
+<<<<<<< HEAD
     "idSave": 117,
     "TimeLevel": 121.57087707519531,
     "sensitivity": 4.823179244995117,
     "money": 18420,
+=======
+    "idSave": 102,
+    "TimeLevel": 121.57087707519531,
+    "sensitivity": 4.823179244995117,
+    "money": 14660,
+>>>>>>> 260d11f54f0a553fd0d0ae97e7000bb9c9251ea8
     "newPlayerName": "Hello!",
     "idWeaponBuy": [
         1,
         2,
         6
     ],
-    "idWeaponSelect": 2,
+    "idWeaponSelect": 6,
     "levels": [
         1,
         2,
@@ -58,6 +65,7 @@
         2,
         2,
         2,
+<<<<<<< HEAD
         2,
         2,
         2,
@@ -66,6 +74,8 @@
         2,
         2,
         2,
+=======
+>>>>>>> 260d11f54f0a553fd0d0ae97e7000bb9c9251ea8
         2
     ],
     "openLevels": [

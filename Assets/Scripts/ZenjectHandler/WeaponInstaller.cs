@@ -14,7 +14,10 @@ namespace SightMaster.Scripts.ZenjectHandler
     {
         [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private DekstopInputHandler _dekstopHandler;
+<<<<<<< HEAD
         [SerializeField] private PlayerCameraStateHandler _playerCameraStateHandler;
+=======
+>>>>>>> 260d11f54f0a553fd0d0ae97e7000bb9c9251ea8
         [SerializeField] private PauseHandler _pauseHandler;
         [SerializeField] private ShootButton _shootButton;
         [SerializeField] private LevelEnder _levelEnder;
