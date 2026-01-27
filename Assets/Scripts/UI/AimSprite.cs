@@ -1,7 +1,9 @@
 using SightMaster.Scripts.CameraHandlers;
+using SightMaster.Scripts.Weapon;
 using SightMaster.Scripts.Weapon.AimHandler;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace SightMaster.Scripts.UI
 {
@@ -10,11 +12,18 @@ namespace SightMaster.Scripts.UI
     {
         [SerializeField] private CameraFollowBullet _cameraFollowBullet;
         [SerializeField] private SpriteGet[] _spriteGet;
-        [SerializeField] private Aim _aim;
 
+        private IInputWeapon _inputWeapon;
         private bool _isFollowed;
         private Texture _texture;
         private RawImage _rawImage;
+
+        [Inject]
+        public void Construct(IInputWeapon inputWeapon)
+        {
+            _inputWeapon = inputWeapon;
+            _inputWeapon.Aiming += OnAimed;
+        }
 
         private void Awake()
         {
@@ -29,13 +38,12 @@ namespace SightMaster.Scripts.UI
         private void OnEnable()
         {
             _cameraFollowBullet.Followed += OnFollowed;
-            _aim.Aimed += OnAimed;
         }
 
         private void OnDisable()
         {
             _cameraFollowBullet.Followed -= OnFollowed;
-            _aim.Aimed -= OnAimed;
+            _inputWeapon.Aiming += OnAimed;
         }
 
         private void SetTexture()

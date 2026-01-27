@@ -3836,6 +3836,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2022904410}
+    - targetCorrespondingSourceObject: {fileID: 1392666903960376785, guid: fabf5a481aafbf3488390baa05a0b856,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2022904414}
     - targetCorrespondingSourceObject: {fileID: 1392666903960554301, guid: fabf5a481aafbf3488390baa05a0b856,
         type: 3}
       insertIndex: -1
@@ -10104,7 +10108,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _magazineSize: 30
-  _aim: {fileID: 1642590479}
 --- !u!1 &986979106
 GameObject:
   m_ObjectHideFlags: 0
@@ -11375,6 +11378,8 @@ PrefabInstance:
       objectReference: {fileID: 1482581937}
     m_RemovedComponents:
     - {fileID: 4182201165580103710, guid: d95202f9e902fca4799204ca6f8c433c, type: 3}
+    - {fileID: 8814925696074169989, guid: d95202f9e902fca4799204ca6f8c433c, type: 3}
+    - {fileID: 8284912138537755133, guid: d95202f9e902fca4799204ca6f8c433c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -11426,6 +11431,12 @@ MonoBehaviour:
   _pauseHandler: {fileID: 481536133}
   _levelEnder: {fileID: 1806839231}
   _playerHealth: {fileID: 311436932}
+--- !u!20 &1060046957 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 20559367075549818, guid: d95202f9e902fca4799204ca6f8c433c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1060046947}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1080037592
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13200,7 +13211,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _magazineSize: 30
-  _aim: {fileID: 1642590479}
 --- !u!1001 &1313812680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15175,6 +15185,11 @@ PrefabInstance:
       propertyPath: _dekstopHandler
       value: 
       objectReference: {fileID: 311436933}
+    - target: {fileID: 5009248055956047522, guid: 0891a87e331b66040ad5a3c30fc7399e,
+        type: 3}
+      propertyPath: _playerCameraStateHandler
+      value: 
+      objectReference: {fileID: 2022904414}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16196,6 +16211,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c96926edfb9177d4b8ae5227c6294eab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!20 &1482581952 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3390876138515256340, guid: fabf5a481aafbf3488390baa05a0b856,
+    type: 3}
+  m_PrefabInstance: {fileID: 311436928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1483767923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17050,7 +17071,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _magazineSize: 30
-  _aim: {fileID: 1642590479}
 --- !u!114 &1601870396 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7544509839204467850, guid: fabf5a481aafbf3488390baa05a0b856,
@@ -17088,7 +17108,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _magazineSize: 30
-  _aim: {fileID: 1642590479}
 --- !u!1001 &1602674989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20392,7 +20411,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _magazineSize: 30
-  _aim: {fileID: 1642590479}
 --- !u!1001 &1989819437
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20687,6 +20705,23 @@ MonoBehaviour:
   _pauseHandler: {fileID: 481536133}
   _levelEnder: {fileID: 1806839231}
   _playerHealth: {fileID: 311436932}
+--- !u!114 &2022904414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022904408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 298478b38760f1e4aba90be4f504f0e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 311436932}
+  _levelEnder: {fileID: 1806839231}
+  _cameraFollowBullet: {fileID: 1060046948}
+  _cameraFollower: {fileID: 1060046957}
+  _cameraAim: {fileID: 1482581952}
 --- !u!1001 &2024394003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20785,7 +20820,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _magazineSize: 30
-  _aim: {fileID: 1642590479}
 --- !u!1001 &2029882202
 PrefabInstance:
   m_ObjectHideFlags: 0

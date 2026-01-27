@@ -12,7 +12,6 @@ namespace SightMaster.Scripts.CameraHandlers
         [SerializeField] private BulletSpawn _bulletSpawn;
         [SerializeField] private float _cameraSpeed = 1f;
 
-        private CameraFollower _cameraFollower;
         private float _slowdownFactor = 0.1f;
         private float _slowdownLength = 1.5f;
         private float _cameraDistance = 2f;
@@ -20,11 +19,6 @@ namespace SightMaster.Scripts.CameraHandlers
         private Bullet _followingBullet;
 
         public event Action<bool> Followed;
-
-        private void Awake()
-        {
-            _cameraFollower = GetComponent<CameraFollower>();
-        }
 
         private void OnEnable()
         {
@@ -47,8 +41,6 @@ namespace SightMaster.Scripts.CameraHandlers
             Time.timeScale = _slowdownFactor;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
 
-            _cameraFollower.enabled = false;
-
             Vector3 originalCameraPosition = transform.position;
             Quaternion originalCameraRotation = transform.rotation;
             Vector3 targetCameraPosition;
@@ -69,7 +61,6 @@ namespace SightMaster.Scripts.CameraHandlers
             Time.timeScale = 1f;
             Time.fixedDeltaTime = 0.02f;
 
-            _cameraFollower.enabled = true;
             _followingBullet = null;
 
             Followed?.Invoke(false);

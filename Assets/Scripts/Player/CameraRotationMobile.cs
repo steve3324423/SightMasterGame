@@ -1,16 +1,17 @@
 using SightMaster.Scripts.Setting;
 using SightMaster.Scripts.UI;
 using SightMaster.Scripts.UI.Android;
+using SightMaster.Scripts.Weapon;
 using SightMaster.Scripts.Weapon.AimHandler;
 using UnityEngine;
 using YG;
+using Zenject;
 
 namespace SightMaster.Scripts.Player
 {
     public class CameraRotationMobile : MonoBehaviour
     {
         [SerializeField] private Sensitivity _sensitivity;
-        [SerializeField] private Aim _aim;
         [SerializeField] private AimButton _aimButton;
         [SerializeField] private UITouchControl[] _touchControls;
         [SerializeField] private UIBlocker _uiBlocker;
@@ -19,6 +20,7 @@ namespace SightMaster.Scripts.Player
         [SerializeField] private float _mobileValue = 1.5f;
         [SerializeField] private float _smoothTime = 0.1f;
 
+        private IInputWeapon _inputWeapon;
         private float _currentRotationXVelocity;
         private float _currentRotationYVelocity;
         private float _verticalAngle = 45;
@@ -29,12 +31,18 @@ namespace SightMaster.Scripts.Player
         public float RotationX { get; private set; }
         public float RotationY { get; private set; }
 
+        [Inject]
+        public void Construct(IInputWeapon inputWeapon)
+        {
+            _inputWeapon = inputWeapon;
+            _inputWeapon.Aiming += OnAimed;
+        }
+
+
         private void OnEnable()
         {
             foreach (UITouchControl touchControl in _touchControls)
                 touchControl.Touched += OnTouched;
-
-            _aim.Aimed += OnAimed;
         }
 
         private void OnDisable()
@@ -42,7 +50,7 @@ namespace SightMaster.Scripts.Player
             foreach (UITouchControl touchControl in _touchControls)
                 touchControl.Touched -= OnTouched;
 
-            _aim.Aimed -= OnAimed;
+            _inputWeapon.Aiming -= OnAimed;
         }
 
         private void OnTouched(bool isTouched)
