@@ -14,6 +14,7 @@ namespace SightMaster.Scripts.ZenjectHandler
     {
         [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private DekstopInputHandler _dekstopHandler;
+        [SerializeField] private PlayerCameraStateHandler _playerCameraStateHandler;
         [SerializeField] private PauseHandler _pauseHandler;
         [SerializeField] private ShootButton _shootButton;
         [SerializeField] private LevelEnder _levelEnder;
@@ -30,6 +31,7 @@ namespace SightMaster.Scripts.ZenjectHandler
             Container.Bind<AimButton>().FromInstance(_aimButton).AsSingle();
             Container.Bind<ShootButton>().FromInstance(_shootButton).AsSingle();
             Container.Bind<PauseHandler>().FromInstance(_pauseHandler).AsSingle();
+            Container.Bind<PlayerCameraStateHandler>().FromInstance(_playerCameraStateHandler).AsSingle();
             Container.Bind<LevelEnder>().FromInstance(_levelEnder).AsSingle();
             Container.Bind<DekstopInputHandler>().FromInstance(_dekstopHandler).AsSingle();
         }

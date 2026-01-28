@@ -1,5 +1,4 @@
 using SightMaster.Scripts.Weapon;
-using SightMaster.Scripts.Weapon.AimHandler;
 using UnityEngine;
 using Zenject;
 
@@ -13,6 +12,10 @@ namespace SightMaster.Scripts.Player
         public void Construct(IInputWeapon inputWeapon)
         {
             _inputWeapon = inputWeapon;
+        }
+
+        private void OnEnable()
+        {
             _inputWeapon.Aiming += OnAimed;
         }
 

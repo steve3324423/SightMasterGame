@@ -11,7 +11,6 @@ namespace SightMaster.Scripts.ZenjectHandler
         [SerializeField] private CameraRotationMobile _cameraRotation;
         [SerializeField] private PlayerCameraController _playerCameraController;
         [SerializeField] private PlayerYawRotator _playerYawRotate;
-        [SerializeField] private CameraAimEnableHandler _cameraAim;
         [SerializeField] private Sensitivity _sensitivity;
 
         public override void InstallBindings()
@@ -21,7 +20,6 @@ namespace SightMaster.Scripts.ZenjectHandler
             else
                 Container.Bind<IInput>().To<DekstopInput>().AsSingle();
 
-            Container.Bind<CameraAimEnableHandler>().FromInstance(_cameraAim).AsSingle();
             Container.Bind<PlayerCameraController>().FromInstance(_playerCameraController).AsSingle();
             Container.Bind<CameraRotationMobile>().FromInstance(_cameraRotation).AsSingle();
             Container.Bind<PlayerYawRotator>().FromInstance(_playerYawRotate).AsSingle();

@@ -4,7 +4,6 @@ using Zenject;
 
 namespace SightMaster.Scripts.CameraHandlers
 {
-    [RequireComponent(typeof(CameraAimEnableHandler))]
     public class CameraAim : MonoBehaviour
     {
         private IInput _input;

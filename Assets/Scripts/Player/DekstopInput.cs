@@ -23,11 +23,7 @@ namespace SightMaster.Scripts.Player
         private float _targetPitch = 15f;
         private float _targetYaw = 0f;
 
-        public DekstopInput(
-            LevelEnder levelEnder,
-            PlayerHealth playerHealth,
-            CameraAimEnableHandler cameraAim,
-            Sensitivity sensitivity)
+        public DekstopInput(LevelEnder levelEnder, PlayerHealth playerHealth, Sensitivity sensitivity)
             : base(levelEnder, playerHealth)
         {
             Cursor.lockState = CursorLockMode.Locked;
