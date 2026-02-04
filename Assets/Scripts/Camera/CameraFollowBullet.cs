@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 using System;
 using System.Collections;
 using SightMaster.Scripts.Weapon;
@@ -5,6 +6,25 @@ using SightMaster.Scripts.Weapon.Bullet;
 using UnityEngine;
 
 namespace SightMaster.Scripts.CameraHandlers
+=======
+<<<<<<< HEAD
+using System;
+using System.Collections;
+using SightMaster.Scripts.Weapon;
+using SightMaster.Scripts.Weapon.Bullet;
+using UnityEngine;
+
+namespace SightMaster.Scripts.CameraHandlers
+=======
+using System;
+using System.Collections;
+using SightMaster.Scripts.Weapon;
+using SightMaster.Scripts.Weapon.Bullet;
+using UnityEngine;
+
+namespace SightMaster.Scripts.CameraHandlers
+>>>>>>> 260d11f54f0a553fd0d0ae97e7000bb9c9251ea8
+>>>>>>> 7c40df2c669c8240bcf268ac9925faf2830489a2
 {
     public class CameraFollowBullet : MonoBehaviour
     {

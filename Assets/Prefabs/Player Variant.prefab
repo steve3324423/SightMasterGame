@@ -109,6 +109,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e23dec521d9ac7429e9aa20692e48d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
+=======
+--- !u!114 &706207860129974434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3686538720889954886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e3b71ddb78f57d458f4b0df0008ebf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraFollowBullet: {fileID: 0}
+  _levelEnder: {fileID: 0}
+>>>>>>> 7c40df2c669c8240bcf268ac9925faf2830489a2
 --- !u!114 &1536906881645369931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -582,11 +599,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 186346, guid: 5d1f2362ca2e441489aa1f185887f8fb,
         type: 3}
       insertIndex: -1
+<<<<<<< HEAD
       addedObject: {fileID: 6114136818339875812}
     - targetCorrespondingSourceObject: {fileID: 186346, guid: 5d1f2362ca2e441489aa1f185887f8fb,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: -733924301666532380}
+=======
+      addedObject: {fileID: 7129852630871644719}
+>>>>>>> 7c40df2c669c8240bcf268ac9925faf2830489a2
     - targetCorrespondingSourceObject: {fileID: 199002, guid: 5d1f2362ca2e441489aa1f185887f8fb,
         type: 3}
       insertIndex: -1
@@ -781,6 +802,7 @@ MonoBehaviour:
   _pauseHandler: {fileID: 0}
   _levelEnder: {fileID: 0}
   _playerHealth: {fileID: 0}
+<<<<<<< HEAD
 --- !u!114 &6114136818339875812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -799,6 +821,9 @@ MonoBehaviour:
   _cameraFollower: {fileID: 0}
   _cameraAim: {fileID: 0}
 --- !u!114 &-733924301666532380
+=======
+--- !u!114 &7129852630871644719
+>>>>>>> 7c40df2c669c8240bcf268ac9925faf2830489a2
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -961,12 +986,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ammos:
+<<<<<<< HEAD
   - {fileID: 9073230322707053645}
   - {fileID: 6674140676667283414}
   - {fileID: 1850132551856966276}
   - {fileID: 4380188654478945887}
   - {fileID: 1043584892294457592}
   - {fileID: 8224758449963521509}
+=======
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+>>>>>>> 7c40df2c669c8240bcf268ac9925faf2830489a2
 --- !u!1 &1392666903960554111 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100420, guid: 5d1f2362ca2e441489aa1f185887f8fb,
@@ -1056,6 +1087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f0746a1a476ec43b4fc91cf554fce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
 --- !u!114 &8224758449963521509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1069,6 +1101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _magazineSize: 30
+=======
+>>>>>>> 7c40df2c669c8240bcf268ac9925faf2830489a2
 --- !u!1 &1392666903960573545 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 119890, guid: 5d1f2362ca2e441489aa1f185887f8fb,
@@ -1435,6 +1469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f0746a1a476ec43b4fc91cf554fce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
 --- !u!114 &6674140676667283414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1448,6 +1483,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _magazineSize: 30
+=======
+>>>>>>> 7c40df2c669c8240bcf268ac9925faf2830489a2
 --- !u!1 &1934052488468507307 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1100550981398491710, guid: e433efba24a0e3741a524714c37811b1,
@@ -3219,6 +3256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f0746a1a476ec43b4fc91cf554fce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
 --- !u!114 &1850132551856966276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3232,6 +3270,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _magazineSize: 30
+=======
+>>>>>>> 7c40df2c669c8240bcf268ac9925faf2830489a2
 --- !u!1 &6731624096268682003 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 951653411444133938, guid: 83299ca25062d064a80e9911aca0f1ba,
